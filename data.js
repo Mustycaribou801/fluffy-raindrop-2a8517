@@ -161,3 +161,21 @@ const METHODOLOGY = {
     "Be specific about sample size and how it affects confidence",
   ],
 };
+const accuracyMap = [
+  {
+    state: "Texas",
+    race: "Senate",
+    status: "wrong",
+    predicted: "Likely R",
+    actual: "Lean R",
+    reason: "I underestimated how close the race would become and over-weighted Republican fundamentals."
+  },
+  {
+    state: "Georgia",
+    race: "President",
+    status: "correct",
+    predicted: "Republican",
+    actual: "Republican",
+    reason: "Correctly identified the Republican trend in the state."
+  }
+];
