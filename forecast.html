@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026 Forecast — Mustycaribou Forecasts</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="masthead">
+  <div class="masthead-inner">
+    <h1 class="masthead-title"><a href="index.html">Mustycaribou Forecasts</a></h1>
+    <span class="masthead-tag">Professional election intelligence</span>
+  </div>
+  <div class="masthead-meta">
+    <span>By <span class="forecaster-name">Preston</span></span>
+    <span>last updated <span id="last-updated"></span></span>
+  </div>
+</header>
+
+<nav class="primary">
+  <ul>
+    <li><a href="index.html">Home</a></li>
+    <li><a href="forecast.html">2026 Forecast</a></li>
+    <li><a href="track-record.html">Track Record</a></li>
+    <li><a href="methodology.html">Methodology</a></li>
+  </ul>
+</nav>
+
+<main>
+  <section class="wrap">
+    <p class="section-label">2026 Midterms</p>
+    <h2>Senate forecast</h2>
+    <p>Because 2026 is a midterm cycle, this board tracks Senate control rather than an Electoral College map. The map highlights only states with Senate races in 2026; select a state for the race page and source notes.</p>
+
+    <div class="forecast-map senate-forecast-map" aria-label="2026 Senate forecast map">
+      <div class="map-header">
+        <span>U.S. Senate races</span>
+        <span>35 seats up</span>
+      </div>
+      <div class="map-canvas senate-map-canvas" id="senate-map"></div>
+      <div class="map-legend">
+        <span><i class="legend-dem"></i> Democratic edge</span>
+        <span><i class="legend-toss"></i> Toss-up</span>
+        <span><i class="legend-rep"></i> Republican edge</span>
+      </div>
+    </div>
+
+    <div class="senate-board-shell">
+      <table class="race-board">
+        <caption>All 2026 Senate races, sorted Safe D to Safe R</caption>
+        <thead>
+          <tr><th>State</th><th>Held by</th><th>Rating</th><th>Race note</th></tr>
+        </thead>
+        <tbody id="senate-race-tbody"></tbody>
+      </table>
+    </div>
+
+    <div class="rating-legend">
+      <span><span class="rating-chip SD">Safe D</span></span>
+      <span><span class="rating-chip LD">Likely D</span></span>
+      <span><span class="rating-chip TD">Lean D</span></span>
+      <span><span class="rating-chip TU">Toss-up</span></span>
+      <span><span class="rating-chip TR">Lean R</span></span>
+      <span><span class="rating-chip LR">Likely R</span></span>
+      <span><span class="rating-chip SR">Safe R</span></span>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap">
+  <p>Ratings reflect the forecaster's own judgment based on the inputs described on the <a href="methodology.html">methodology page</a>, and are updated periodically.</p>
+</footer>
+
+<script src="data.js"></script>
+<script src="script.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    renderSenateMap("senate-map", SENATE.races);
+    renderRaceBoard("senate-race-tbody", SENATE.races);
+  });
+</script>
+</body>
+</html>

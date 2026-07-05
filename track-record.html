@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Track Record — Mustycaribou Forecasts</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="masthead">
+  <div class="masthead-inner">
+    <h1 class="masthead-title"><a href="index.html">Mustycaribou Forecasts</a></h1>
+    <span class="masthead-tag">Professional election intelligence</span>
+  </div>
+  <div class="masthead-meta">
+    <span>By <span class="forecaster-name">Preston</span></span>
+    <span>last updated <span id="last-updated"></span></span>
+  </div>
+</header>
+
+<nav class="primary">
+  <ul>
+    <li><a href="index.html">Home</a></li>
+    <li><a href="forecast.html">2026 Forecast</a></li>
+    <li><a href="track-record.html">Track Record</a></li>
+    <li><a href="methodology.html">Methodology</a></li>
+  </ul>
+</nav>
+
+<main>
+  <section class="wrap">
+    <p class="section-label">2024 cycle</p>
+    <h2>The headline numbers</h2>
+    <div class="stat-grid" id="headline-stats"></div>
+  </section>
+
+  <section class="wrap">
+    <p class="section-label">The number that actually matters</p>
+    <h2>Performance on competitive races only</h2>
+    <p id="competitive-definition" style="color: var(--ink-soft); font-size: 0.9rem;"></p>
+    <div class="stat-grid" id="competitive-stats"></div>
+    <p style="margin-top: 16px; max-width: 62ch;">Most states and Senate seats in any given cycle aren't genuinely contested — calling them correctly isn't a meaningful test of a forecasting method. The figures above isolate races that were rated Toss-up or Lean in the final week, which is a fairer measure of whether the model (or the judgment behind it) is actually adding value over just reading the polls.</p>
+  </section>
+
+  <section class="wrap">
+    <p class="section-label">In the interest of being honest</p>
+    <h2>Every race called wrong</h2>
+    <ul class="miss-list" id="misses-list"></ul>
+  </section>
+</main>
+
+<footer class="wrap">
+  <p>Figures on this page are self-reported. Methodology and the definition of "competitive" used above are detailed on the <a href="methodology.html">methodology page</a>.</p>
+</footer>
+
+<script src="data.js"></script>
+<script src="script.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const tr = TRACK_RECORD_2024;
+
+    document.getElementById("headline-stats").innerHTML = `
+      <div class="stat-card">
+        <span class="stat-number">${tr.headline.presidentialStatesCorrect}/${tr.headline.presidentialStatesTotal}</span>
+        <span class="stat-label">Presidential states called correctly</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-number">${tr.headline.senateCorrect}/${tr.headline.senateTotal}</span>
+        <span class="stat-label">Senate races called correctly</span>
+      </div>
+    `;
+
+    document.getElementById("competitive-definition").textContent = tr.competitiveBreakdown.definition;
+
+    document.getElementById("competitive-stats").innerHTML = `
+      <div class="stat-card">
+        <span class="stat-number">${tr.competitiveBreakdown.presidentialTossUpsCorrect}/${tr.competitiveBreakdown.presidentialTossUpsTotal}</span>
+        <span class="stat-label">Presidential toss-ups called correctly</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-number">${tr.competitiveBreakdown.senateTossUpsCorrect}/${tr.competitiveBreakdown.senateTossUpsTotal}</span>
+        <span class="stat-label">Senate toss-ups called correctly</span>
+      </div>
+    `;
+
+    renderMisses("misses-list", tr.misses);
+  });
+</script>
+</body>
+</html>

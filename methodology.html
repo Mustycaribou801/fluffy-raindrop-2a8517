@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Methodology — Mustycaribou Forecasts</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="masthead">
+  <div class="masthead-inner">
+    <h1 class="masthead-title"><a href="index.html">Mustycaribou Forecasts</a></h1>
+    <span class="masthead-tag">Professional election intelligence</span>
+  </div>
+  <div class="masthead-meta">
+    <span>By <span class="forecaster-name">Preston</span></span>
+    <span>last updated <span id="last-updated"></span></span>
+  </div>
+</header>
+
+<nav class="primary">
+  <ul>
+    <li><a href="index.html">Home</a></li>
+    <li><a href="forecast.html">2026 Forecast</a></li>
+    <li><a href="track-record.html">Track Record</a></li>
+    <li><a href="methodology.html">Methodology</a></li>
+  </ul>
+</nav>
+
+<main>
+  <section class="wrap">
+    <p class="section-label">How the ratings are made</p>
+    <h2>Methodology</h2>
+    <p id="methodology-summary" style="font-family: var(--font-display); font-size: 1.15rem; font-weight: 500;"></p>
+  </section>
+
+  <section class="wrap">
+    <p class="section-label">Inputs</p>
+    <h3>What goes into a rating</h3>
+    <ul class="method-list" id="inputs-list"></ul>
+  </section>
+
+  <section class="wrap">
+    <p class="section-label">Be upfront</p>
+    <h3>What this doesn't account for</h3>
+    <ul class="method-list" id="limitations-list"></ul>
+  </section>
+
+  <section class="wrap">
+    <p class="section-label">Rating scale</p>
+    <h3>What each label means</h3>
+    <p style="max-width: 62ch;">Safe: the race isn't being watched at all. Likely: would be a significant upset to flip. Lean: competitive but one side has a real edge. Toss-up: genuinely could go either way based on available evidence.</p>
+    <div class="rating-legend">
+      <span><span class="rating-chip SD">Safe D</span></span>
+      <span><span class="rating-chip LD">Likely D</span></span>
+      <span><span class="rating-chip TD">Lean D</span></span>
+      <span><span class="rating-chip TU">Toss-up</span></span>
+      <span><span class="rating-chip TR">Lean R</span></span>
+      <span><span class="rating-chip LR">Likely R</span></span>
+      <span><span class="rating-chip SR">Safe R</span></span>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap">
+  <p>Questions about methodology or a specific call: contact details go here.</p>
+</footer>
+
+<script src="data.js"></script>
+<script src="script.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    document.getElementById("methodology-summary").textContent = METHODOLOGY.summary;
+    document.getElementById("inputs-list").innerHTML = METHODOLOGY.inputs.map(i => `<li>${i}</li>`).join("");
+    document.getElementById("limitations-list").innerHTML = METHODOLOGY.limitations.map(i => `<li>${i}</li>`).join("");
+  });
+</script>
+</body>
+</html>

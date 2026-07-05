@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Senate Race Forecast — Mustycaribou Forecasts</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="masthead">
+  <div class="masthead-inner">
+    <h1 class="masthead-title"><a href="index.html">Mustycaribou Forecasts</a></h1>
+    <span class="masthead-tag">Professional election intelligence</span>
+  </div>
+  <div class="masthead-meta">
+    <span>By <span class="forecaster-name">Preston</span></span>
+    <span>last updated <span id="last-updated"></span></span>
+  </div>
+</header>
+
+<nav class="primary">
+  <ul>
+    <li><a href="index.html">Home</a></li>
+    <li><a href="forecast.html">2026 Forecast</a></li>
+    <li><a href="track-record.html">Track Record</a></li>
+    <li><a href="methodology.html">Methodology</a></li>
+  </ul>
+</nav>
+
+<main>
+  <section class="wrap race-detail-hero">
+    <p class="section-label">2026 Senate race</p>
+    <h2 id="race-state">Senate race</h2>
+    <div class="race-detail-summary">
+      <div class="stat-card">
+        <span class="stat-label">Current rating</span>
+        <span class="stat-number race-rating-number" id="race-rating"></span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-label">Held by</span>
+        <span class="stat-number race-meta-number" id="race-held-by"></span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-label">Incumbent / seat holder</span>
+        <span class="stat-number race-meta-number" id="race-incumbent"></span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-label">Race updated</span>
+        <span class="stat-number race-meta-number" id="race-last-updated"></span>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap race-detail-grid">
+    <article class="race-detail-panel">
+      <p class="section-label">Candidate status</p>
+      <p id="race-candidate-status"></p>
+    </article>
+    <article class="race-detail-panel">
+      <p class="section-label">Polling</p>
+      <p id="race-polling"></p>
+    </article>
+    <article class="race-detail-panel">
+      <p class="section-label">Previous results</p>
+      <p id="race-previous-results"></p>
+    </article>
+    <article class="race-detail-panel">
+      <p class="section-label">Demographic trends</p>
+      <p id="race-demographic-trends"></p>
+    </article>
+  </section>
+
+  <section class="wrap">
+    <p class="section-label">Analysis</p>
+    <h3>Forecast rationale</h3>
+    <p id="race-analysis" class="race-analysis-copy"></p>
+  </section>
+
+  <section class="wrap race-detail-grid">
+    <article class="race-detail-panel">
+      <p class="section-label">Rating history</p>
+      <ul class="method-list race-history" id="race-rating-history"></ul>
+    </article>
+    <article class="race-detail-panel">
+      <p class="section-label">Sources</p>
+      <ul class="method-list" id="race-sources"></ul>
+    </article>
+  </section>
+</main>
+
+<footer class="wrap">
+  <p><a href="forecast.html">Return to the 2026 Senate forecast board</a>. Ratings reflect the forecaster's own judgment based on the inputs described on the <a href="methodology.html">methodology page</a>.</p>
+</footer>
+
+<script src="data.js"></script>
+<script src="script.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", renderSenateRacePage);
+</script>
+</body>
+</html>

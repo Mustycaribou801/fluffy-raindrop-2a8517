@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mustycaribou Forecasts — Professional Election Forecasting</title>
+<meta name="description" content="Professional election forecasts, seat projections, and transparent race ratings from Mustycaribou Forecasts.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="masthead">
+  <div class="masthead-inner">
+    <h1 class="masthead-title"><a href="index.html">Mustycaribou Forecasts</a></h1>
+    <span class="masthead-tag">Professional election intelligence</span>
+  </div>
+  <div class="masthead-meta">
+    <span>By <span class="forecaster-name">Preston</span></span>
+    <span><span id="site-cycle-label"></span> &middot; last updated <span id="last-updated"></span></span>
+  </div>
+</header>
+
+<nav class="primary">
+  <ul>
+    <li><a href="index.html">Home</a></li>
+    <li><a href="forecast.html">2026 Forecast</a></li>
+    <li><a href="track-record.html">Track Record</a></li>
+    <li><a href="methodology.html">Methodology</a></li>
+  </ul>
+</nav>
+
+<main>
+  <section class="hero wrap">
+    <div class="hero-copy">
+      <p class="section-label">2026 Midterm Model</p>
+      <h2>Mustycaribou Forecasts</h2>
+      <p class="hero-lede">A disciplined election forecast desk for seat-level ratings, control scenarios, and transparent model judgment. Every call is built to be inspected before election night and audited after it.</p>
+      <div class="hero-actions">
+        <a class="button-primary" href="forecast.html">View Forecast Board</a>
+        <a class="button-secondary" href="methodology.html">Read Methodology</a>
+      </div>
+    </div>
+
+    <div class="forecast-map" aria-label="Featured forecast map placeholder">
+      <div class="map-header">
+        <span>Featured Forecast Map</span>
+        <span id="map-cycle-label">2026 Midterms</span>
+      </div>
+      <div class="map-canvas">
+        <div class="state-block dem strong" style="--x:7; --y:24; --w:17; --h:14;"></div>
+        <div class="state-block rep strong" style="--x:26; --y:20; --w:16; --h:17;"></div>
+        <div class="state-block toss" style="--x:45; --y:18; --w:13; --h:13;"></div>
+        <div class="state-block dem" style="--x:61; --y:23; --w:12; --h:18;"></div>
+        <div class="state-block rep" style="--x:76; --y:18; --w:14; --h:14;"></div>
+        <div class="state-block rep strong" style="--x:16; --y:43; --w:20; --h:18;"></div>
+        <div class="state-block dem" style="--x:39; --y:42; --w:13; --h:16;"></div>
+        <div class="state-block toss active" style="--x:56; --y:46; --w:18; --h:15;"></div>
+        <div class="state-block rep" style="--x:77; --y:43; --w:12; --h:18;"></div>
+        <div class="state-block dem strong" style="--x:23; --y:67; --w:14; --h:12;"></div>
+        <div class="state-block toss" style="--x:42; --y:67; --w:19; --h:13;"></div>
+        <div class="state-block rep strong" style="--x:65; --y:68; --w:20; --h:12;"></div>
+        <div class="map-callout">
+          <strong>Control range</strong>
+          <span>House and Senate battlegrounds updating from the public board</span>
+        </div>
+      </div>
+      <div class="map-legend">
+        <span><i class="legend-dem"></i> Democratic edge</span>
+        <span><i class="legend-toss"></i> Toss-up</span>
+        <span><i class="legend-rep"></i> Republican edge</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap control-room">
+    <div class="section-heading">
+      <p class="section-label">Current Projection</p>
+      <h2>Control board</h2>
+    </div>
+
+    <div class="tally-board">
+      <div class="tally-chamber">
+        <div class="tally-chamber-label"><span>U.S. House</span><span>435 seats</span></div>
+        <div class="tally-row">
+          <div class="tally-party">
+            <div class="tally-party-label dem">Democrats</div>
+            <div class="flip-group" id="house-dem-flip"></div>
+          </div>
+          <div class="tally-party">
+            <div class="tally-party-label rep">Republicans</div>
+            <div class="flip-group" id="house-rep-flip"></div>
+          </div>
+        </div>
+        <div class="tally-bar" id="house-bar"></div>
+        <div class="tally-majority-line" id="house-majority-note"></div>
+      </div>
+
+      <div class="tally-chamber">
+        <div class="tally-chamber-label"><span>U.S. Senate</span><span>35 seats up</span></div>
+        <div class="tally-row">
+          <div class="tally-party">
+            <div class="tally-party-label dem">Democrats</div>
+            <div class="flip-group" id="senate-dem-flip"></div>
+          </div>
+          <div class="tally-party">
+            <div class="tally-party-label rep">Republicans</div>
+            <div class="flip-group" id="senate-rep-flip"></div>
+          </div>
+        </div>
+        <div class="tally-bar" id="senate-bar"></div>
+        <div class="tally-majority-line" id="senate-majority-note"></div>
+      </div>
+    </div>
+    <p class="hero-footnote">Projected seat totals include safe seats not individually rated. See the full board on the <a href="forecast.html">2026 Forecast</a> page.</p>
+  </section>
+
+  <section class="wrap">
+    <p class="section-label">Track record</p>
+    <h2>2024, in full — including the misses</h2>
+    <div class="stat-grid" id="track-record-stats"></div>
+    <p style="margin-top:18px;"><a href="track-record.html">See the complete 2024 breakdown, race by race →</a></p>
+  </section>
+
+  <section class="wrap">
+    <p class="section-label">How this works</p>
+    <h2>The short version</h2>
+    <p id="methodology-summary-preview" style="max-width: 62ch;"></p>
+    <p><a href="methodology.html">Read the full methodology →</a></p>
+  </section>
+</main>
+
+<footer class="wrap">
+  <p>Mustycaribou Forecasts is an independent forecast, not affiliated with any party, campaign, or media outlet. Ratings reflect the forecaster's own judgment and are updated periodically.</p>
+</footer>
+
+<script src="data.js"></script>
+<script src="script.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    document.getElementById("site-cycle-label").textContent = SITE_META.cycle;
+    document.getElementById("map-cycle-label").textContent = SITE_META.cycle;
+
+    renderTally({
+      elPrefix: "house",
+      safeD: HOUSE.safeSeatsD,
+      safeR: HOUSE.safeSeatsR,
+      races: HOUSE.races,
+      majority: HOUSE.majority,
+      digits: 3,
+    });
+    renderTally({
+      elPrefix: "senate",
+      safeD: SENATE.currentHoldoverD,
+      safeR: SENATE.currentHoldoverR,
+      races: SENATE.races,
+      majority: SENATE.majority,
+      digits: 2,
+    });
+
+    const tr = TRACK_RECORD_2024;
+    document.getElementById("track-record-stats").innerHTML = `
+      <div class="stat-card">
+        <span class="stat-number">${tr.headline.presidentialStatesCorrect}/${tr.headline.presidentialStatesTotal}</span>
+        <span class="stat-label">Presidential states called correctly</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-number">${tr.headline.senateCorrect}/${tr.headline.senateTotal}</span>
+        <span class="stat-label">Senate races called correctly</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-number">${tr.competitiveBreakdown.presidentialTossUpsCorrect}/${tr.competitiveBreakdown.presidentialTossUpsTotal}</span>
+        <span class="stat-label">On presidential toss-ups specifically</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-number">${tr.competitiveBreakdown.senateTossUpsCorrect}/${tr.competitiveBreakdown.senateTossUpsTotal}</span>
+        <span class="stat-label">On Senate toss-ups specifically</span>
+      </div>
+    `;
+
+    document.getElementById("methodology-summary-preview").textContent = METHODOLOGY.summary;
+  });
+</script>
+</body>
+</html>
