@@ -426,6 +426,211 @@ p{ max-width: 68ch; }
   display: block;
 }
 
+/* ---------- 2024 archive ---------- */
+.archive-hero{ padding-top: 56px; }
+.archive-heading{ align-items: start; }
+.archive-lede{
+  font-family: var(--font-display);
+  font-size: clamp(1.05rem, 2vw, 1.35rem);
+  color: var(--ink);
+  margin-bottom: 0;
+}
+.archive-stamp{
+  flex: 0 0 auto;
+  border: 1px solid var(--rule-strong);
+  border-radius: 3px;
+  padding: 8px 10px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gold);
+  background: rgba(208,168,77,0.08);
+}
+.archive-split{
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.8fr);
+  gap: 22px;
+  align-items: stretch;
+  margin-top: 26px;
+}
+.archive-kpis{
+  grid-template-columns: 1fr;
+  align-self: stretch;
+}
+.archive-image-card{ min-width: 0; }
+.prediction-artifact{
+  margin: 0;
+  background: #111822;
+  border-top: 1px solid rgba(255,255,255,0.07);
+}
+.prediction-artifact img{
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 560px;
+  object-fit: contain;
+  background: #f4f4f0;
+}
+.prediction-artifact figcaption{
+  padding: 12px 16px 14px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--ink-soft);
+  border-top: 1px solid rgba(255,255,255,0.07);
+}
+.accuracy-legend{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 18px;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--ink-soft);
+}
+.accuracy-legend span{
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+.accuracy-legend i{
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+.accuracy-legend .correct{ background: #4fa968; }
+.accuracy-legend .incorrect{ background: #c85f5f; }
+.accuracy-workbench{
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 330px;
+  gap: 22px;
+  align-items: start;
+}
+.accuracy-map-shell{
+  background: linear-gradient(145deg, rgba(28,38,51,0.96), rgba(14,19,27,0.96));
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  box-shadow: 0 28px 70px rgba(0,0,0,0.28);
+  padding: 18px;
+}
+.accuracy-map{
+  position: relative;
+  min-height: 440px;
+  padding: 14px 24px 14px 14px;
+  background:
+    linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px),
+    #121923;
+  background-size: 32px 32px;
+  border: 1px solid rgba(255,255,255,0.07);
+}
+.accuracy-state{
+  position: absolute;
+  left: calc(3% + (var(--x) * 7.25%));
+  top: calc(4% + (var(--y) * 10.2%));
+  width: clamp(34px, 6.4vw, 54px);
+  height: clamp(30px, 4.8vw, 42px);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 3px;
+  color: var(--ink);
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 12px 28px rgba(0,0,0,0.24);
+  transition: transform 140ms ease, outline-color 140ms ease, filter 140ms ease;
+}
+.accuracy-state.correct{ background: #2f7045; }
+.accuracy-state.incorrect{ background: var(--rep); }
+.accuracy-state:hover,
+.accuracy-state.active{
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+  transform: translateY(-2px);
+  filter: brightness(1.08);
+}
+.accuracy-panel{
+  position: sticky;
+  top: 148px;
+  background: var(--paper-raised);
+  border: 1px solid rgba(255,255,255,0.09);
+  border-radius: 3px;
+  padding: 20px;
+  box-shadow: 0 16px 36px rgba(0,0,0,0.24);
+}
+.accuracy-panel h3{ margin-bottom: 14px; }
+.panel-metrics{
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px 14px;
+  margin: 0 0 16px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--rule);
+}
+.panel-metrics dt{
+  color: var(--ink-soft);
+  font-size: 0.88rem;
+}
+.panel-metrics dd{
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 0.86rem;
+  color: var(--ink);
+}
+.accuracy-panel p:last-child{ margin-bottom: 0; }
+.dashboard-grid{ grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+.senate-archive-section .archive-heading{ margin-bottom: 24px; }
+.senate-dashboard{ margin-bottom: 28px; }
+.archive-table-wrap{
+  overflow-x: auto;
+  border: 1px solid var(--rule);
+  background: var(--paper-raised);
+  margin-bottom: 22px;
+}
+.archive-table{
+  width: 100%;
+  min-width: 720px;
+  border-collapse: collapse;
+  font-size: 0.94rem;
+}
+.archive-table caption{
+  text-align: left;
+  padding: 14px 16px;
+  color: var(--ink-soft);
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  border-bottom: 1px solid var(--rule);
+}
+.archive-table th,
+.archive-table td{
+  padding: 13px 16px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  text-align: left;
+}
+.archive-table th{
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--ink-soft);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background: rgba(255,255,255,0.03);
+}
+.archive-table td:not(:first-child){
+  font-family: var(--font-mono);
+  font-size: 0.86rem;
+}
+.archive-table tbody tr:last-child td{ border-bottom: 0; }
+.archive-table .correct-row td:first-child{ border-left: 4px solid #4fa968; }
+.archive-table .incorrect-row td:first-child{ border-left: 4px solid var(--rep); }
+.archive-note p{
+  font-family: var(--font-display);
+  font-size: 1.14rem;
+  font-weight: 500;
+  margin: 0;
+}
+
 /* ---------- Race board (table) ---------- */
 .race-tabs{
   display: flex;
@@ -630,6 +835,22 @@ footer{
     height: 29px;
     font-size: 0.68rem;
   }
+  .archive-split,
+  .accuracy-workbench{
+    grid-template-columns: 1fr;
+  }
+  .archive-kpis{ grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
+  .accuracy-panel{
+    position: static;
+  }
+  .accuracy-map{
+    min-height: 390px;
+  }
+  .accuracy-state{
+    width: clamp(30px, 7vw, 44px);
+    height: clamp(27px, 5.6vw, 36px);
+    font-size: 0.66rem;
+  }
 }
 
 @media (max-width: 560px){
@@ -641,4 +862,15 @@ footer{
   .map-header span{ display: block; }
   .map-canvas{ min-height: 280px; }
   .tally-chamber{ padding: 18px; }
+  .archive-stamp{ margin-top: 12px; }
+  .accuracy-map-shell{ padding: 10px; overflow-x: auto; }
+  .accuracy-map{
+    min-width: 660px;
+    min-height: 360px;
+  }
+  .accuracy-state{
+    width: 36px;
+    height: 29px;
+  }
+  .panel-metrics{ grid-template-columns: 1fr; }
 }
