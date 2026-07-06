@@ -354,21 +354,30 @@ function stateAbbrFromName(name){
 }
 
 function renderSenateAccuracyMap(){
+ function renderSenateAccuracyMap(){
   const map = document.getElementById("senate-accuracy-map");
   if (!map) return;
 
-  const positions = senateMapPositions();
+  const positions = {
+    WI:{x:6,y:2}, NE:{x:4,y:4}, MD:{x:10,y:6}, OH:{x:8,y:3},
+    MT:{x:3,y:1}, AZ:{x:2,y:5}, NV:{x:2,y:3}, PA:{x:9,y:3},
+    TX:{x:4,y:7}, MI:{x:7,y:2}, FL:{x:9,y:8}
+  };
+
+  const lookup = {
+    Wisconsin:"WI", Nebraska:"NE", Maryland:"MD", Ohio:"OH", Montana:"MT",
+    Arizona:"AZ", Nevada:"NV", Pennsylvania:"PA", Texas:"TX", Michigan:"MI", Florida:"FL"
+  };
 
   map.innerHTML = SENATE_ARCHIVE_2024.map(race => {
-    const abbr = stateAbbrFromName(race.state);
-    const pos = positions[abbr] || {x:5,y:5};
+    const abbr = lookup[race.state];
+    const pos = positions[abbr];
     const correct = race.predicted === race.actual;
 
     return `
       <button class="accuracy-state ${correct ? "correct" : "incorrect"}"
         style="--x:${pos.x}; --y:${pos.y};"
-        data-state="${race.state}"
-        aria-label="${race.state} Senate, ${correct ? "correct" : "incorrect"} prediction">
+        data-state="${race.state}">
         <span>${abbr}</span>
       </button>
     `;
@@ -379,6 +388,19 @@ function renderSenateAccuracyMap(){
     if (!button) return;
 
     const selected = SENATE_ARCHIVE_2024.find(r => r.state === button.dataset.state);
+    renderSenatePanel(selected);
+
+    map.querySelectorAll(".accuracy-state").forEach(el => {
+      el.classList.toggle("active", el === button);
+    });
+  });
+
+  const defaultRace = SENATE_ARCHIVE_2024.find(r => r.state === "Pennsylvania") || SENATE_ARCHIVE_2024[0];
+  renderSenatePanel(defaultRace);
+
+  const defaultButton = map.querySelector(`[data-state="${defaultRace.state}"]`);
+  if (defaultButton) defaultButton.classList.add("active");
+}
     renderSenatePanel(selected);
 
     map.querySelectorAll(".accuracy-state").forEach(el => {
