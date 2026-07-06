@@ -40,16 +40,21 @@
     </div>
 
     <div class="archive-split">
-      <article class="forecast-map archive-image-card">
-        <div class="map-header">
-          <span>Uploaded final prediction file</span>
-          <span>2024 archive source</span>
-        </div>
-        <figure class="prediction-artifact">
-          <img src="assets/2024-election-prediction.jpg" alt="Uploaded 2024 election prediction preview">
-          <figcaption>The uploaded Numbers file is preserved here through its embedded preview image.</figcaption>
-        </figure>
-      </article>
+  <article class="forecast-map archive-image-card">
+  <div class="map-header">
+    <span>Final presidential forecast</span>
+    <span>Before election day</span>
+  </div>
+
+  <div class="accuracy-map-shell">
+    <div class="accuracy-map forecast-archive-map" id="forecast-archive-map" aria-label="Final 2024 presidential forecast map"></div>
+  </div>
+
+  <p class="hero-footnote">
+    Final forecast map. Blue states were predicted Democratic, red states were predicted Republican.
+    The audit map below compares this forecast with the actual result.
+  </p>
+</article>
 
       <div class="stat-grid archive-kpis" id="presidential-kpis"></div>
     </div>
@@ -243,7 +248,18 @@
       <div class="stat-card"><span class="stat-number">${stats.competitive.filter(s => s.predicted === s.actual).length}/${stats.competitive.length}</span><span class="stat-label">Competitive State Accuracy</span></div>
     `;
   }
+function renderForecastArchiveMap(){
+  const map = document.getElementById("forecast-archive-map");
+  if (!map) return;
 
+  map.innerHTML = PRESIDENTIAL_ARCHIVE_2024.map(s => `
+    <button class="accuracy-state ${s.predicted === "D" ? "forecast-dem" : "forecast-rep"}"
+      style="--x:${s.x}; --y:${s.y};"
+      aria-label="${s.state}, predicted ${s.predicted}">
+      <span>${s.abbr}</span>
+    </button>
+  `).join("");
+}
   function renderAccuracyMap(){
     const map = document.getElementById("accuracy-map");
     map.innerHTML = PRESIDENTIAL_ARCHIVE_2024.map(s => `
@@ -335,10 +351,11 @@
   }
 
   document.addEventListener("DOMContentLoaded", () => {
-    renderKpis();
-    renderAccuracyMap();
-    renderDashboard();
-    renderSenateArchive();
+   renderKpis();
+renderForecastArchiveMap();
+renderAccuracyMap();
+renderPerformanceDashboard();
+renderSenateArchive();
   });
 </script>
 </body>
