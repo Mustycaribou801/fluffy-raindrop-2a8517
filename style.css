@@ -874,3 +874,16 @@ footer{
   }
   .panel-metrics{ grid-template-columns: 1fr; }
 }
+/* ---------- Forecast Archive Map ---------- */
+
+.forecast-archive-map .forecast-dem {
+  background: var(--dem);
+}
+
+.forecast-archive-map .forecast-rep {
+  background: var(--rep);
+}
+
+.forecast-archive-map .accuracy-state {
+  cursor: default;
+}
