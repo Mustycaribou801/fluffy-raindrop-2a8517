@@ -102,6 +102,18 @@
     </div>
 
     <div class="stat-grid dashboard-grid senate-dashboard" id="senate-performance-dashboard"></div>
+    <div class="accuracy-workbench senate-accuracy-workbench">
+  <div class="accuracy-map-shell">
+    <div class="accuracy-map senate-accuracy-map" id="senate-accuracy-map" aria-label="2024 Senate prediction accuracy by state"></div>
+  </div>
+
+  <aside class="accuracy-panel" id="senate-accuracy-panel" aria-live="polite">
+    <p class="section-label">Selected Senate race</p>
+    <h3 id="senate-panel-state">Pennsylvania</h3>
+    <dl class="panel-metrics" id="senate-panel-metrics"></dl>
+    <p id="senate-panel-explanation"></p>
+  </aside>
+</div>
 
     <div class="archive-table-wrap">
       <table class="archive-table">
@@ -325,7 +337,80 @@ function renderForecastArchiveMap(){
       closest
     };
   }
+function senateMapPositions(){
+  return {
+    WI:{x:6,y:2}, NE:{x:4,y:4}, MD:{x:10,y:6}, OH:{x:8,y:3},
+    MT:{x:3,y:1}, AZ:{x:2,y:5}, NV:{x:2,y:3}, PA:{x:9,y:3},
+    TX:{x:4,y:7}, MI:{x:7,y:2}, FL:{x:9,y:8}
+  };
+}
 
+function stateAbbrFromName(name){
+  const lookup = {
+    Wisconsin:"WI", Nebraska:"NE", Maryland:"MD", Ohio:"OH", Montana:"MT",
+    Arizona:"AZ", Nevada:"NV", Pennsylvania:"PA", Texas:"TX", Michigan:"MI", Florida:"FL"
+  };
+  return lookup[name] || name.slice(0,2).toUpperCase();
+}
+
+function renderSenateAccuracyMap(){
+  const map = document.getElementById("senate-accuracy-map");
+  if (!map) return;
+
+  const positions = senateMapPositions();
+
+  map.innerHTML = SENATE_ARCHIVE_2024.map(race => {
+    const abbr = stateAbbrFromName(race.state);
+    const pos = positions[abbr] || {x:5,y:5};
+    const correct = race.predicted === race.actual;
+
+    return `
+      <button class="accuracy-state ${correct ? "correct" : "incorrect"}"
+        style="--x:${pos.x}; --y:${pos.y};"
+        data-state="${race.state}"
+        aria-label="${race.state} Senate, ${correct ? "correct" : "incorrect"} prediction">
+        <span>${abbr}</span>
+      </button>
+    `;
+  }).join("");
+
+  map.addEventListener("click", event => {
+    const button = event.target.closest(".accuracy-state");
+    if (!button) return;
+
+    const selected = SENATE_ARCHIVE_2024.find(r => r.state === button.dataset.state);
+    renderSenatePanel(selected);
+
+    map.querySelectorAll(".accuracy-state").forEach(el => {
+      el.classList.toggle("active", el === button);
+    });
+  });
+
+  const defaultRace = SENATE_ARCHIVE_2024.find(r => r.state === "Pennsylvania") || SENATE_ARCHIVE_2024[0];
+  renderSenatePanel(defaultRace);
+
+  const defaultButton = map.querySelector(`[data-state="${defaultRace.state}"]`);
+  if (defaultButton) defaultButton.classList.add("active");
+}
+
+function renderSenatePanel(race){
+  if (!race) return;
+
+  const correct = race.predicted === race.actual;
+
+  document.getElementById("senate-panel-state").textContent = `${race.state} Senate`;
+
+  document.getElementById("senate-panel-metrics").innerHTML = `
+    <dt>My predicted margin</dt><dd>${signedParty(race.predicted, race.predictedMargin)}</dd>
+    <dt>Actual margin</dt><dd>${signedParty(race.actual, race.actualMargin)}</dd>
+    <dt>Margin error</dt><dd>${marginError(race).toFixed(1)} pts</dd>
+    <dt>Winner call</dt><dd>${correct ? "Correct" : "Incorrect"}</dd>
+  `;
+
+  document.getElementById("senate-panel-explanation").textContent = correct
+    ? `The Senate call in ${race.state} was correct, with the final forecast identifying the winning party.`
+    : `This was the Senate miss. The forecast underestimated the Republican result relative to the final prediction.`;
+}
   function renderSenateArchive(){
     const stats = senateStats();
     document.getElementById("senate-performance-dashboard").innerHTML = `
@@ -355,6 +440,7 @@ function renderForecastArchiveMap(){
 renderForecastArchiveMap();
 renderAccuracyMap();
 renderPerformanceDashboard();
+renderSenateAccuracyMap();
 renderSenateArchive();
   });
 </script>
