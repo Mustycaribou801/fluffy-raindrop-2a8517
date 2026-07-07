@@ -149,17 +149,24 @@ const TRACK_RECORD_2024 = {
 ------------------------------------------------------------ */
 const METHODOLOGY = {
   summary:
-    "Replace this with a plain-language description of how your model actually works: what inputs it uses, how it weights them, and what it deliberately ignores.", // TODO
+    "Mustycaribou Forecasts uses a hybrid forecasting methodology that combines polling, electoral history, demographic trends and informed political judgement. Rather than relying on a purely statistical model, every rating reflects the balance of evidence available at the time it is published. Forecasts are intended to communicate probabilities, not certainties, and are updated whenever the evidence materially changes.",
+
   inputs: [
-    "Polling averages (list your sources)", // TODO
-    "Historical partisan lean / prior election baselines",
-    "Fundamentals (fundraising, incumbency, redistricting)",
-    "Your own judgment calls, stated explicitly where you override the model",
+    "Polling averages, with greater weight given to high-quality and recent surveys.",
+    "Historical voting patterns and long-term partisan trends.",
+    "Candidate quality, incumbency, fundraising and campaign environment.",
+    "Demographic change, migration patterns and regional political realignment.",
+    "National political environment and issue salience.",
+    "Qualitative judgement where evidence suggests the baseline model should be adjusted."
   ],
+
   limitations: [
-    "State clearly what the model does NOT account for",
-    "Be specific about sample size and how it affects confidence",
+    "Forecasts cannot anticipate unforeseen events such as scandals, major news developments or late campaign shocks.",
+    "Individual polls are treated cautiously and are never followed in isolation.",
+    "Margins become less reliable in races with sparse or low-quality polling.",
+    "Every forecast represents a judgement based on information available at the time and should not be interpreted as a guarantee of the final result."
   ],
+};
 };
 const accuracyMap = [
   {
