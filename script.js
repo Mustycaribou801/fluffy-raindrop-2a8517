@@ -103,6 +103,31 @@ function renderRaceBoard(tbodyId, races, keyLabel){
       <td>${r.note || ""}</td>
     </tr>
   `).join("");
+}function renderGovernorMap(containerId, races){
+  const container = document.getElementById(containerId);
+  if (!container) return;
+
+  const positions = {
+    AK:[9,78], AL:[60,63], AR:[52,58], CO:[36,48], DE:[79,45], FL:[68,76], GA:[64,63],
+    IA:[52,39], ID:[24,31], IL:[58,43], KS:[45,50], KY:[62,49], LA:[54,69], MA:[86,31],
+    ME:[88,18], MI:[63,33], MN:[50,25], MS:[58,64], MT:[32,23], NC:[73,56], ND:[43,23],
+    NE:[45,41], NH:[85,25], NJ:[80,42], NM:[34,59], NV:[22,45], OH:[68,41], OK:[47,58],
+    OR:[13,35], PA:[74,39], RI:[86,34], SC:[70,61], SD:[43,32], TN:[61,55], TX:[44,71],
+    VA:[75,51], VT:[82,24], WA:[16,23], WI:[57,30], WV:[70,47], WY:[33,36]
+  };
+
+  container.innerHTML = races.map(race => {
+    const [x, y] = positions[race.abbr] || [50,50];
+
+    return `
+      <a class="senate-state ${ratingTone(race.rating)}"
+         style="--x:${x}; --y:${y};"
+         href="governor-race.html?state=${encodeURIComponent(race.abbr)}"
+         aria-label="${race.state} Governor race, ${RATING_LABELS[race.rating]}">
+        <span>${race.abbr}</span>
+      </a>
+    `;
+  }).join("");
 }
 
 function ratingTone(rating){
