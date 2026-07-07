@@ -149,16 +149,22 @@ const TRACK_RECORD_2024 = {
 ------------------------------------------------------------ */
 const METHODOLOGY = {
   summary:
-    "Replace this with a plain-language description of how your model actually works: what inputs it uses, how it weights them, and what it deliberately ignores.", // TODO
+    "Mustycaribou Forecasts combines polling, electoral history, demographic trends and informed political judgement to produce independent election forecasts. Ratings are based on the balance of available evidence and are updated as that evidence changes.",
+
   inputs: [
-    "Polling averages (list your sources)", // TODO
-    "Historical partisan lean / prior election baselines",
-    "Fundamentals (fundraising, incumbency, redistricting)",
-    "Your own judgment calls, stated explicitly where you override the model",
+    "Polling averages and recent public surveys.",
+    "Historical voting patterns and partisan lean relative to national lean.",
+    "Candidate quality, incumbency and campaign environment.",
+    "Demographic trends and regional political change.",
+    "National political environment.",
+    "Forecaster judgement where the evidence requires context."
   ],
+
   limitations: [
-    "State clearly what the model does NOT account for",
-    "Be specific about sample size and how it affects confidence",
+    "Forecasts cannot anticipate every late-breaking event.",
+    "Individual polls are not followed in isolation.",
+    "Margins are less reliable where polling is sparse.",
+    "Ratings are based on information available at the time and can change as evidence changes."
   ],
 };
 const accuracyMap = [
