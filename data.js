@@ -67,7 +67,7 @@ const SENATE = {
   currentHoldoverR: 31, // Rs not up this cycle
   races: [
     { state: "Alabama", abbr: "AL", incumbent: "R", incumbentName: "Tommy Tuberville", heldBy: "Republican", rating: "SR", note: "Republican-favored state", candidateStatus: "Incumbent running; Democratic field remains a long-shot contest.", polling: "No reliable general-election polling found in the public tracker.", previousResults: "2020 Senate: Tuberville 60.1%, Jones 39.7%. 2024 President: Trump carried Alabama by a wide margin.", demographicTrends: "Heavily Republican electorate with Democratic strength concentrated around Birmingham, Montgomery, and Black Belt counties.", analysis: "Alabama begins as a Safe Republican race unless the national environment becomes extraordinary or the Republican nominee changes.", ratingHistory: [{ date: "2026-07-06", rating: "SR", note: "Initial Senate board rating" }], lastUpdated: "2026-07-06", sources: ["U.S. Senate Class II roster", "Ballotpedia 2026 Senate elections", "270toWin 2026 Senate polling"] },
-    { state: "Alaska", abbr: "AK", incumbent: "R", incumbentName: "Dan Sullivan", heldBy: "Republican", rating: "LR", note: "Democrat nominee Mary Petola won the Alaskas AL housedistrict in the last midterms, in what will be a much redder year. This makes the race particuarly intresting, candidateStatus: "Incumbent Dan Sullivan is running; former Rep. Mary Peltola has entered the Senate race.", polling: "No consistent public general-election polling available yet.", previousResults: "2020 Senate: Sullivan 53.9%, Gross 41.2%. 2024 President: Trump carried Alaska.", demographicTrends: "Republicans retain a baseline edge, but ranked-choice voting and Peltola's rural/Native support keep the ceiling for Democrats higher than in many red states.", analysis: "Sullivan is favored, but Alaska is not treated as a routine safe hold because the Democratic nominee is unusually proven statewide.", ratingHistory: [{ date: "2026-07-06", rating: "LR", note: "Moved onto expanded watch list" }], lastUpdated: "2026-07-06", sources: ["Ballotpedia 2026 Senate elections", "270toWin Cook Political Report ratings", "270toWin 2026 Senate polling"] },
+    { state: "Alaska", abbr: "AK", incumbent: "R", incumbentName: "Dan Sullivan", heldBy: "Republican", rating: "LR", note: "Peltola candidacy makes race watchable", candidateStatus: "Incumbent Dan Sullivan is running; former Rep. Mary Peltola has entered the Senate race.", polling: "No consistent public general-election polling available yet.", previousResults: "2020 Senate: Sullivan 53.9%, Gross 41.2%. 2024 President: Trump carried Alaska.", demographicTrends: "Republicans retain a baseline edge, but ranked-choice voting and Peltola's rural/Native support keep the ceiling for Democrats higher than in many red states.", analysis: "Sullivan is favored, but Alaska is not treated as a routine safe hold because the Democratic nominee is unusually proven statewide.", ratingHistory: [{ date: "2026-07-06", rating: "LR", note: "Moved onto expanded watch list" }], lastUpdated: "2026-07-06", sources: ["Ballotpedia 2026 Senate elections", "270toWin Cook Political Report ratings", "270toWin 2026 Senate polling"] },
     { state: "Arkansas", abbr: "AR", incumbent: "R", incumbentName: "Tom Cotton", heldBy: "Republican", rating: "SR", note: "Deep red baseline", candidateStatus: "Incumbent running; Democratic path is currently minimal.", polling: "No public polling indicates a competitive general election.", previousResults: "2020 Senate: Cotton won without major-party Democratic opposition. 2024 President: Trump carried Arkansas by a wide margin.", demographicTrends: "Republican margins remain dominant outside a few urban and Delta counties.", analysis: "Arkansas is Safe Republican on fundamentals and candidate quality.", ratingHistory: [{ date: "2026-07-06", rating: "SR", note: "Initial Senate board rating" }], lastUpdated: "2026-07-06", sources: ["U.S. Senate Class II roster", "Ballotpedia 2026 Senate elections"] },
     { state: "Colorado", abbr: "CO", incumbent: "D", incumbentName: "John Hickenlooper", heldBy: "Democratic", rating: "SD", note: "Blue-state incumbent", candidateStatus: "Incumbent running; Republican field has not changed the race's baseline.", polling: "No public polling shows serious danger for the incumbent.", previousResults: "2020 Senate: Hickenlooper 53.5%, Gardner 44.2%. 2024 President: Harris carried Colorado.", demographicTrends: "Denver suburbs and college-educated Front Range voters continue to push the state left of the nation.", analysis: "Colorado remains Safe Democratic unless the national environment sharply turns against Democrats.", ratingHistory: [{ date: "2026-07-06", rating: "SD", note: "Initial Senate board rating" }], lastUpdated: "2026-07-06", sources: ["U.S. Senate Class II roster", "Ballotpedia 2026 Senate elections"] },
     { state: "Delaware", abbr: "DE", incumbent: "D", incumbentName: "Chris Coons", heldBy: "Democratic", rating: "SD", note: "Strong Democratic state", candidateStatus: "Incumbent running; no major upset signal.", polling: "No competitive general-election polling found.", previousResults: "2020 Senate: Coons 59.4%, Witzke 37.9%. 2024 President: Harris carried Delaware.", demographicTrends: "Democratic strength in New Castle County anchors the statewide vote.", analysis: "Delaware is a Safe Democratic hold.", ratingHistory: [{ date: "2026-07-06", rating: "SD", note: "Initial Senate board rating" }], lastUpdated: "2026-07-06", sources: ["U.S. Senate Class II roster", "Ballotpedia 2026 Senate elections"] },
@@ -149,24 +149,17 @@ const TRACK_RECORD_2024 = {
 ------------------------------------------------------------ */
 const METHODOLOGY = {
   summary:
-    "Mustycaribou Forecasts uses a hybrid forecasting methodology that combines polling, electoral history, demographic trends and informed political judgement. Rather than relying on a purely statistical model, every rating reflects the balance of evidence available at the time it is published. Forecasts are intended to communicate probabilities, not certainties, and are updated whenever the evidence materially changes.",
-
+    "Replace this with a plain-language description of how your model actually works: what inputs it uses, how it weights them, and what it deliberately ignores.", // TODO
   inputs: [
-    "Polling averages, with greater weight given to high-quality and recent surveys.",
-    "Historical voting patterns and long-term partisan trends.",
-    "Candidate quality, incumbency, fundraising and campaign environment.",
-    "Demographic change, migration patterns and regional political realignment.",
-    "National political environment and issue salience.",
-    "Qualitative judgement where evidence suggests the baseline model should be adjusted."
+    "Polling averages (list your sources)", // TODO
+    "Historical partisan lean / prior election baselines",
+    "Fundamentals (fundraising, incumbency, redistricting)",
+    "Your own judgment calls, stated explicitly where you override the model",
   ],
-
   limitations: [
-    "Forecasts cannot anticipate unforeseen events such as scandals, major news developments or late campaign shocks.",
-    "Individual polls are treated cautiously and are never followed in isolation.",
-    "Margins become less reliable in races with sparse or low-quality polling.",
-    "Every forecast represents a judgement based on information available at the time and should not be interpreted as a guarantee of the final result."
+    "State clearly what the model does NOT account for",
+    "Be specific about sample size and how it affects confidence",
   ],
-};
 };
 const accuracyMap = [
   {
