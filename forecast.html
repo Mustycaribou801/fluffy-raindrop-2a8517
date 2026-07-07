@@ -67,6 +67,34 @@
       <span><span class="rating-chip SR">Safe R</span></span>
     </div>
   </section>
+<section class="wrap">
+  <p class="section-label">2026 Midterms</p>
+  <h2>Governor forecast</h2>
+  <p>This board tracks the 2026 gubernatorial races. The map highlights states with governor elections in 2026; select a state for the race page and source notes.</p>
+
+  <div class="forecast-map senate-forecast-map" aria-label="2026 Governor forecast map">
+    <div class="map-header">
+      <span>U.S. Governor races</span>
+      <span>36 races</span>
+    </div>
+    <div class="map-canvas senate-map-canvas" id="governor-map"></div>
+    <div class="map-legend">
+      <span><i class="legend-dem"></i> Democratic edge</span>
+      <span><i class="legend-toss"></i> Toss-up</span>
+      <span><i class="legend-rep"></i> Republican edge</span>
+    </div>
+  </div>
+
+  <div class="senate-board-shell">
+    <table class="race-board">
+      <caption>All 2026 governor races, sorted Safe D to Safe R</caption>
+      <thead>
+        <tr><th>State</th><th>Held by</th><th>Rating</th><th>Race note</th></tr>
+      </thead>
+      <tbody id="governor-race-tbody"></tbody>
+    </table>
+  </div>
+</section>
 </main>
 
 <footer class="wrap">
@@ -79,6 +107,8 @@
   document.addEventListener("DOMContentLoaded", () => {
     renderSenateMap("senate-map", SENATE.races);
     renderRaceBoard("senate-race-tbody", SENATE.races);
+    renderSenateMap("governor-map", GOVERNORS.races);
+renderRaceBoard("governor-race-tbody", GOVERNORS.races);
   });
 </script>
 </body>
