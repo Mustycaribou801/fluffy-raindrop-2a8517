@@ -27,30 +27,31 @@ const SITE_META = {
    "safeSeatsD" / "safeSeatsR" below as an aggregate so you're
    not hand-entering 380 uncontested seats.
 ------------------------------------------------------------ */
-const HOUSE = {
-  majority: 218,
-  totalSeats: 435,
-  // seats not individually tracked — lump sum by party
-  safeSeatsD: 180, // SAMPLE
-  safeSeatsR: 178, // SAMPLE
+const GOVERNORS = {
+  majority: 19,
+  totalSeats: 36,
+
+  // Governors that are not individually rated
+  safeSeatsD: 16,
+  safeSeatsR: 15,
+
   races: [
-    // SAMPLE ROWS — replace with your actual competitive board
-    { district: "AZ-01", incumbent: "R", rating: "TU", note: "Open seat, redistricted 2025" },
-    { district: "CA-13", incumbent: "D", rating: "LD", note: "" },
-    { district: "CO-08", incumbent: "D", rating: "TD", note: "" },
-    { district: "IA-01", incumbent: "R", rating: "TU", note: "" },
-    { district: "ME-02", incumbent: "D", rating: "TR", note: "Trump won district in 2024" },
-    { district: "MI-07", incumbent: "R", rating: "TU", note: "" },
-    { district: "NC-01", incumbent: "D", rating: "LD", note: "New map" },
-    { district: "NE-02", incumbent: "R", rating: "TD", note: "" },
-    { district: "NJ-07", incumbent: "R", rating: "TR", note: "" },
-    { district: "NY-04", incumbent: "D", rating: "LD", note: "" },
-    { district: "NY-19", incumbent: "D", rating: "TD", note: "" },
-    { district: "OH-09", incumbent: "D", rating: "TR", note: "Retirement" },
-    { district: "PA-08", incumbent: "R", rating: "TU", note: "" },
-    { district: "TX-28", incumbent: "D", rating: "LR", note: "" },
-    { district: "VA-02", incumbent: "R", rating: "TU", note: "" },
-    { district: "WI-03", incumbent: "R", rating: "TD", note: "" },
+    { state: "Arizona", incumbent: "D", rating: "TU", note: "" },
+    { state: "Alaska", incumbent: "R", rating: "TR", note: "" },
+    { state: "Florida", incumbent: "R", rating: "SR", note: "" },
+    { state: "Georgia", incumbent: "R", rating: "TU", note: "" },
+    { state: "Iowa", incumbent: "R", rating: "LR", note: "" },
+    { state: "Kansas", incumbent: "D", rating: "TD", note: "" },
+    { state: "Maine", incumbent: "D", rating: "LD", note: "" },
+    { state: "Michigan", incumbent: "D", rating: "TD", note: "" },
+    { state: "Minnesota", incumbent: "D", rating: "LD", note: "" },
+    { state: "Nevada", incumbent: "R", rating: "TU", note: "" },
+    { state: "New Hampshire", incumbent: "R", rating: "LD", note: "" },
+    { state: "New Mexico", incumbent: "D", rating: "LD", note: "" },
+    { state: "Ohio", incumbent: "R", rating: "LR", note: "" },
+    { state: "Pennsylvania", incumbent: "D", rating: "TU", note: "" },
+    { state: "Texas", incumbent: "R", rating: "SR", note: "" },
+    { state: "Wisconsin", incumbent: "D", rating: "TU", note: "" },
   ],
 };
 
