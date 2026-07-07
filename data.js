@@ -27,6 +27,19 @@ const SITE_META = {
    "safeSeatsD" / "safeSeatsR" below as an aggregate so you're
    not hand-entering 380 uncontested seats.
 ------------------------------------------------------------ */
+const GOVERNORS = {
+  safeSeatsD: 22,
+  safeSeatsR: 28,
+  majority: 26,
+  races: []
+};
+
+const SENATE = {
+  currentHoldoverD: 46,
+  currentHoldoverR: 52,
+  majority: 51,
+  races: [
+    ...
 const HOUSE = {
   majority: 218,
   totalSeats: 435,
@@ -132,10 +145,10 @@ const TRACK_RECORD_2024 = {
   competitiveBreakdown: {
     definition:
       "Races rated Toss-up or Lean (either party) in the final week before election day.", // SAMPLE definition — adjust to match your own methodology
-    presidentialTossUpsCorrect: 0, // TODO — fill in
-    presidentialTossUpsTotal: 0, // TODO — fill in
-    senateTossUpsCorrect: 0, // TODO — fill in
-    senateTossUpsTotal: 0, // TODO — fill in
+    presidentialTossUpsCorrect: 9, // TODO — fill in
+    presidentialTossUpsTotal: 11, // TODO — fill in
+    senateTossUpsCorrect: 9, // TODO — fill in
+    senateTossUpsTotal: 10, // TODO — fill in
   },
   misses: [
     // List every race you called wrong, plainly. Credibility comes
