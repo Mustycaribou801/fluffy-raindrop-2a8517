@@ -139,14 +139,14 @@
     document.getElementById("site-cycle-label").textContent = SITE_META.cycle;
     document.getElementById("map-cycle-label").textContent = SITE_META.cycle;
 
-    renderTally({
-      elPrefix: "house",
-      safeD: HOUSE.safeSeatsD,
-      safeR: HOUSE.safeSeatsR,
-      races: HOUSE.races,
-      majority: HOUSE.majority,
-      digits: 3,
-    });
+  renderTally({
+  elPrefix: "governor",
+  safeD: GOVERNORS.safeSeatsD,
+  safeR: GOVERNORS.safeSeatsR,
+  races: GOVERNORS.races,
+  majority: GOVERNORS.majority,
+  digits: 2,
+});
     renderTally({
       elPrefix: "senate",
       safeD: SENATE.currentHoldoverD,
