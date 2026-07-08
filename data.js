@@ -49,7 +49,7 @@ const GOVERNORS = {
     { state: "New Hampshire", incumbent: "R", rating: "LD", note: "" },
     { state: "New Mexico", incumbent: "D", rating: "LD", note: "" },
     { state: "Ohio", incumbent: "R", rating: "LR", note: "" },
-    { state: "Pennsylvania", incumbent: "D", rating: "TU", note: "" },
+    { state: "Pennsylvania", incumbent: "D", rating: "SD", note: "" },
     { state: "Texas", incumbent: "R", rating: "SR", note: "" },
     { state: "Wisconsin", incumbent: "D", rating: "TU", note: "" },
   ],
