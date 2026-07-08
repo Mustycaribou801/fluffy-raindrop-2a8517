@@ -46,7 +46,7 @@ const GOVERNORS = {
     { state: "Michigan", incumbent: "D", rating: "TD", note: "" },
     { state: "Minnesota", incumbent: "D", rating: "LD", note: "" },
     { state: "Nevada", incumbent: "R", rating: "TU", note: "" },
-    { state: "New Hampshire", incumbent: "R", rating: "LD", note: "" },
+    { state: "New Hampshire", incumbent: "R", rating: "LR", note: "" },
     { state: "New Mexico", incumbent: "D", rating: "LD", note: "" },
     { state: "Ohio", incumbent: "R", rating: "LR", note: "" },
     { state: "Pennsylvania", incumbent: "D", rating: "SD", note: "" },
@@ -133,10 +133,10 @@ const TRACK_RECORD_2024 = {
   competitiveBreakdown: {
     definition:
       "Races rated Toss-up or Lean (either party) in the final week before election day.", // SAMPLE definition — adjust to match your own methodology
-    presidentialTossUpsCorrect: 0, // TODO — fill in
-    presidentialTossUpsTotal: 0, // TODO — fill in
-    senateTossUpsCorrect: 0, // TODO — fill in
-    senateTossUpsTotal: 0, // TODO — fill in
+    presidentialTossUpsCorrect: 9, // TODO — fill in
+    presidentialTossUpsTotal: 11, // TODO — fill in
+    senateTossUpsCorrect: 10, // TODO — fill in
+    senateTossUpsTotal: 11, // TODO — fill in
   },
   misses: [
     // List every race you called wrong, plainly. Credibility comes
