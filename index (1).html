@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mustycaribou Forecasts — Professional Election Forecasting</title>
+<meta name="description" content="Professional election forecasts, seat projections, and transparent race ratings from Mustycaribou Forecasts.">
+<link rel="stylesheet" href="style.css">
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-66SC7DBMMG"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-66SC7DBMMG');
+</script>
+</head>
+<body class="home">
+
+<header class="masthead">
+  <div class="masthead-inner">
+    <h1 class="masthead-title"><a href="index.html">Mustycaribou Forecasts</a></h1>
+    <span class="masthead-tag">Professional election intelligence</span>
+  </div>
+  <div class="masthead-meta">
+    <span>By <span class="forecaster-name">Preston</span></span>
+    <span><span id="site-cycle-label"></span> &middot; last updated <span id="last-updated"></span></span>
+  </div>
+</header>
+
+<nav class="primary">
+  <ul>
+    <li><a href="index.html">Home</a></li>
+    <li><a href="forecast.html">2026 Forecast</a></li>
+    <li><a href="track-record.html">Track Record</a></li>
+    <li><a href="methodology.html">Methodology</a></li>
+  </ul>
+</nav>
+
+<main>
+  <section class="home-hero">
+    <div class="wrap home-hero-inner">
+      <div class="home-hero-copy">
+        <p class="section-label">2026 Midterms &middot; Senate &amp; Governor</p>
+        <h2 class="home-hero-title">The 2026 forecast, rated race by race.</h2>
+        <p class="hero-lede">Seat-level ratings for all 35 Senate races and every 2026 governor's race, with the reasoning published before election night and audited after it.</p>
+        <div class="hero-actions">
+          <a class="button-primary" href="forecast.html">View the 2026 forecast board</a>
+          <a class="button-secondary" href="track-record.html">See the 2024 track record</a>
+        </div>
+
+        <ul class="credibility-strip" id="credibility-strip"></ul>
+      </div>
+
+      <div class="forecast-map home-map">
+        <div class="map-header">
+          <span>2026 Senate map</span>
+          <span id="map-cycle-label">2026 Midterms</span>
+        </div>
+        <div class="home-map-scroll">
+          <div class="map-canvas home-map-canvas" id="home-senate-map" aria-label="2026 Senate forecast map"></div>
+        </div>
+        <p class="map-scroll-hint">Swipe the map to see every state &rarr;</p>
+        <div class="map-legend">
+          <span><i class="legend-dem"></i> Democratic edge</span>
+          <span><i class="legend-toss"></i> Toss-up</span>
+          <span><i class="legend-rep"></i> Republican edge</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap control-room">
+    <div class="section-heading home-section-heading">
+      <div>
+        <p class="section-label">Current projection</p>
+        <h2>2026 control board</h2>
+      </div>
+      <a class="section-link" href="forecast.html">Full board, race by race &rarr;</a>
+    </div>
+
+    <div class="control-grid">
+      <div class="tally-chamber">
+        <div class="tally-chamber-label"><span>U.S. Senate</span><span>35 seats up</span></div>
+        <div class="tally-row">
+          <div class="tally-party">
+            <div class="tally-party-label dem">Democrats</div>
+            <div class="flip-group" id="senate-dem-flip"></div>
+          </div>
+          <div class="tally-party">
+            <div class="tally-party-label rep">Republicans</div>
+            <div class="flip-group" id="senate-rep-flip"></div>
+          </div>
+        </div>
+        <div class="tally-bar" id="senate-bar"></div>
+        <div class="tally-majority-line" id="senate-majority-note"></div>
+      </div>
+
+      <div class="tally-chamber">
+        <div class="tally-chamber-label"><span>U.S. Governors</span><span>36 races</span></div>
+        <div class="tally-row">
+          <div class="tally-party">
+            <div class="tally-party-label dem">Democrats</div>
+            <div class="flip-group" id="governor-dem-flip"></div>
+          </div>
+          <div class="tally-party">
+            <div class="tally-party-label rep">Republicans</div>
+            <div class="flip-group" id="governor-rep-flip"></div>
+          </div>
+        </div>
+        <div class="tally-bar" id="governor-bar"></div>
+        <div class="tally-majority-line" id="governor-majority-note"></div>
+      </div>
+    </div>
+
+    <p class="hero-footnote">Projected seat totals include safe seats not individually rated. See the full board on the <a href="forecast.html">2026 Forecast</a> page.</p>
+  </section>
+
+  <section class="wrap battleground-section">
+    <div class="section-heading home-section-heading">
+      <div>
+        <p class="section-label">Where control is decided</p>
+        <h2>Races on the edge</h2>
+      </div>
+      <a class="section-link" href="forecast.html">All ratings &rarr;</a>
+    </div>
+    <p class="section-intro">Every 2026 race currently rated Toss-up or Lean. These are the contests that move the seat count.</p>
+    <ul class="battleground-grid" id="battleground-grid"></ul>
+  </section>
+
+  <section class="wrap record-section">
+    <div class="section-heading home-section-heading">
+      <div>
+        <p class="section-label">Track record</p>
+        <h2>2024, in full — including the misses</h2>
+      </div>
+      <a class="section-link" href="track-record.html">Race-by-race breakdown &rarr;</a>
+    </div>
+
+    <div class="record-layout">
+      <div class="record-feature">
+        <p class="record-feature-eyebrow">2024 statewide races</p>
+        <span class="record-feature-number">98.2%</span>
+        <span class="record-feature-label">of statewide races called correctly</span>
+        <div class="record-feature-highlight" id="record-senate-highlight"></div>
+        <p class="record-feature-note">Every call is archived with the predicted margin next to the actual result — the misses included.</p>
+      </div>
+
+      <div class="stat-grid record-stats" id="track-record-stats"></div>
+    </div>
+
+    <p class="hero-footnote" id="track-record-definition"></p>
+  </section>
+
+  <section class="wrap method-section">
+    <div class="section-heading home-section-heading">
+      <div>
+        <p class="section-label">How this works</p>
+        <h2>The short version</h2>
+      </div>
+      <a class="section-link" href="methodology.html">Full methodology &rarr;</a>
+    </div>
+    <p class="method-preview" id="methodology-summary-preview"></p>
+  </section>
+</main>
+
+<footer class="wrap">
+  <p>Mustycaribou Forecasts is an independent forecast, not affiliated with any party, campaign, or media outlet. Ratings reflect the forecaster's own judgment and are updated periodically.</p>
+</footer>
+
+<script src="data.js"></script>
+<script src="script.js"></script>
+<script>
+  // Self-reported 2024 accuracy across all statewide races, as published on the
+  // track record page. Update here if the figure is ever restated.
+  const STATEWIDE_ACCURACY_2024 = "98.2%";
+
+  document.addEventListener("DOMContentLoaded", () => {
+    document.getElementById("site-cycle-label").textContent = SITE_META.cycle;
+    document.getElementById("map-cycle-label").textContent = SITE_META.cycle;
+
+    renderSenateMap("home-senate-map", SENATE.races);
+
+    renderTally({
+      elPrefix: "senate",
+      safeD: SENATE.currentHoldoverD,
+      safeR: SENATE.currentHoldoverR,
+      races: SENATE.races,
+      majority: SENATE.majority,
+      digits: 2,
+    });
+
+    renderTally({
+      elPrefix: "governor",
+      safeD: GOVERNORS.safeSeatsD,
+      safeR: GOVERNORS.safeSeatsR,
+      races: GOVERNORS.races,
+      majority: GOVERNORS.majority,
+      digits: 2,
+    });
+
+    const tr = TRACK_RECORD_2024;
+
+    document.getElementById("credibility-strip").innerHTML = `
+      <li>
+        <span class="credibility-number">${STATEWIDE_ACCURACY_2024}</span>
+        <span class="credibility-label">2024 statewide-race accuracy</span>
+      </li>
+      <li>
+        <span class="credibility-number">${tr.headline.senateCorrect}/${tr.headline.senateTotal}</span>
+        <span class="credibility-label">2024 Senate races correct</span>
+      </li>
+      <li>
+        <span class="credibility-number">${tr.headline.presidentialStatesCorrect}/${tr.headline.presidentialStatesTotal}</span>
+        <span class="credibility-label">2024 presidential states correct</span>
+      </li>
+    `;
+
+    // ---- Races on the edge: every Toss-up / Lean rating in the 2026 board ----
+    const edgeOrder = ["TU", "TD", "TR"];
+    const edgeRaces = [
+      ...SENATE.races
+        .filter(r => edgeOrder.includes(r.rating))
+        .map(r => ({ ...r, chamber: "Senate", href: `senate-race.html?state=${encodeURIComponent(r.abbr)}` })),
+      ...GOVERNORS.races
+        .filter(r => edgeOrder.includes(r.rating))
+        .map(r => ({ ...r, chamber: "Governor", href: null })),
+    ].sort((a, b) =>
+      edgeOrder.indexOf(a.rating) - edgeOrder.indexOf(b.rating) ||
+      a.state.localeCompare(b.state)
+    );
+
+    document.getElementById("battleground-grid").innerHTML = edgeRaces.map(race => `
+      <li class="battleground-card">
+        <div class="battleground-top">
+          <span class="battleground-chamber">${race.chamber}</span>
+          <span class="rating-chip ${race.rating}">${RATING_LABELS[race.rating]}</span>
+        </div>
+        <span class="battleground-state">${race.href ? `<a href="${race.href}">${race.state}</a>` : race.state}</span>
+        <span class="battleground-note">${race.note || ""}</span>
+      </li>
+    `).join("");
+
+    document.getElementById("record-senate-highlight").innerHTML = `
+      <strong>${tr.headline.senateCorrect}/${tr.headline.senateTotal}</strong>
+      <span>Senate races called correctly in 2024</span>
+    `;
+
+    document.getElementById("track-record-stats").innerHTML = `
+      <div class="stat-card">
+        <span class="stat-number">${tr.headline.presidentialStatesCorrect}/${tr.headline.presidentialStatesTotal}</span>
+        <span class="stat-label">Presidential states called correctly</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-number">${tr.headline.senateCorrect}/${tr.headline.senateTotal}</span>
+        <span class="stat-label">Senate races called correctly</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-number">${tr.competitiveBreakdown.presidentialTossUpsCorrect}/${tr.competitiveBreakdown.presidentialTossUpsTotal}</span>
+        <span class="stat-label">On presidential toss-ups specifically</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-number">${tr.competitiveBreakdown.senateTossUpsCorrect}/${tr.competitiveBreakdown.senateTossUpsTotal}</span>
+        <span class="stat-label">On Senate toss-ups specifically</span>
+      </div>
+    `;
+
+    document.getElementById("track-record-definition").textContent =
+      `Toss-up and lean races are defined as: ${tr.competitiveBreakdown.definition}`;
+
+    document.getElementById("methodology-summary-preview").textContent = METHODOLOGY.summary;
+  });
+</script>
+</body>
+</html>
