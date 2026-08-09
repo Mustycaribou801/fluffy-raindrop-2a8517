@@ -1,3 +1,5 @@
+headersOrigin = "config"
+redirectsOrigin = "config"
 plugins = []
 headers = []
 redirects = []
@@ -7,8 +9,8 @@ redirects = []
   [functions."*"]
 
 [build]
-publish = "."
-publishOrigin = "default"
+publish = "/opt/build/repo"
+publishOrigin = "config"
 
   [build.environment]
 
