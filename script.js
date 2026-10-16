@@ -89,17 +89,27 @@ function renderTally({ elPrefix, safeD, safeR, races, majority, digits }){
   }
 }
 
+// Positive margins indicate Democrats; negative margins indicate Republicans.
+// Null indicates a prediction has not been published.
+function formatProjectedMargin(margin){
+  if (typeof margin !== "number" || !Number.isFinite(margin)) return "Not yet published";
+  if (margin === 0) return "EVEN";
+  return `${margin > 0 ? "D" : "R"}+${Math.abs(margin).toFixed(1)}`;
+}
+
 // ---------- Race board rendering ----------
 function renderRaceBoard(tbodyId, races, keyLabel){
   const tbody = document.getElementById(tbodyId);
   if (!tbody) return;
   const order = ["SD","LD","TD","TU","TR","LR","SR"];
   const sorted = [...races].sort((a,b) => order.indexOf(a.rating) - order.indexOf(b.rating));
+  const isSenateBoard = tbodyId === "senate-race-tbody";
   tbody.innerHTML = sorted.map(r => `
     <tr>
       <td>${r.abbr ? `<a href="senate-race.html?state=${encodeURIComponent(r.abbr)}">${r.state}</a>` : (r.district || r.state)}</td>
       <td>${(r.incumbent || "").replace("OPEN-", "Open (")}${r.incumbent && r.incumbent.startsWith("OPEN") ? ")" : ""}</td>
       <td><span class="rating-chip ${r.rating}">${RATING_LABELS[r.rating]}</span></td>
+      ${isSenateBoard ? `<td>${formatProjectedMargin(r.margin)}</td>` : ""}
       <td>${r.note || ""}</td>
     </tr>
   `).join("");
@@ -199,6 +209,7 @@ function renderSenateRacePage(){
   setText("race-demographic-trends", race.demographicTrends);
   setText("race-analysis", race.analysis);
   setText("race-last-updated", race.lastUpdated);
+  setText("race-margin", formatProjectedMargin(race.margin));
 
   const rating = document.getElementById("race-rating");
   if (rating) rating.innerHTML = `<span class="rating-chip ${race.rating}">${RATING_LABELS[race.rating]}</span>`;
