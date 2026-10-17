@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Forecast Update Log — Mustycaribou Forecasts</title>
+<link rel="stylesheet" href="style.css">
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-66SC7DBMMG"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-66SC7DBMMG');
+</script>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="masthead-inner">
+    <h1 class="masthead-title"><a href="index.html">Mustycaribou Forecasts</a></h1>
+    <span class="masthead-tag">Professional election intelligence</span>
+  </div>
+  <div class="masthead-meta">
+    <span>By <span class="forecaster-name">Preston</span></span>
+    <span>last updated <span id="last-updated"></span></span>
+  </div>
+</header>
+
+<nav class="primary">
+  <ul>
+    <li><a href="index.html">Home</a></li>
+    <li><a href="forecast.html">2026 Forecast</a></li>
+    <li><a href="updates.html">Updates</a></li>
+    <li><a href="track-record.html">Track Record</a></li>
+    <li><a href="methodology.html">Methodology</a></li>
+  </ul>
+</nav>
+
+<main>
+  <section class="wrap">
+    <p class="section-label">2026 Senate</p>
+    <h2>Forecast update log</h2>
+    <p>Every change to a Senate rating or projected margin, with the date and the reasoning behind it. Changes whose date or explanation hasn't been recorded yet are listed first and marked as not yet logged.</p>
+
+    <div class="board-toolbar">
+      <label class="board-field">
+        <span>Race</span>
+        <select id="log-filter-race"></select>
+      </label>
+      <label class="board-field">
+        <span>Change type</span>
+        <select id="log-filter-type">
+          <option value="">Ratings and margins</option>
+          <option value="rating">Rating changes</option>
+          <option value="margin">Projected margin changes</option>
+        </select>
+      </label>
+      <span class="board-count" id="log-count" aria-live="polite"></span>
+    </div>
+
+    <ol class="update-log" id="update-log"></ol>
+  </section>
+</main>
+
+<footer class="wrap">
+  <p><a href="forecast.html#senate-board">Return to the 2026 Senate forecast board</a>. Ratings reflect the forecaster's own judgment based on the inputs described on the <a href="methodology.html">methodology page</a>.</p>
+</footer>
+
+<script src="data.js"></script>
+<script src="script.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", initUpdateLogPage);
+</script>
+</body>
+</html>

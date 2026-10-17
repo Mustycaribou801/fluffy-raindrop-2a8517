@@ -103,10 +103,6 @@ const SENATE = {
     { state: "West Virginia", abbr: "WV", incumbent: "R", incumbentName: "Shelley Moore Capito", heldBy: "Republican", rating: "SR", margin: null, note: "Safe Republican", candidateStatus: "Incumbent running; federal Democratic brand is extremely weak statewide.", polling: "No competitive public polling found.", previousResults: "2020 Senate: Capito 70.3%, Swearengin 27.0%. 2024 President: Trump carried West Virginia by a very large margin.", demographicTrends: "The state has completed a major shift from Democratic ancestry to Republican dominance in federal races.", analysis: "West Virginia is Safe Republican.", ratingHistory: [{ date: "2026-07-06", rating: "SR", note: "Initial Senate board rating" }], lastUpdated: "2026-07-06", sources: ["U.S. Senate Class II roster", "Ballotpedia 2026 Senate elections"] },
     { state: "Wyoming", abbr: "WY", incumbent: "R", incumbentName: "Cynthia Lummis", heldBy: "Republican", rating: "SR", margin: null, note: "Safe Republican", candidateStatus: "Incumbent running; no competitive general-election path is apparent.", polling: "No competitive public polling found.", previousResults: "2020 Senate: Lummis 73.1%, Ben-David 26.9%. 2024 President: Trump carried Wyoming by one of the largest margins in the country.", demographicTrends: "Small, overwhelmingly Republican federal electorate.", analysis: "Wyoming is Safe Republican.", ratingHistory: [{ date: "2026-07-06", rating: "SR", note: "Initial Senate board rating" }], lastUpdated: "2026-07-06", sources: ["U.S. Senate Class II roster", "Ballotpedia 2026 Senate elections"] },
   ],
-    { state: "Virginia", abbr: "VA", incumbent: "D", incumbentName: "Mark Warner", heldBy: "Democratic", rating: "SD", note: "Democratic-favored", candidateStatus: "Incumbent running; Republicans need a favorable national climate to make it close.", polling: "No consistent public polling average yet.", previousResults: "2020 Senate: Warner 56.0%, Gade 44.0%. 2024 President: Harris carried Virginia.", demographicTrends: "Northern Virginia and Richmond suburbs keep the state Democratic-leaning in federal races.", analysis: "Virginia is Likely Democratic: competitive in theory, but not yet a top-tier pickup target.", ratingHistory: [{ date: "2026-07-06", rating: "LD", note: "Initial Likely D rating" }], lastUpdated: "2026-07-06", sources: ["270toWin Cook Political Report ratings", "Ballotpedia 2026 Senate elections"] },
-    { state: "West Virginia", abbr: "WV", incumbent: "R", incumbentName: "Shelley Moore Capito", heldBy: "Republican", rating: "SR", note: "Safe Republican", candidateStatus: "Incumbent running; federal Democratic brand is extremely weak statewide.", polling: "No competitive public polling found.", previousResults: "2020 Senate: Capito 70.3%, Swearengin 27.0%. 2024 President: Trump carried West Virginia by a very large margin.", demographicTrends: "The state has completed a major shift from Democratic ancestry to Republican dominance in federal races.", analysis: "West Virginia is Safe Republican.", ratingHistory: [{ date: "2026-07-06", rating: "SR", note: "Initial Senate board rating" }], lastUpdated: "2026-07-06", sources: ["U.S. Senate Class II roster", "Ballotpedia 2026 Senate elections"] },
-    { state: "Wyoming", abbr: "WY", incumbent: "R", incumbentName: "Cynthia Lummis", heldBy: "Republican", rating: "SR", note: "Safe Republican", candidateStatus: "Incumbent running; no competitive general-election path is apparent.", polling: "No competitive public polling found.", previousResults: "2020 Senate: Lummis 73.1%, Ben-David 26.9%. 2024 President: Trump carried Wyoming by one of the largest margins in the country.", demographicTrends: "Small, overwhelmingly Republican federal electorate.", analysis: "Wyoming is Safe Republican.", ratingHistory: [{ date: "2026-07-06", rating: "SR", note: "Initial Senate board rating" }], lastUpdated: "2026-07-06", sources: ["U.S. Senate Class II roster", "Ballotpedia 2026 Senate elections"] },
-  ],
 };
 
 const SENATE_SOURCE_LINKS = {
@@ -117,6 +113,25 @@ const SENATE_SOURCE_LINKS = {
   "270toWin 2026 Senate polling": "https://www.270towin.com/content/2026-senate-polling",
   "Cook Political Report race summary": "https://www.cookpolitical.com/senate/race/488686",
 };
+
+/* ------------------------------------------------------------
+   FORECAST UPDATE LOG
+   One entry per change to a Senate rating or projected margin.
+   Rendered on updates.html and on each race page, newest first.
+   Each race's ratingHistory above is also pulled into the log
+   automatically, so you don't need to enter a rating change twice.
+
+   type: "rating" or "margin"
+   from / to: rating codes for "rating" entries; signed numbers
+     for "margin" entries (positive = D, negative = R, null = not
+     yet published).
+
+   Example:
+   { date: "2026-08-01", abbr: "ME", type: "margin", from: null, to: 0.5,
+     explanation: "First published margin after the primary." },
+------------------------------------------------------------ */
+const FORECAST_UPDATES = [
+];
 
 /* ------------------------------------------------------------
    2024 TRACK RECORD

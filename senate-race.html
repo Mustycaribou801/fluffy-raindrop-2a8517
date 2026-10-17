@@ -32,6 +32,7 @@
   <ul>
     <li><a href="index.html">Home</a></li>
     <li><a href="forecast.html">2026 Forecast</a></li>
+    <li><a href="updates.html">Updates</a></li>
     <li><a href="track-record.html">Track Record</a></li>
     <li><a href="methodology.html">Methodology</a></li>
   </ul>
@@ -39,15 +40,29 @@
 
 <main>
   <section class="wrap race-detail-hero">
+    <div class="race-nav-bar">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="forecast.html">2026 Forecast</a>
+        <span aria-hidden="true">/</span>
+        <a id="race-back-link" href="forecast.html#senate-board">Senate table</a>
+        <span aria-hidden="true">/</span>
+        <span id="race-crumb-state" aria-current="page">Race</span>
+      </nav>
+      <label class="board-field race-jump-field">
+        <span>Jump to state</span>
+        <select id="race-jump"></select>
+      </label>
+    </div>
     <p class="section-label">2026 Senate race</p>
     <h2 id="race-state">Senate race</h2>
     <div class="race-detail-summary">
       <div class="stat-card">
-  <span class="stat-label">Projected margin</span>
-  <span class="stat-number race-meta-number" id="race-margin">
-    Not yet published
-  </span>
-</div>
+        <span class="stat-label">Current rating</span>
+        <span class="stat-number race-rating-number" id="race-rating"></span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-label">Projected margin</span>
+        <span class="stat-number race-meta-number" id="race-margin">Not yet published</span>
       </div>
       <div class="stat-card">
         <span class="stat-label">Held by</span>
@@ -99,6 +114,19 @@
       <ul class="method-list" id="race-sources"></ul>
     </article>
   </section>
+
+  <section class="wrap">
+    <div class="section-heading">
+      <div>
+        <p class="section-label">Forecast update log</p>
+        <h3>Changes to this forecast</h3>
+      </div>
+      <a class="section-more" href="updates.html">All Senate updates &rarr;</a>
+    </div>
+    <ol class="update-log" id="race-update-log"></ol>
+  </section>
+
+  <nav class="wrap race-pager" id="race-pager" aria-label="Other Senate races"></nav>
 </main>
 
 <footer class="wrap">

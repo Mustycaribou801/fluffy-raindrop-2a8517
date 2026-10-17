@@ -23,13 +23,22 @@
   <ul>
     <li><a href="index.html">Home</a></li>
     <li><a href="forecast.html">2026 Forecast</a></li>
+    <li><a href="updates.html">Updates</a></li>
     <li><a href="track-record.html">Track Record</a></li>
     <li><a href="methodology.html">Methodology</a></li>
   </ul>
 </nav>
 
 <main>
-  <section class="wrap">
+  <nav class="page-jump wrap" aria-label="On this page">
+    <a href="#senate-forecast">Senate map</a>
+    <a href="#senate-board">Senate table</a>
+    <a href="#control-calculator">Control calculator</a>
+    <a href="#recent-updates">Recent updates</a>
+    <a href="#governor-forecast">Governors</a>
+  </nav>
+
+  <section class="wrap" id="senate-forecast">
     <p class="section-label">2026 Midterms</p>
     <h2>Senate forecast</h2>
     <p>Because 2026 is a midterm cycle, this board tracks Senate control rather than an Electoral College map. The map highlights only states with Senate races in 2026; select a state for the race page and source notes.</p>
@@ -47,9 +56,27 @@
       </div>
     </div>
 
+    <div class="board-toolbar" id="senate-board">
+      <label class="board-field">
+        <span>Find a state</span>
+        <input type="search" id="senate-board-search" placeholder="State or incumbent" autocomplete="off">
+      </label>
+      <label class="board-field">
+        <span>Show</span>
+        <select id="senate-board-rating">
+          <option value="">All ratings</option>
+          <option value="competitive">Lean D, Toss-up and Lean R</option>
+          <option value="D">Democratic-leaning</option>
+          <option value="TU">Toss-ups only</option>
+          <option value="R">Republican-leaning</option>
+        </select>
+      </label>
+      <span class="board-count" id="senate-board-count" aria-live="polite"></span>
+    </div>
+
     <div class="senate-board-shell">
-      <table class="race-board">
-        <caption>All 2026 Senate races, sorted Safe D to Safe R</caption>
+      <table class="race-board senate-board">
+        <caption>All 2026 Senate races, sorted Safe D to Safe R. Select a state to open its race page.</caption>
         <thead>
         <tr>
   <th>State</th>
@@ -73,7 +100,26 @@
       <span><span class="rating-chip SR">Safe R</span></span>
     </div>
   </section>
-<section class="wrap">
+
+  <section class="wrap" id="control-calculator">
+    <p class="section-label">Interactive</p>
+    <h2>Senate control calculator</h2>
+    <p>Assign each Toss-up to a party and see the resulting balance of the chamber. Every other race is counted for the party its current rating leans toward.</p>
+    <div class="calculator" id="senate-calculator"></div>
+  </section>
+
+  <section class="wrap" id="recent-updates">
+    <div class="section-heading">
+      <div>
+        <p class="section-label">Forecast update log</p>
+        <h2>Recent updates</h2>
+      </div>
+      <a class="section-more" href="updates.html">Full update log &rarr;</a>
+    </div>
+    <ol class="update-log" id="recent-update-log"></ol>
+  </section>
+
+<section class="wrap" id="governor-forecast">
   <p class="section-label">2026 Midterms</p>
   <h2>Governor forecast</h2>
   <p>This board tracks the 2026 gubernatorial races. The map highlights states with governor elections in 2026; select a state for the race page and source notes.</p>
@@ -113,6 +159,10 @@
   document.addEventListener("DOMContentLoaded", () => {
     renderSenateMap("senate-map", SENATE.races);
     renderRaceBoard("senate-race-tbody", SENATE.races);
+    initBoardFilter("senate-race-tbody", "senate-board-search", "senate-board-rating", "senate-board-count");
+    highlightBoardRow();
+    renderSenateCalculator("senate-calculator");
+    renderUpdateLog("recent-update-log", { limit: 6 });
     renderGovernorMap("governor-map", GOVERNORS.races);
 renderRaceBoard("governor-race-tbody", GOVERNORS.races);
   });

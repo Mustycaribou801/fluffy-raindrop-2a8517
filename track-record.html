@@ -32,6 +32,7 @@
   <ul>
     <li><a href="index.html">Home</a></li>
     <li><a href="forecast.html">2026 Forecast</a></li>
+    <li><a href="updates.html">Updates</a></li>
     <li><a href="track-record.html">Track Record</a></li>
     <li><a href="methodology.html">Methodology</a></li>
   </ul>
@@ -98,6 +99,38 @@
     <p class="section-label">Forecast performance</p>
     <h2>Dashboard</h2>
     <div class="stat-grid dashboard-grid" id="performance-dashboard"></div>
+  </section>
+
+  <section class="wrap" id="predicted-vs-actual">
+    <div class="section-heading">
+      <div>
+        <p class="section-label">Predicted vs. actual</p>
+        <h2>Margin audit</h2>
+      </div>
+      <div class="race-tabs" role="group" aria-label="Choose race set">
+        <button type="button" class="race-tab active" data-set="pres-competitive" aria-pressed="true">President: competitive</button>
+        <button type="button" class="race-tab" data-set="pres-all" aria-pressed="false">President: all states</button>
+        <button type="button" class="race-tab" data-set="senate" aria-pressed="false">Senate</button>
+      </div>
+    </div>
+    <p class="archive-lede" id="audit-set-note"></p>
+    <div class="stat-grid dashboard-grid" id="audit-summary"></div>
+
+    <div class="audit-layout">
+      <figure class="mchart-card">
+        <figcaption class="mchart-legend">
+          <span><i class="mchart-key predicted"></i> Final forecast margin</span>
+          <span><i class="mchart-key actual"></i> Actual result</span>
+          <span><i class="mchart-key miss"></i> Wrong winner call</span>
+        </figcaption>
+        <div class="mchart" id="margin-chart"></div>
+        <p class="hero-footnote">Sorted from most Democratic to most Republican actual result. Blue marks fall on the Democratic side of even, red on the Republican side. Hover or focus a row for exact figures; the tables on this page list every value.</p>
+      </figure>
+      <aside class="race-detail-panel audit-misses">
+        <p class="section-label">Notable misses</p>
+        <ul class="miss-list" id="audit-misses"></ul>
+      </aside>
+    </div>
   </section>
 
   <section class="wrap senate-archive-section">
@@ -451,7 +484,42 @@ renderAccuracyMap();
 renderDashboard();
 // renderSenateAccuracyMap();
 renderSenateArchive();
+renderMarginAudit();
   });
+
+  // Margin audit: same archive arrays as above, viewed through the shared chart helpers in script.js.
+  function renderMarginAudit(){
+    const sets = {
+      "pres-competitive": {
+        races: PRESIDENTIAL_ARCHIVE_2024.filter(s => s.actualMargin < 6),
+        note: "Presidential states decided by under 6 points, the same competitive definition used throughout this page.",
+      },
+      "pres-all": {
+        races: PRESIDENTIAL_ARCHIVE_2024,
+        note: "All 50 states plus DC from the final presidential forecast.",
+      },
+      senate: {
+        races: SENATE_ARCHIVE_2024,
+        note: `The ${SENATE_ARCHIVE_2024.length} Senate races with recorded forecast margins. The overall Senate winner record was 33/34.`,
+      },
+    };
+    const show = key => {
+      const set = sets[key];
+      document.getElementById("audit-set-note").textContent = set.note;
+      renderAccuracySummary("audit-summary", set.races);
+      renderMarginChart("margin-chart", set.races);
+      renderNotableMisses("audit-misses", set.races);
+      document.querySelectorAll("#predicted-vs-actual [data-set]").forEach(b => {
+        const on = b.dataset.set === key;
+        b.classList.toggle("active", on);
+        b.setAttribute("aria-pressed", String(on));
+      });
+    };
+    document.querySelectorAll("#predicted-vs-actual [data-set]").forEach(b => {
+      b.addEventListener("click", () => show(b.dataset.set));
+    });
+    show("pres-competitive");
+  }
 </script>
 </body>
 </html>
