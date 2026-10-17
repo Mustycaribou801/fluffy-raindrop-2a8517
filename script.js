@@ -105,8 +105,8 @@ function renderRaceBoard(tbodyId, races, keyLabel){
   const sorted = [...races].sort((a,b) => order.indexOf(a.rating) - order.indexOf(b.rating));
   const isSenateBoard = tbodyId === "senate-race-tbody";
   tbody.innerHTML = sorted.map(r => `
-    <tr>
-      <td>${r.abbr ? `<a href="senate-race.html?state=${encodeURIComponent(r.abbr)}">${r.state}</a>` : (r.district || r.state)}</td>
+    <tr${isSenateBoard ? ` id="race-${r.abbr}" data-rating="${r.rating}" data-search="${`${r.state} ${r.abbr} ${r.incumbentName || ""}`.toLowerCase()}"` : ""}>
+      <td>${r.abbr ? `<a class="race-link" href="${senateRaceHref(r.abbr)}">${r.state} <span class="race-link-arrow" aria-hidden="true">&rarr;</span></a>` : (r.district || r.state)}</td>
       <td>${(r.incumbent || "").replace("OPEN-", "Open (")}${r.incumbent && r.incumbent.startsWith("OPEN") ? ")" : ""}</td>
       <td><span class="rating-chip ${r.rating}">${RATING_LABELS[r.rating]}</span></td>
       ${isSenateBoard ? `<td>${formatProjectedMargin(r.margin)}</td>` : ""}
@@ -223,6 +223,413 @@ function renderSenateRacePage(){
   if (sources) sources.innerHTML = race.sources.map(name => {
     const href = SENATE_SOURCE_LINKS[name];
     return `<li>${href ? `<a href="${href}" rel="noopener" target="_blank">${name}</a>` : name}</li>`;
+  }).join("");
+
+  renderRaceNav(race);
+  renderUpdateLog("race-update-log", { abbr: race.abbr, showRace: false });
+}
+
+// ---------- Board <-> race page navigation ----------
+function senateRaceHref(abbr){
+  return `senate-race.html?state=${encodeURIComponent(abbr)}`;
+}
+
+// Same order as the forecast table (Safe D -> Safe R), so prev/next walks the board.
+function senateBoardOrder(){
+  const order = ["SD","LD","TD","TU","TR","LR","SR"];
+  return [...SENATE.races].sort((a,b) => order.indexOf(a.rating) - order.indexOf(b.rating));
+}
+
+function renderRaceNav(race){
+  const board = senateBoardOrder();
+  const i = board.findIndex(r => r.abbr === race.abbr);
+  const prev = board[(i - 1 + board.length) % board.length];
+  const next = board[(i + 1) % board.length];
+
+  const back = document.getElementById("race-back-link");
+  if (back) back.href = `forecast.html#race-${race.abbr}`;
+  const crumb = document.getElementById("race-crumb-state");
+  if (crumb) crumb.textContent = race.state;
+
+  const nav = document.getElementById("race-pager");
+  if (nav) nav.innerHTML = `
+    <a class="race-pager-link" href="${senateRaceHref(prev.abbr)}" rel="prev">
+      <span class="race-pager-dir">&larr; Previous on board</span>
+      <span class="race-pager-state">${prev.state} <span class="rating-chip ${prev.rating}">${RATING_LABELS[prev.rating]}</span></span>
+    </a>
+    <a class="race-pager-link next" href="${senateRaceHref(next.abbr)}" rel="next">
+      <span class="race-pager-dir">Next on board &rarr;</span>
+      <span class="race-pager-state">${next.state} <span class="rating-chip ${next.rating}">${RATING_LABELS[next.rating]}</span></span>
+    </a>
+  `;
+
+  const jump = document.getElementById("race-jump");
+  if (jump){
+    jump.innerHTML = [...SENATE.races]
+      .sort((a,b) => a.state.localeCompare(b.state))
+      .map(r => `<option value="${r.abbr}"${r.abbr === race.abbr ? " selected" : ""}>${r.state} — ${RATING_LABELS[r.rating]}</option>`)
+      .join("");
+    jump.addEventListener("change", () => { location.href = senateRaceHref(jump.value); });
+  }
+}
+
+// Search box + rating filter for the Senate board.
+function initBoardFilter(tbodyId, searchId, ratingId, countId){
+  const tbody = document.getElementById(tbodyId);
+  const search = document.getElementById(searchId);
+  const rating = document.getElementById(ratingId);
+  const count = document.getElementById(countId);
+  if (!tbody || !search || !rating) return;
+  const apply = () => {
+    const q = search.value.trim().toLowerCase();
+    const group = rating.value;
+    let shown = 0;
+    tbody.querySelectorAll("tr").forEach(tr => {
+      const r = tr.dataset.rating;
+      const matchesGroup = !group
+        || (group === "D" && r.endsWith("D"))
+        || (group === "R" && r.endsWith("R"))
+        || (group === "competitive" && ["TD","TU","TR"].includes(r))
+        || r === group;
+      const visible = matchesGroup && (!q || tr.dataset.search.includes(q));
+      tr.hidden = !visible;
+      if (visible) shown++;
+    });
+    if (count) count.textContent = `${shown} of ${tbody.rows.length} races shown`;
+  };
+  search.addEventListener("input", apply);
+  rating.addEventListener("change", apply);
+  apply();
+}
+
+// Coming back from a race page via forecast.html#race-XX: highlight that row.
+function highlightBoardRow(){
+  const id = location.hash.slice(1);
+  if (!id.startsWith("race-")) return;
+  const row = document.getElementById(id);
+  if (!row) return;
+  row.classList.add("is-target");
+  row.scrollIntoView({ block: "center" });
+}
+
+// ---------- Senate control calculator ----------
+// Non-toss-up ratings are locked to their leaning party; only Toss-ups are assignable.
+function renderSenateCalculator(containerId){
+  const root = document.getElementById(containerId);
+  if (!root) return;
+
+  const tossUps = SENATE.races.filter(r => r.rating === "TU");
+  let baseD = SENATE.currentHoldoverD;
+  let baseR = SENATE.currentHoldoverR;
+  SENATE.races.forEach(r => {
+    if (r.rating === "TU") return;
+    if (r.rating.endsWith("D")) baseD++; else baseR++;
+  });
+  const total = SENATE.currentHoldoverD + SENATE.currentHoldoverR + SENATE.races.length;
+  const picks = {};
+
+  root.innerHTML = `
+    <div class="calc-result">
+      <div class="calc-seats">
+        <div class="calc-party dem"><span class="calc-party-label">Democrats</span><span class="calc-number" id="calc-d"></span></div>
+        <div class="calc-party toss"><span class="calc-party-label">Unassigned</span><span class="calc-number" id="calc-u"></span></div>
+        <div class="calc-party rep"><span class="calc-party-label">Republicans</span><span class="calc-number" id="calc-r"></span></div>
+      </div>
+      <div class="calc-bar" id="calc-bar" aria-hidden="true"></div>
+      <p class="calc-verdict" id="calc-verdict" aria-live="polite"></p>
+    </div>
+    <div class="calc-controls">
+      <div class="calc-actions">
+        <button type="button" class="race-tab" data-all="D">All Toss-ups D</button>
+        <button type="button" class="race-tab" data-all="">Reset</button>
+        <button type="button" class="race-tab" data-all="R">All Toss-ups R</button>
+      </div>
+      <ul class="calc-list">
+        ${tossUps.map(r => `
+          <li class="calc-race" data-abbr="${r.abbr}">
+            <a class="calc-race-name" href="${senateRaceHref(r.abbr)}">${r.state}</a>
+            <span class="calc-race-held">Held by ${r.heldBy}</span>
+            <div class="calc-toggle" role="group" aria-label="Assign ${r.state}">
+              <button type="button" data-pick="D" aria-pressed="false">Dem</button>
+              <button type="button" data-pick="" aria-pressed="true">Toss-up</button>
+              <button type="button" data-pick="R" aria-pressed="false">Rep</button>
+            </div>
+          </li>`).join("")}
+      </ul>
+      <p class="calc-footnote">Starting point: ${SENATE.currentHoldoverD} Democratic/independent and ${SENATE.currentHoldoverR} Republican seats not up in 2026, plus every race rated Safe, Likely or Lean counted for its leaning party (${baseD - SENATE.currentHoldoverD} D, ${baseR - SENATE.currentHoldoverR} R). Lean races are not locks; this is a scenario tool, not a probability.</p>
+    </div>
+  `;
+
+  const update = () => {
+    let d = baseD, r = baseR, u = 0;
+    tossUps.forEach(t => {
+      if (picks[t.abbr] === "D") d++;
+      else if (picks[t.abbr] === "R") r++;
+      else u++;
+    });
+    document.getElementById("calc-d").textContent = d;
+    document.getElementById("calc-r").textContent = r;
+    document.getElementById("calc-u").textContent = u;
+    document.getElementById("calc-bar").innerHTML = `
+      <div class="seg-dem" style="width:${(d / total) * 100}%"></div>
+      <div class="seg-tu" style="width:${(u / total) * 100}%"></div>
+      <div class="seg-rep" style="width:${(r / total) * 100}%"></div>
+      <span class="calc-bar-mark" style="left:${(SENATE.majority / total) * 100}%"></span>
+    `;
+    let verdict;
+    if (d >= SENATE.majority) verdict = `<strong class="dem">Democratic control</strong> with ${d} seats.`;
+    else if (r >= SENATE.majority) verdict = `<strong class="rep">Republican control</strong> with ${r} seats.`;
+    else if (u === 0 && d === r) verdict = `<strong>${d}–${r} tie.</strong> Control would rest on the Vice President's tie-breaking vote.`;
+    else verdict = `No majority yet: ${u} Toss-up${u === 1 ? "" : "s"} unassigned. Democrats need ${Math.max(0, SENATE.majority - d)} more, Republicans need ${Math.max(0, SENATE.majority - r)} more for ${SENATE.majority}.`;
+    document.getElementById("calc-verdict").innerHTML = verdict;
+    root.querySelectorAll(".calc-race").forEach(li => {
+      const pick = picks[li.dataset.abbr] || "";
+      li.dataset.pick = pick;
+      li.querySelectorAll("[data-pick]").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.pick === pick)));
+    });
+  };
+
+  root.addEventListener("click", e => {
+    const pickBtn = e.target.closest("[data-pick]");
+    if (pickBtn){
+      picks[pickBtn.closest(".calc-race").dataset.abbr] = pickBtn.dataset.pick;
+      update();
+      return;
+    }
+    const allBtn = e.target.closest("[data-all]");
+    if (allBtn){
+      tossUps.forEach(t => { picks[t.abbr] = allBtn.dataset.all; });
+      update();
+    }
+  });
+  update();
+}
+
+// ---------- Forecast update log ----------
+// Combines FORECAST_UPDATES with each race's ratingHistory. If a race's current
+// rating or margin differs from its last logged value, that change is listed as
+// "not yet logged" rather than given an invented date or reason.
+function buildUpdateLog(){
+  const entries = [];
+  const manual = typeof FORECAST_UPDATES !== "undefined" ? FORECAST_UPDATES : [];
+  manual.forEach(u => entries.push({ ...u }));
+
+  SENATE.races.forEach(race => {
+    let prev = null;
+    (race.ratingHistory || []).forEach(h => {
+      const dup = manual.some(u => u.abbr === race.abbr && u.type === "rating" && u.date === h.date && u.to === h.rating);
+      if (!dup) entries.push({ date: h.date, abbr: race.abbr, type: "rating", from: prev, to: h.rating, explanation: h.note });
+      prev = h.rating;
+    });
+
+    const lastRating = entries
+      .filter(e => e.abbr === race.abbr && e.type === "rating" && e.date)
+      .sort((a,b) => a.date.localeCompare(b.date)).pop();
+    if (lastRating && lastRating.to !== race.rating){
+      entries.push({ date: null, abbr: race.abbr, type: "rating", from: lastRating.to, to: race.rating, explanation: null });
+    }
+
+    const lastMargin = entries
+      .filter(e => e.abbr === race.abbr && e.type === "margin" && e.date)
+      .sort((a,b) => a.date.localeCompare(b.date)).pop();
+    const loggedMargin = lastMargin ? lastMargin.to : null;
+    if (typeof race.margin === "number" && loggedMargin !== race.margin){
+      entries.push({ date: null, abbr: race.abbr, type: "margin", from: loggedMargin, to: race.margin, explanation: null });
+    }
+  });
+
+  // Unlogged changes first, then newest first.
+  return entries.sort((a,b) => {
+    if (!a.date !== !b.date) return a.date ? 1 : -1;
+    return (b.date || "").localeCompare(a.date || "") || a.abbr.localeCompare(b.abbr);
+  });
+}
+
+function describeUpdateChange(entry){
+  if (entry.type === "margin"){
+    return `<span class="log-value">${formatProjectedMargin(entry.from)}</span> <span class="log-arrow" aria-label="to">&rarr;</span> <span class="log-value">${formatProjectedMargin(entry.to)}</span>`;
+  }
+  const chip = code => `<span class="rating-chip ${code}">${RATING_LABELS[code]}</span>`;
+  return entry.from && entry.from !== entry.to
+    ? `${chip(entry.from)} <span class="log-arrow" aria-label="to">&rarr;</span> ${chip(entry.to)}`
+    : `${chip(entry.to)} <span class="log-initial">initial rating</span>`;
+}
+
+function renderUpdateLog(listId, { abbr = "", type = "", limit = 0, showRace = true } = {}){
+  const list = document.getElementById(listId);
+  if (!list) return;
+  const raceByAbbr = Object.fromEntries(SENATE.races.map(r => [r.abbr, r]));
+  let entries = buildUpdateLog().filter(e => (!abbr || e.abbr === abbr) && (!type || e.type === type));
+  const totalMatching = entries.length;
+  if (limit) entries = entries.slice(0, limit);
+
+  if (!entries.length){
+    list.innerHTML = '<li class="miss-empty">No updates match this filter.</li>';
+    return totalMatching;
+  }
+  list.innerHTML = entries.map(e => {
+    const race = raceByAbbr[e.abbr];
+    const name = race ? race.state : e.abbr;
+    return `
+      <li class="log-entry${e.date ? "" : " is-unlogged"}">
+        <span class="log-date">${e.date || "Date not logged"}</span>
+        <div class="log-body">
+          <div class="log-head">
+            ${showRace ? `<a class="log-race" href="${senateRaceHref(e.abbr)}">${name}</a>` : ""}
+            <span class="log-type">${e.type === "margin" ? "Projected margin" : "Rating"}</span>
+            <span class="log-change">${describeUpdateChange(e)}</span>
+          </div>
+          <p class="log-note">${e.explanation || "Explanation not yet recorded for this change."}</p>
+        </div>
+      </li>
+    `;
+  }).join("");
+  return totalMatching;
+}
+
+function initUpdateLogPage(){
+  const race = document.getElementById("log-filter-race");
+  const type = document.getElementById("log-filter-type");
+  const count = document.getElementById("log-count");
+  if (!race || !type) return;
+  race.innerHTML = '<option value="">All Senate races</option>' + [...SENATE.races]
+    .sort((a,b) => a.state.localeCompare(b.state))
+    .map(r => `<option value="${r.abbr}">${r.state}</option>`).join("");
+  const params = new URLSearchParams(location.search);
+  if (params.get("state")) race.value = params.get("state").toUpperCase();
+  const apply = () => {
+    const n = renderUpdateLog("update-log", { abbr: race.value, type: type.value });
+    if (count) count.textContent = `${n} entr${n === 1 ? "y" : "ies"}`;
+  };
+  race.addEventListener("change", apply);
+  type.addEventListener("change", apply);
+  apply();
+}
+
+// ---------- 2024 predicted vs actual (track record) ----------
+// Archive rows store unsigned margins plus a winning party; convert to signed
+// (positive = D) so predicted and actual sit on one axis.
+function signedMargin(party, margin){
+  return party === "D" ? margin : -margin;
+}
+
+function accuracySummary(races){
+  const signedErrors = races.map(r => signedMargin(r.predicted, r.predictedMargin) - signedMargin(r.actual, r.actualMargin));
+  const absErrors = signedErrors.map(Math.abs);
+  const mean = xs => xs.reduce((a,b) => a + b, 0) / xs.length;
+  return {
+    n: races.length,
+    correct: races.filter(r => r.predicted === r.actual).length,
+    meanAbs: mean(absErrors),
+    bias: mean(signedErrors), // > 0: forecast was more Democratic than the result
+    within3: absErrors.filter(e => e <= 3).length,
+  };
+}
+
+function renderAccuracySummary(containerId, races){
+  const el = document.getElementById(containerId);
+  if (!el) return;
+  const s = accuracySummary(races);
+  const biasParty = s.bias > 0 ? "Republicans" : "Democrats";
+  el.innerHTML = `
+    <div class="stat-card"><span class="stat-number">${s.meanAbs.toFixed(1)}</span><span class="stat-label">Average forecast error (pts)</span></div>
+    <div class="stat-card"><span class="stat-number">${s.bias > 0 ? "D" : "R"}+${Math.abs(s.bias).toFixed(1)}</span><span class="stat-label">Average lean of the forecast vs. result (underestimated ${biasParty})</span></div>
+    <div class="stat-card"><span class="stat-number">${s.within3}/${s.n}</span><span class="stat-label">Within 3 pts of the actual margin</span></div>
+    <div class="stat-card"><span class="stat-number">${s.correct}/${s.n}</span><span class="stat-label">Winners called correctly in this set</span></div>
+  `;
+}
+
+function renderMarginChart(containerId, races, { maxActual = Infinity } = {}){
+  const el = document.getElementById(containerId);
+  if (!el) return;
+  const rows = races
+    .filter(r => r.actualMargin <= maxActual)
+    .map(r => ({ ...r, p: signedMargin(r.predicted, r.predictedMargin), a: signedMargin(r.actual, r.actualMargin) }))
+    .sort((x,y) => y.a - x.a);
+  const extent = Math.max(5, ...rows.map(r => Math.max(Math.abs(r.p), Math.abs(r.a))));
+  const domain = Math.ceil(extent / 5) * 5;
+  const pos = v => ((v + domain) / (2 * domain)) * 100;
+  const step = domain <= 15 ? 5 : domain <= 40 ? 10 : 20;
+  const ticks = [];
+  for (let t = -domain; t <= domain; t += step) ticks.push(t);
+  const tickLabel = t => t === 0 ? "EVEN" : `${t > 0 ? "D" : "R"}+${Math.abs(t)}`;
+
+  el.innerHTML = `
+    <div class="mchart-axis" aria-hidden="true">
+      <span class="mchart-label"></span>
+      <div class="mchart-track">${ticks.map(t => `<span class="mchart-tick" style="left:${pos(t)}%">${tickLabel(t)}</span>`).join("")}</div>
+    </div>
+    ${rows.map(r => {
+      const err = Math.abs(r.p - r.a);
+      const miss = r.predicted !== r.actual;
+      const lo = Math.min(pos(r.p), pos(r.a)), hi = Math.max(pos(r.p), pos(r.a));
+      const summary = `${r.state}: predicted ${formatProjectedMargin(r.p)}, actual ${formatProjectedMargin(r.a)}, error ${err.toFixed(1)} points${miss ? ", wrong winner" : ""}`;
+      return `
+        <div class="mchart-row${miss ? " is-miss" : ""}" tabindex="0" role="img" aria-label="${summary}"
+             data-state="${r.state}" data-p="${formatProjectedMargin(r.p)}" data-a="${formatProjectedMargin(r.a)}" data-err="${err.toFixed(1)}" data-miss="${miss}">
+          <span class="mchart-label">${r.abbr || r.state}${miss ? ' <span class="mchart-flag">Miss</span>' : ""}</span>
+          <div class="mchart-track">
+            ${ticks.map(t => `<span class="mchart-grid${t === 0 ? " zero" : ""}" style="left:${pos(t)}%"></span>`).join("")}
+            <span class="mchart-link" style="left:${lo}%; width:${hi - lo}%"></span>
+            <span class="mchart-dot predicted ${r.p >= 0 ? "dem" : "rep"}" style="left:${pos(r.p)}%"></span>
+            <span class="mchart-dot actual ${r.a >= 0 ? "dem" : "rep"}" style="left:${pos(r.a)}%"></span>
+          </div>
+        </div>`;
+    }).join("")}
+    <div class="mchart-tooltip" role="presentation" hidden></div>
+  `;
+
+  const tip = el.querySelector(".mchart-tooltip");
+  const show = row => {
+    tip.innerHTML = "";
+    const title = document.createElement("strong");
+    title.textContent = row.dataset.state;
+    tip.appendChild(title);
+    [["Predicted", row.dataset.p], ["Actual", row.dataset.a], ["Error", `${row.dataset.err} pts`]].forEach(([k, v]) => {
+      const line = document.createElement("span");
+      const val = document.createElement("b");
+      val.textContent = v;
+      line.append(val, ` ${k.toLowerCase()}`);
+      tip.appendChild(line);
+    });
+    if (row.dataset.miss === "true"){
+      const flag = document.createElement("span");
+      flag.className = "mchart-flag";
+      flag.textContent = "Wrong winner";
+      tip.appendChild(flag);
+    }
+    tip.hidden = false;
+    tip.style.top = `${row.offsetTop + row.offsetHeight + 4}px`;
+  };
+  const hide = () => { tip.hidden = true; };
+  el.querySelectorAll(".mchart-row").forEach(row => {
+    row.addEventListener("pointerenter", () => show(row));
+    row.addEventListener("focus", () => show(row));
+    row.addEventListener("pointerleave", hide);
+    row.addEventListener("blur", hide);
+  });
+}
+
+// Every wrong winner call, then the largest margin errors (>= minErr pts) among correct calls.
+function renderNotableMisses(listId, races, { extra = 3, minErr = 3 } = {}){
+  const list = document.getElementById(listId);
+  if (!list) return;
+  const withErr = races.map(r => {
+    const p = signedMargin(r.predicted, r.predictedMargin), a = signedMargin(r.actual, r.actualMargin);
+    return { ...r, p, a, err: Math.abs(p - a) };
+  });
+  const wrong = withErr.filter(r => r.predicted !== r.actual).sort((x,y) => y.err - x.err);
+  const largest = withErr.filter(r => r.predicted === r.actual && r.err >= minErr).sort((x,y) => y.err - x.err).slice(0, extra);
+  list.innerHTML = [...wrong, ...largest].map(r => {
+    const under = r.p > r.a ? "Republicans" : "Democrats";
+    return `
+      <li>
+        <span class="miss-race">${r.state}</span>
+        <span>
+          <span class="miss-tag ${r.predicted !== r.actual ? "wrong" : "error"}">${r.predicted !== r.actual ? "Wrong winner" : "Margin miss"}</span>
+          Predicted <strong>${formatProjectedMargin(r.p)}</strong>, actual <strong>${formatProjectedMargin(r.a)}</strong> — off by ${r.err.toFixed(1)} pts, underestimating ${under}.
+        </span>
+      </li>`;
   }).join("");
 }
 
