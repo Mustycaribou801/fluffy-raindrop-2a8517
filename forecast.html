@@ -33,7 +33,7 @@
   <nav class="page-jump wrap" aria-label="On this page">
     <a href="#senate-forecast">Senate map</a>
     <a href="#senate-board">Senate table</a>
-    <a href="#control-calculator">Control calculator</a>
+    <a href="#control-calculator">Battleground calculator</a>
     <a href="#recent-updates">Recent updates</a>
     <a href="#governor-forecast">Governors</a>
   </nav>
@@ -103,8 +103,9 @@
 
   <section class="wrap" id="control-calculator">
     <p class="section-label">Interactive</p>
-    <h2>Senate control calculator</h2>
-    <p>Assign each Toss-up to a party and see the resulting balance of the chamber. Every other race is counted for the party its current rating leans toward.</p>
+    <h2>2026 Senate Battleground Calculator</h2>
+    <p>Every race with a projected margin of 10 points or less starts on the party my forecast projects to win. Switch any of them between Democrats and Republicans to see how the chamber changes; every other race stays with its projected winner.</p>
+    <div class="flip-summary" id="senate-projected-flips"></div>
     <div class="calculator" id="senate-calculator"></div>
   </section>
 
@@ -161,6 +162,7 @@
     renderRaceBoard("senate-race-tbody", SENATE.races);
     initBoardFilter("senate-race-tbody", "senate-board-search", "senate-board-rating", "senate-board-count");
     highlightBoardRow();
+    renderProjectedFlips("senate-projected-flips");
     renderSenateCalculator("senate-calculator");
     renderUpdateLog("recent-update-log", { limit: 6 });
     renderGovernorMap("governor-map", GOVERNORS.races);

@@ -97,6 +97,60 @@ function formatProjectedMargin(margin){
   return `${margin > 0 ? "D" : "R"}+${Math.abs(margin).toFixed(1)}`;
 }
 
+// ---------- Projected seat flips ----------
+// Party currently holding the seat: "D", "R", "OPEN-D" and "OPEN-R" reduce to D or R.
+function seatHolderParty(race){
+  return (race.incumbent || "").replace("OPEN-", "");
+}
+
+// Party projected to win from the signed margin (positive = D, negative = R).
+// An even or unpublished margin is treated as a hold for the current party.
+function projectedWinnerParty(race){
+  if (typeof race.margin !== "number" || !Number.isFinite(race.margin) || race.margin === 0) return seatHolderParty(race);
+  return race.margin > 0 ? "D" : "R";
+}
+
+// Returns "D" or "R" for the party gaining the seat, or "" if no flip.
+function seatFlip(holder, winner){
+  return holder && winner && holder !== winner ? winner : "";
+}
+
+function projectedFlip(race){
+  return seatFlip(seatHolderParty(race), projectedWinnerParty(race));
+}
+
+function flipBadge(party){
+  if (!party) return "";
+  const from = party === "D" ? "Republican" : "Democratic";
+  const to = party === "D" ? "Democrats" : "Republicans";
+  return `<span class="flip-badge ${party === "D" ? "dem" : "rep"}" title="Projected pickup: ${from}-held seat projected for ${to}">${party} FLIP</span>`;
+}
+
+// Small "Projected Seat Flips" summary, derived from every race's margin.
+function renderProjectedFlips(containerId){
+  const el = document.getElementById(containerId);
+  if (!el) return;
+  const flips = SENATE.races
+    .map(r => ({ race: r, party: projectedFlip(r) }))
+    .filter(f => f.party)
+    .sort((a,b) => a.race.state.localeCompare(b.race.state));
+  const dGain = flips.filter(f => f.party === "D").length;
+  const rGain = flips.length - dGain;
+  const net = dGain - rGain;
+  const netText = net === 0 ? "No net change" : `Net ${net > 0 ? "D" : "R"} +${Math.abs(net)}`;
+  el.innerHTML = `
+    <div class="flip-summary-head">
+      <span class="flip-summary-title">Projected Seat Flips</span>
+      <span class="flip-summary-net">${flips.length ? netText : "None projected"}</span>
+    </div>
+    ${flips.length ? `<ul class="flip-summary-list">
+      ${flips.map(f => `
+        <li><a href="${senateRaceHref(f.race.abbr)}">${f.race.state}</a> ${flipBadge(f.party)} <span class="flip-summary-margin">${formatProjectedMargin(f.race.margin)}</span></li>
+      `).join("")}
+    </ul>` : '<p class="flip-summary-empty">Every seat is currently projected to stay with its party.</p>'}
+  `;
+}
+
 // ---------- Race board rendering ----------
 function renderRaceBoard(tbodyId, races, keyLabel){
   const tbody = document.getElementById(tbodyId);
@@ -109,7 +163,7 @@ function renderRaceBoard(tbodyId, races, keyLabel){
       <td>${r.abbr ? `<a class="race-link" href="${senateRaceHref(r.abbr)}">${r.state} <span class="race-link-arrow" aria-hidden="true">&rarr;</span></a>` : (r.district || r.state)}</td>
       <td>${(r.incumbent || "").replace("OPEN-", "Open (")}${r.incumbent && r.incumbent.startsWith("OPEN") ? ")" : ""}</td>
       <td><span class="rating-chip ${r.rating}">${RATING_LABELS[r.rating]}</span></td>
-      ${isSenateBoard ? `<td>${formatProjectedMargin(r.margin)}</td>` : ""}
+      ${isSenateBoard ? `<td class="margin-cell">${formatProjectedMargin(r.margin)} ${flipBadge(projectedFlip(r))}</td>` : ""}
       <td>${r.note || ""}</td>
     </tr>
   `).join("");
@@ -210,6 +264,8 @@ function renderSenateRacePage(){
   setText("race-analysis", race.analysis);
   setText("race-last-updated", race.lastUpdated);
   setText("race-margin", formatProjectedMargin(race.margin));
+  const marginEl = document.getElementById("race-margin");
+  if (marginEl) marginEl.insertAdjacentHTML("beforeend", flipBadge(projectedFlip(race)));
 
   const rating = document.getElementById("race-rating");
   if (rating) rating.innerHTML = `<span class="rating-chip ${race.rating}">${RATING_LABELS[race.rating]}</span>`;
@@ -312,79 +368,93 @@ function highlightBoardRow(){
   row.scrollIntoView({ block: "center" });
 }
 
-// ---------- Senate control calculator ----------
-// Non-toss-up ratings are locked to their leaning party; only Toss-ups are assignable.
+// ---------- Senate Battleground Calculator ----------
+// Every race within 10 points (either way) is switchable; it starts on the party
+// its published margin projects. All other races stay locked to their projected
+// winner, so the totals always reflect holdovers plus all 35 race outcomes.
+const BATTLEGROUND_MAX_MARGIN = 10;
+
+function isBattleground(race){
+  return typeof race.margin === "number" && Math.abs(race.margin) <= BATTLEGROUND_MAX_MARGIN;
+}
+
 function renderSenateCalculator(containerId){
   const root = document.getElementById(containerId);
   if (!root) return;
 
-  const tossUps = SENATE.races.filter(r => r.rating === "TU");
-  let baseD = SENATE.currentHoldoverD;
-  let baseR = SENATE.currentHoldoverR;
+  const battlegrounds = SENATE.races
+    .filter(isBattleground)
+    .sort((a,b) => b.margin - a.margin);
+  let lockedD = 0, lockedR = 0;
   SENATE.races.forEach(r => {
-    if (r.rating === "TU") return;
-    if (r.rating.endsWith("D")) baseD++; else baseR++;
+    if (isBattleground(r)) return;
+    if (projectedWinnerParty(r) === "D") lockedD++; else lockedR++;
   });
+  const baseD = SENATE.currentHoldoverD + lockedD;
+  const baseR = SENATE.currentHoldoverR + lockedR;
   const total = SENATE.currentHoldoverD + SENATE.currentHoldoverR + SENATE.races.length;
-  const picks = {};
+  const forecastPicks = () => Object.fromEntries(battlegrounds.map(r => [r.abbr, projectedWinnerParty(r)]));
+  let picks = forecastPicks();
 
   root.innerHTML = `
     <div class="calc-result">
       <div class="calc-seats">
         <div class="calc-party dem"><span class="calc-party-label">Democrats</span><span class="calc-number" id="calc-d"></span></div>
-        <div class="calc-party toss"><span class="calc-party-label">Unassigned</span><span class="calc-number" id="calc-u"></span></div>
+        <div class="calc-party toss"><span class="calc-party-label">For majority</span><span class="calc-number">${SENATE.majority}</span></div>
         <div class="calc-party rep"><span class="calc-party-label">Republicans</span><span class="calc-number" id="calc-r"></span></div>
       </div>
       <div class="calc-bar" id="calc-bar" aria-hidden="true"></div>
       <p class="calc-verdict" id="calc-verdict" aria-live="polite"></p>
+      <p class="calc-scenario-flips" id="calc-flips"></p>
     </div>
     <div class="calc-controls">
       <div class="calc-actions">
-        <button type="button" class="race-tab" data-all="D">All Toss-ups D</button>
-        <button type="button" class="race-tab" data-all="">Reset</button>
-        <button type="button" class="race-tab" data-all="R">All Toss-ups R</button>
+        <button type="button" class="race-tab" data-all="D">All battlegrounds D</button>
+        <button type="button" class="race-tab" data-all="forecast">Reset to Forecast</button>
+        <button type="button" class="race-tab" data-all="R">All battlegrounds R</button>
       </div>
-      <ul class="calc-list">
-        ${tossUps.map(r => `
+      ${battlegrounds.length ? `<ul class="calc-list">
+        ${battlegrounds.map(r => `
           <li class="calc-race" data-abbr="${r.abbr}">
-            <a class="calc-race-name" href="${senateRaceHref(r.abbr)}">${r.state}</a>
-            <span class="calc-race-held">Held by ${r.heldBy}</span>
+            <span class="calc-race-title"><a class="calc-race-name" href="${senateRaceHref(r.abbr)}">${r.state}</a> <span data-flip></span></span>
+            <span class="calc-race-held">Held by ${r.heldBy} &middot; Forecast ${formatProjectedMargin(r.margin)} <span class="rating-chip ${r.rating}">${RATING_LABELS[r.rating]}</span></span>
             <div class="calc-toggle" role="group" aria-label="Assign ${r.state}">
               <button type="button" data-pick="D" aria-pressed="false">Dem</button>
-              <button type="button" data-pick="" aria-pressed="true">Toss-up</button>
               <button type="button" data-pick="R" aria-pressed="false">Rep</button>
             </div>
           </li>`).join("")}
-      </ul>
-      <p class="calc-footnote">Starting point: ${SENATE.currentHoldoverD} Democratic/independent and ${SENATE.currentHoldoverR} Republican seats not up in 2026, plus every race rated Safe, Likely or Lean counted for its leaning party (${baseD - SENATE.currentHoldoverD} D, ${baseR - SENATE.currentHoldoverR} R). Lean races are not locks; this is a scenario tool, not a probability.</p>
+      </ul>` : '<p class="calc-footnote">No races are currently within 10 points.</p>'}
+      <p class="calc-footnote">Battlegrounds are every race with a projected margin of ${BATTLEGROUND_MAX_MARGIN} points or less (${battlegrounds.length} of ${SENATE.races.length}). Starting point: ${SENATE.currentHoldoverD} Democratic/independent and ${SENATE.currentHoldoverR} Republican seats not up in 2026, plus the ${SENATE.races.length - battlegrounds.length} other races counted for their projected winner (${lockedD} D, ${lockedR} R). This is a scenario tool, not a probability.</p>
     </div>
   `;
 
   const update = () => {
-    let d = baseD, r = baseR, u = 0;
-    tossUps.forEach(t => {
-      if (picks[t.abbr] === "D") d++;
-      else if (picks[t.abbr] === "R") r++;
-      else u++;
+    let d = baseD, r = baseR, gainD = 0, gainR = 0;
+    battlegrounds.forEach(b => {
+      if (picks[b.abbr] === "D") d++; else r++;
+      const flip = seatFlip(seatHolderParty(b), picks[b.abbr]);
+      if (flip === "D") gainD++; else if (flip === "R") gainR++;
     });
     document.getElementById("calc-d").textContent = d;
     document.getElementById("calc-r").textContent = r;
-    document.getElementById("calc-u").textContent = u;
     document.getElementById("calc-bar").innerHTML = `
       <div class="seg-dem" style="width:${(d / total) * 100}%"></div>
-      <div class="seg-tu" style="width:${(u / total) * 100}%"></div>
       <div class="seg-rep" style="width:${(r / total) * 100}%"></div>
       <span class="calc-bar-mark" style="left:${(SENATE.majority / total) * 100}%"></span>
     `;
     let verdict;
-    if (d >= SENATE.majority) verdict = `<strong class="dem">Democratic control</strong> with ${d} seats.`;
-    else if (r >= SENATE.majority) verdict = `<strong class="rep">Republican control</strong> with ${r} seats.`;
-    else if (u === 0 && d === r) verdict = `<strong>${d}–${r} tie.</strong> Control would rest on the Vice President's tie-breaking vote.`;
-    else verdict = `No majority yet: ${u} Toss-up${u === 1 ? "" : "s"} unassigned. Democrats need ${Math.max(0, SENATE.majority - d)} more, Republicans need ${Math.max(0, SENATE.majority - r)} more for ${SENATE.majority}.`;
+    if (d >= SENATE.majority) verdict = `<strong class="dem">Democratic control</strong> with ${d} seats (${SENATE.majority} needed for a majority).`;
+    else if (r >= SENATE.majority) verdict = `<strong class="rep">Republican control</strong> with ${r} seats (${SENATE.majority} needed for a majority).`;
+    else verdict = `<strong>${d}–${r} tie.</strong> Neither party reaches ${SENATE.majority}; control would rest on the Vice President's tie-breaking vote.`;
     document.getElementById("calc-verdict").innerHTML = verdict;
+    document.getElementById("calc-flips").innerHTML = gainD || gainR
+      ? `Battleground seats changing hands in this scenario: ${gainD ? `${flipBadge("D")} &times;${gainD}` : ""} ${gainR ? `${flipBadge("R")} &times;${gainR}` : ""}`
+      : "No battleground seats change hands in this scenario.";
     root.querySelectorAll(".calc-race").forEach(li => {
-      const pick = picks[li.dataset.abbr] || "";
+      const pick = picks[li.dataset.abbr];
+      const race = battlegrounds.find(b => b.abbr === li.dataset.abbr);
       li.dataset.pick = pick;
+      li.querySelector("[data-flip]").innerHTML = flipBadge(seatFlip(seatHolderParty(race), pick));
       li.querySelectorAll("[data-pick]").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.pick === pick)));
     });
   };
@@ -398,7 +468,8 @@ function renderSenateCalculator(containerId){
     }
     const allBtn = e.target.closest("[data-all]");
     if (allBtn){
-      tossUps.forEach(t => { picks[t.abbr] = allBtn.dataset.all; });
+      if (allBtn.dataset.all === "forecast") picks = forecastPicks();
+      else battlegrounds.forEach(b => { picks[b.abbr] = allBtn.dataset.all; });
       update();
     }
   });
