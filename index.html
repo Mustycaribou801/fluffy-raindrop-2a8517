@@ -96,6 +96,7 @@
         </div>
         <div class="tally-bar" id="senate-bar"></div>
         <div class="tally-majority-line" id="senate-majority-note"></div>
+        <div class="flip-summary compact" id="home-projected-flips"></div>
       </div>
 
       <div class="tally-chamber">
@@ -182,6 +183,8 @@
     document.getElementById("map-cycle-label").textContent = SITE_META.cycle;
 
     renderSenateMap("home-senate-map", SENATE.races);
+
+    renderProjectedFlips("home-projected-flips");
 
     renderTally({
       elPrefix: "senate",

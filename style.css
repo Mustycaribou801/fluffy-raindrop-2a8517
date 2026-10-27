@@ -1639,3 +1639,52 @@ footer{
   .mchart-card{ padding: 12px 10px; }
   .section-heading .section-more{ display: inline-block; margin-top: 4px; }
 }
+
+/* ---------- Projected seat flip badges ---------- */
+.flip-badge{
+  display: inline-block;
+  margin-left: 6px;
+  padding: 2px 6px;
+  border: 1px solid currentColor;
+  border-radius: 2px;
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  line-height: 1.3;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+.flip-badge.dem{ color: #8fb4d6; background: rgba(77,143,200,0.14); }
+.flip-badge.rep{ color: #d69a9a; background: rgba(200,95,95,0.14); }
+.senate-board .margin-cell{ white-space: nowrap; }
+.race-meta-number .flip-badge{ font-size: 0.7rem; }
+
+.flip-summary{
+  background: var(--paper-raised);
+  border: 1px solid var(--rule);
+  border-left: 3px solid var(--gold);
+  padding: 14px 18px;
+  margin: 0 0 22px;
+}
+.flip-summary.compact{ margin: 14px 0 0; padding: 10px 12px; background: rgba(0,0,0,0.18); }
+.flip-summary-head{ display: flex; justify-content: space-between; gap: 12px; align-items: baseline; }
+.flip-summary-title{
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--gold);
+}
+.flip-summary-net{ font-family: var(--font-mono); font-size: 0.74rem; color: var(--ink-soft); }
+.flip-summary-list{ list-style: none; margin: 8px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px 18px; }
+.flip-summary-list li{ font-size: 0.92rem; }
+.flip-summary-list a{ color: var(--ink); font-weight: 600; }
+.flip-summary-list a:hover{ color: var(--gold); text-decoration: none; }
+.flip-summary-margin{ font-family: var(--font-mono); font-size: 0.76rem; color: var(--ink-soft); margin-left: 4px; }
+.flip-summary-empty{ margin: 6px 0 0; font-size: 0.88rem; color: var(--ink-soft); }
+
+.calc-race-title{ display: flex; align-items: center; flex-wrap: wrap; gap: 2px; }
+.calc-race-held .rating-chip{ margin-left: 4px; vertical-align: middle; }
+.calc-scenario-flips{ margin: 10px 0 0; font-size: 0.85rem; color: var(--ink-soft); }
+.calc-scenario-flips .flip-badge{ margin-left: 4px; }
