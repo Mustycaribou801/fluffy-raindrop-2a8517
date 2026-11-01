@@ -37,21 +37,21 @@ const GOVERNORS = {
 
   races: [
     { state: "Arizona", incumbent: "D", rating: "TU", note: "" },
-    { state: "Alaska", incumbent: "R", rating: "TR", note: "" },
+    { state: "Alaska", incumbent: "R", rating: "LD", note: "" },
     { state: "Florida", incumbent: "R", rating: "SR", note: "" },
-    { state: "Georgia", incumbent: "R", rating: "TU", note: "" },
+    { state: "Georgia", incumbent: "R", rating: "TD", note: "" },
     { state: "Iowa", incumbent: "R", rating: "TD", note: "" },
-    { state: "Kansas", incumbent: "D", rating: "SR", note: "" },
+    { state: "Kansas", incumbent: "D", rating: "LR", note: "" },
     { state: "Maine", incumbent: "D", rating: "LD", note: "" },
     { state: "Michigan", incumbent: "D", rating: "TD", note: "" },
     { state: "Minnesota", incumbent: "D", rating: "LD", note: "" },
     { state: "Nevada", incumbent: "R", rating: "TR", note: "" },
     { state: "New Hampshire", incumbent: "R", rating: "LR", note: "" },
     { state: "New Mexico", incumbent: "D", rating: "LD", note: "" },
-    { state: "Ohio", incumbent: "R", rating: "TU", note: "" },
+    { state: "Ohio", incumbent: "R", rating: "TD", note: "" },
     { state: "Pennsylvania", incumbent: "D", rating: "SD", note: "" },
     { state: "Texas", incumbent: "R", rating: "LR", note: "" },
-    { state: "Wisconsin", incumbent: "D", rating: "TU", note: "" },
+    { state: "Wisconsin", incumbent: "D", rating: "TD", note: "" },
   ],
 };
 
