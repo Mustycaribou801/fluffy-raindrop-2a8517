@@ -27,31 +27,52 @@ const SITE_META = {
    "safeSeatsD" / "safeSeatsR" below as an aggregate so you're
    not hand-entering 380 uncontested seats.
 ------------------------------------------------------------ */
+
 const GOVERNORS = {
   majority: 19,
   totalSeats: 36,
 
-  // Governors that are not individually rated
-  safeSeatsD: 16,
-  safeSeatsR: 15,
+  // All 36 governor races are individually rated
+  safeSeatsD: 0,
+  safeSeatsR: 0,
 
   races: [
-    { state: "Arizona", incumbent: "D", rating: "TU", note: "" },
+    { state: "Alabama", incumbent: "R", rating: "SR", note: "" },
     { state: "Alaska", incumbent: "R", rating: "LD", note: "" },
+    { state: "Arizona", incumbent: "D", rating: "TU", note: "" },
+    { state: "Arkansas", incumbent: "R", rating: "SR", note: "" },
+    { state: "California", incumbent: "D", rating: "SD", note: "" },
+    { state: "Colorado", incumbent: "D", rating: "SD", note: "" },
+    { state: "Connecticut", incumbent: "D", rating: "SD", note: "" },
     { state: "Florida", incumbent: "R", rating: "SR", note: "" },
     { state: "Georgia", incumbent: "R", rating: "TD", note: "" },
+    { state: "Hawaii", incumbent: "D", rating: "SD", note: "" },
+    { state: "Idaho", incumbent: "R", rating: "SR", note: "" },
+    { state: "Illinois", incumbent: "D", rating: "SD", note: "" },
     { state: "Iowa", incumbent: "R", rating: "TD", note: "" },
     { state: "Kansas", incumbent: "D", rating: "LR", note: "" },
     { state: "Maine", incumbent: "D", rating: "LD", note: "" },
+    { state: "Maryland", incumbent: "D", rating: "SD", note: "" },
+    { state: "Massachusetts", incumbent: "D", rating: "SD", note: "" },
     { state: "Michigan", incumbent: "D", rating: "TD", note: "" },
     { state: "Minnesota", incumbent: "D", rating: "LD", note: "" },
+    { state: "Nebraska", incumbent: "R", rating: "SR", note: "" },
     { state: "Nevada", incumbent: "R", rating: "TR", note: "" },
     { state: "New Hampshire", incumbent: "R", rating: "LR", note: "" },
     { state: "New Mexico", incumbent: "D", rating: "LD", note: "" },
+    { state: "New York", incumbent: "D", rating: "SD", note: "" },
     { state: "Ohio", incumbent: "R", rating: "TD", note: "" },
+    { state: "Oklahoma", incumbent: "R", rating: "SR", note: "" },
+    { state: "Oregon", incumbent: "D", rating: "LD", note: "" },
     { state: "Pennsylvania", incumbent: "D", rating: "SD", note: "" },
+    { state: "Rhode Island", incumbent: "D", rating: "SD", note: "" },
+    { state: "South Carolina", incumbent: "R", rating: "SR", note: "" },
+    { state: "South Dakota", incumbent: "R", rating: "SR", note: "" },
+    { state: "Tennessee", incumbent: "R", rating: "SR", note: "" },
     { state: "Texas", incumbent: "R", rating: "LR", note: "" },
+    { state: "Vermont", incumbent: "R", rating: "LR", note: "" },
     { state: "Wisconsin", incumbent: "D", rating: "TD", note: "" },
+    { state: "Wyoming", incumbent: "R", rating: "SR", note: "" },
   ],
 };
 
