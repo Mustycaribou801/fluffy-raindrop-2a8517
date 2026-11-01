@@ -39,7 +39,7 @@ const GOVERNORS = {
   races: [
     { state: "Alabama", incumbent: "R", rating: "SR", note: "" },
     { state: "Alaska", incumbent: "R", rating: "LD", note: "" },
-    { state: "Arizona", incumbent: "D", rating: "TU", note: "" },
+    { state: "Arizona", incumbent: "D", rating: "TD", note: "" },
     { state: "Arkansas", incumbent: "R", rating: "SR", note: "" },
     { state: "California", incumbent: "D", rating: "SD", note: "" },
     { state: "Colorado", incumbent: "D", rating: "SD", note: "" },
