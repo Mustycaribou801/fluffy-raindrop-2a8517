@@ -8,42 +8,59 @@ const RATING_LABELS = {
   TR: "Lean R", LR: "Likely R", SR: "Safe R",
 };
 
-// ---------- Flip-digit counter (split-flap board effect) ----------
-class FlipCounter {
-  constructor(el, target, digits){
+// ---------- Seat counter (rolling odometer) ----------
+// Each digit is a 0-9 reel that rolls smoothly to its value. The first roll is
+// started by the caller (once the board is on screen); any later change to the
+// total rolls the reels again and briefly highlights the counter.
+class SeatCounter {
+  constructor(el, digits){
     this.el = el;
-    this.target = target;
     this.digits = digits;
+    this.value = null;
     this.el.innerHTML = "";
-    this.cells = [];
+    this.el.setAttribute("role", "img");
+    this.reels = [];
     for (let i = 0; i < digits; i++){
       const d = document.createElement("div");
       d.className = "flip-digit";
-      d.innerHTML = '<div class="face">0</div>';
+      d.innerHTML = `<div class="reel" aria-hidden="true">${[0,1,2,3,4,5,6,7,8,9].map(n => `<span>${n}</span>`).join("")}</div>`;
       this.el.appendChild(d);
-      this.cells.push(d);
+      this.reels.push(d.firstElementChild);
     }
   }
-  run(){
-    const str = String(this.target).padStart(this.digits, "0").slice(-this.digits);
-    this.cells.forEach((cell, i) => {
-      const targetDigit = parseInt(str[i], 10);
-      const face = cell.querySelector(".face");
-      let current = 0;
-      const delay = i * 60;
-      setTimeout(() => {
-        const tick = setInterval(() => {
-          cell.classList.add("flipping");
-          current = (current + 1) % 10;
-          face.textContent = current;
-          if (current === targetDigit){
-            clearInterval(tick);
-            setTimeout(() => cell.classList.remove("flipping"), 90);
-          }
-        }, 90);
-      }, delay);
+  set(value){
+    const str = String(value).padStart(this.digits, "0").slice(-this.digits);
+    this.reels.forEach((reel, i) => {
+      reel.style.transitionDelay = `${i * 140}ms`;
+      reel.style.transform = `translateY(-${parseInt(str[i], 10) * 10}%)`;
     });
+    this.el.setAttribute("aria-label", `${value} seats`);
+    if (this.value !== null && this.value !== value) highlightChange(this.el);
+    this.value = value;
   }
+}
+
+// One soft glow on a number whose value just changed (no repeated flashing).
+function highlightChange(el){
+  el.classList.remove("is-updated");
+  void el.offsetWidth; // restart the animation if it is already running
+  el.classList.add("is-updated");
+}
+
+function prefersReducedMotion(){
+  return window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+}
+
+// Runs fn once el is meaningfully on screen (immediately if motion is reduced).
+function whenVisible(el, fn){
+  if (!el || prefersReducedMotion() || !("IntersectionObserver" in window)){ fn(); return; }
+  const io = new IntersectionObserver(entries => {
+    if (entries.some(e => e.isIntersecting)){
+      io.disconnect();
+      fn();
+    }
+  }, { threshold: 0.35 });
+  io.observe(el);
 }
 
 // ---------- Tally math ----------
@@ -62,23 +79,23 @@ function renderTally({ elPrefix, safeD, safeR, races, majority, digits }){
   const { d, r, tu, total } = tallyChamber(safeD, safeR, races, majority);
   const demEl = document.getElementById(`${elPrefix}-dem-flip`);
   const repEl = document.getElementById(`${elPrefix}-rep-flip`);
-  if (demEl){
-    const c = new FlipCounter(demEl, d, digits);
-    c.run();
+  const demCounter = demEl ? new SeatCounter(demEl, digits) : null;
+  const repCounter = repEl ? new SeatCounter(repEl, digits) : null;
+
+  const thresholdEl = document.getElementById(`${elPrefix}-threshold`);
+  if (thresholdEl){
+    thresholdEl.innerHTML = `<span class="tally-threshold-number">${majority}</span><span class="tally-threshold-label">for control</span>`;
   }
-  if (repEl){
-    const c = new FlipCounter(repEl, r, digits);
-    c.run();
-  }
+
   const barEl = document.getElementById(`${elPrefix}-bar`);
   if (barEl){
-    const pd = (d / total) * 100;
-    const ptu = (tu / total) * 100;
-    const pr = (r / total) * 100;
     barEl.innerHTML = `
-      <div class="seg-dem" style="width:${pd}%"></div>
-      <div class="seg-tu" style="width:${ptu}%"></div>
-      <div class="seg-rep" style="width:${pr}%"></div>
+      <div class="tally-bar-track">
+        <div class="seg-dem" style="width:0%"></div>
+        <div class="seg-tu" style="width:0%"></div>
+        <div class="seg-rep" style="width:0%"></div>
+      </div>
+      <span class="tally-majority-mark" style="left:${(majority / total) * 100}%" title="${majority} seats needed for control"></span>
     `;
   }
   const majEl = document.getElementById(`${elPrefix}-majority-note`);
@@ -87,6 +104,25 @@ function renderTally({ elPrefix, safeD, safeR, races, majority, digits }){
     const leaderMargin = Math.abs(d - r);
     majEl.innerHTML = `<strong>${majority}</strong> needed for control &middot; ${tu} toss-up${tu === 1 ? "" : "s"} outstanding &middot; current edge: <strong>${leaderParty === "TIED" ? "even" : leaderParty}</strong>${leaderParty !== "TIED" ? " +" + leaderMargin : ""}`;
   }
+
+  // Counters start at zero and roll to the projection the first time the board is seen.
+  const board = (demEl || repEl || barEl) && (demEl || repEl || barEl).closest(".tally-chamber");
+  if (demCounter) demCounter.set(0);
+  if (repCounter) repCounter.set(0);
+  whenVisible(board, () => {
+    requestAnimationFrame(() => {
+      if (demCounter){ demCounter.value = null; demCounter.set(d); }
+      if (repCounter){ repCounter.value = null; repCounter.set(r); }
+      if (barEl){
+        const [segD, segTU, segR] = barEl.querySelectorAll(".tally-bar-track > div");
+        segD.style.width = `${(d / total) * 100}%`;
+        segTU.style.width = `${(tu / total) * 100}%`;
+        segR.style.width = `${(r / total) * 100}%`;
+      }
+      if (board) board.classList.add("is-revealed");
+    });
+  });
+  return { dem: demCounter, rep: repCounter };
 }
 
 // Positive margins indicate Democrats; negative margins indicate Republicans.
@@ -196,22 +232,27 @@ function renderGovernorMap(containerId, races){
     VA:[75,51], VT:[82,24], WA:[16,23], WI:[57,30], WV:[70,47], WY:[33,36]
   };
 
-  container.innerHTML = races.map(race => {
+  container.innerHTML = races.map((race, i) => {
     const abbr = race.abbr || STATE_ABBR[race.state];
     const coords = positions[abbr];
     if (!coords) return ""; // skip states without coordinates rather than stacking them
     const [x, y] = coords;
 
-    // Not a link: there is no Governor race-detail page yet.
+    // Not a link: there is no Governor race-detail page yet. Selecting a state opens the info panel.
     return `
       <span class="senate-state ${ratingTone(race.rating)}"
-         style="--x:${x}; --y:${y};"
-         role="img"
+         style="--x:${x}; --y:${y}; --i:${i};"
+         data-abbr="${abbr}"
+         role="button"
+         tabindex="0"
+         aria-pressed="false"
          aria-label="${race.state} Governor race, ${RATING_LABELS[race.rating]}">
         <span>${abbr}</span>
       </span>
     `;
   }).join("");
+
+  attachStatePanel(container, races.map(r => ({ ...r, abbr: r.abbr || STATE_ABBR[r.state] })), { chamber: "Governor" });
 }
 
 function ratingTone(rating){
@@ -231,14 +272,111 @@ function renderSenateMap(containerId, races){
     OR:[13,35], PA:[74,39], RI:[86,34], SC:[70,61], SD:[43,32], TN:[61,55], TX:[44,71],
     VA:[75,51], VT:[82,24], WA:[16,23], WI:[57,30], WV:[70,47], WY:[33,36]
   };
-  container.innerHTML = races.map(race => {
+  container.innerHTML = races.map((race, i) => {
     const [x, y] = positions[race.abbr] || [50, 50];
     return `
-      <a class="senate-state ${ratingTone(race.rating)}" style="--x:${x}; --y:${y};" href="senate-race.html?state=${encodeURIComponent(race.abbr)}" aria-label="${race.state} Senate race, ${RATING_LABELS[race.rating]}">
+      <a class="senate-state ${ratingTone(race.rating)}" style="--x:${x}; --y:${y}; --i:${i};" data-abbr="${race.abbr}" href="senate-race.html?state=${encodeURIComponent(race.abbr)}" aria-label="${race.state} Senate race, ${RATING_LABELS[race.rating]}, projected ${formatProjectedMargin(race.margin)}">
         <span>${race.abbr}</span>
       </a>
     `;
   }).join("");
+
+  attachStatePanel(container, races, { chamber: "Senate", linkFor: race => senateRaceHref(race.abbr) });
+}
+
+// ---------- Map state information panel ----------
+// Selecting a state slides a details panel in beneath the map, so the panel never
+// covers any part of the map. Ctrl/Cmd/Shift-click still follows a tile's link.
+function heldByLabel(race){
+  if (race.heldBy) return race.heldBy;
+  const party = seatHolderParty(race) === "D" ? "Democratic" : seatHolderParty(race) === "R" ? "Republican" : "";
+  return party && (race.incumbent || "").startsWith("OPEN") ? `${party} open seat` : party;
+}
+
+function statePanelMarkup(race, { chamber, linkFor }){
+  const stat = (label, value) => value ? `<div><dt>${label}</dt><dd>${value}</dd></div>` : "";
+  const hasMargin = typeof race.margin === "number";
+  return `
+    <div class="state-panel-head">
+      <div>
+        <span class="state-panel-kicker">2026 ${chamber} &middot; Forecast</span>
+        <h3 class="state-panel-title">${race.state}</h3>
+      </div>
+      <button type="button" class="state-panel-close" data-panel-close aria-label="Close ${race.state} details">&times;</button>
+    </div>
+    <dl class="state-panel-stats">
+      ${stat("Rating", `<span class="rating-chip ${race.rating}">${RATING_LABELS[race.rating]}</span>`)}
+      ${hasMargin ? stat("Projected margin", `<span class="state-panel-margin ${ratingTone(race.rating)}">${formatProjectedMargin(race.margin)}</span> ${flipBadge(projectedFlip(race))}`) : ""}
+      ${stat("Held by", heldByLabel(race))}
+      ${stat("Incumbent", race.incumbentName)}
+    </dl>
+    ${race.note ? `<p class="state-panel-note">${race.note}</p>` : ""}
+    <div class="state-panel-foot">
+      <span class="state-panel-disclaimer">Forecast &middot; not a result</span>
+      ${linkFor ? `<a class="state-panel-link" href="${linkFor(race)}">Full race page &rarr;</a>` : ""}
+    </div>
+  `;
+}
+
+function attachStatePanel(container, races, options){
+  const card = container.closest(".forecast-map");
+  if (!card) return;
+  const byAbbr = Object.fromEntries(races.map(r => [r.abbr, r]));
+  const panel = document.createElement("div");
+  panel.className = "state-panel";
+  panel.setAttribute("aria-live", "polite");
+  panel.innerHTML = '<div class="state-panel-clip"><div class="state-panel-inner"></div></div>';
+  (container.closest(".home-map-scroll") || container).insertAdjacentElement("afterend", panel);
+  const inner = panel.querySelector(".state-panel-inner");
+  let selected = null;
+
+  const mark = (tile, on) => {
+    tile.classList.toggle("is-selected", on);
+    if (tile.tagName === "A") on ? tile.setAttribute("aria-current", "true") : tile.removeAttribute("aria-current");
+    else tile.setAttribute("aria-pressed", String(on));
+  };
+  const close = () => {
+    if (!selected) return;
+    mark(selected, false);
+    selected = null;
+    container.classList.remove("has-selection");
+    panel.classList.remove("is-open");
+  };
+  const select = tile => {
+    const race = byAbbr[tile.dataset.abbr];
+    if (!race) return;
+    if (selected) mark(selected, false);
+    selected = tile;
+    mark(tile, true);
+    container.classList.add("has-selection");
+    inner.innerHTML = statePanelMarkup(race, options);
+    inner.classList.remove("is-entering");
+    void inner.offsetWidth;
+    inner.classList.add("is-entering");
+    panel.classList.add("is-open");
+  };
+
+  container.addEventListener("click", e => {
+    const tile = e.target.closest(".senate-state");
+    if (!tile || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    e.preventDefault();
+    tile === selected ? close() : select(tile);
+  });
+  container.addEventListener("keydown", e => {
+    const tile = e.target.closest(".senate-state");
+    if (!tile || tile.tagName === "A" || (e.key !== "Enter" && e.key !== " ")) return;
+    e.preventDefault();
+    tile === selected ? close() : select(tile);
+  });
+  panel.addEventListener("click", e => {
+    if (!e.target.closest("[data-panel-close]")) return;
+    const tile = selected;
+    close();
+    if (tile) tile.focus();
+  });
+  document.addEventListener("keydown", e => {
+    if (e.key === "Escape" && selected) close();
+  });
 }
 
 function findSenateRace(){
@@ -435,8 +573,12 @@ function renderSenateCalculator(containerId){
       const flip = seatFlip(seatHolderParty(b), picks[b.abbr]);
       if (flip === "D") gainD++; else if (flip === "R") gainR++;
     });
-    document.getElementById("calc-d").textContent = d;
-    document.getElementById("calc-r").textContent = r;
+    [["calc-d", d], ["calc-r", r]].forEach(([id, value]) => {
+      const el = document.getElementById(id);
+      const changed = el.textContent !== "" && el.textContent !== String(value);
+      el.textContent = value;
+      if (changed) highlightChange(el.closest(".calc-party"));
+    });
     document.getElementById("calc-bar").innerHTML = `
       <div class="seg-dem" style="width:${(d / total) * 100}%"></div>
       <div class="seg-rep" style="width:${(r / total) * 100}%"></div>
@@ -737,7 +879,72 @@ function renderMeta(){
   nameEls.forEach(el => el.textContent = SITE_META.forecasterName);
 }
 
+// ---------- Election-night ticker ----------
+// Scrolls every Senate battleground (projected margin within 10 points) beneath
+// the main navigation. The track holds two identical copies of the list and
+// slides by exactly one copy, so the loop has no visible jump.
+function renderElectionTicker(){
+  const nav = document.querySelector("nav.primary");
+  if (!nav || typeof SENATE === "undefined") return;
+  const races = SENATE.races
+    .filter(isBattleground)
+    .sort((a,b) => Math.abs(a.margin) - Math.abs(b.margin) || a.state.localeCompare(b.state));
+  if (!races.length) return;
+
+  // Repeat short lists so one copy is always wider than the viewport.
+  let items = races;
+  while (items.length < 12) items = items.concat(races);
+  const item = (race, hidden) => `
+    <li class="ticker-item">
+      <a href="${senateRaceHref(race.abbr)}"${hidden ? ' tabindex="-1"' : ""}>
+        <span class="ticker-state">${race.state}</span>
+        <span class="ticker-proj">Proj.</span>
+        <span class="ticker-margin ${race.margin > 0 ? "dem" : race.margin < 0 ? "rep" : "toss"}">${formatProjectedMargin(race.margin)}</span>
+        <span class="ticker-rating">${RATING_LABELS[race.rating]}</span>
+      </a>
+    </li>`;
+
+  const ticker = document.createElement("div");
+  ticker.className = "election-ticker";
+  ticker.setAttribute("role", "region");
+  ticker.setAttribute("aria-label", "Senate battleground forecast ticker. Margins are projections, not results.");
+  ticker.innerHTML = `
+    <div class="ticker-inner">
+      <span class="ticker-label"><b>Forecast</b><span>Projected margins &middot; not results</span></span>
+      <div class="ticker-viewport">
+        <div class="ticker-track">
+          <ul class="ticker-list">${items.map(r => item(r, false)).join("")}</ul>
+          <ul class="ticker-list" aria-hidden="true">${items.map(r => item(r, true)).join("")}</ul>
+        </div>
+      </div>
+    </div>`;
+  nav.insertAdjacentElement("afterend", ticker);
+
+  // Constant reading speed (~45px/s) regardless of how many races are listed.
+  const track = ticker.querySelector(".ticker-track");
+  const copyWidth = track.firstElementChild.getBoundingClientRect().width;
+  track.style.setProperty("--ticker-duration", `${Math.max(20, copyWidth / 45)}s`);
+}
+
+// ---------- Election Night banner (homepage) ----------
+const ELECTION_DAY_2026 = new Date(2026, 10, 3); // Tuesday, November 3, 2026 (local time)
+
+function renderElectionBanner(){
+  const el = document.getElementById("election-banner-status");
+  if (!el) return;
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const days = Math.round((ELECTION_DAY_2026 - today) / 86400000);
+  el.textContent =
+    days > 1 ? `${days} days to Election Day` :
+    days === 1 ? "Election Day is tomorrow" :
+    days === 0 ? "Election Day \u00b7 polls open" :
+    "Forecast archived \u00b7 await official results";
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   markActiveNav();
   renderMeta();
+  renderElectionTicker();
+  renderElectionBanner();
 });
