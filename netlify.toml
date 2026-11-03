@@ -1,27 +1,18 @@
-headersOrigin = "config"
-redirectsOrigin = "config"
-plugins = []
-headers = []
-redirects = []
-
-[functions]
-
-  [functions."*"]
-
 [build]
-publish = "."
-publishOrigin = "config"
+  # Copies the site into _site/ and generates the Articles section from
+  # content/articles/*.md. See PUBLISHING.md.
+  command = "npm run build"
+  publish = "_site"
 
-  [build.environment]
+[build.environment]
+  NODE_VERSION = "22"
 
-  [build.processing]
+[[redirects]]
+  from = "/articles/"
+  to = "/articles.html"
+  status = 301
 
-    [build.processing.css]
-
-    [build.processing.html]
-
-    [build.processing.images]
-
-    [build.processing.js]
-
-  [build.services]
+[[redirects]]
+  from = "/articles"
+  to = "/articles.html"
+  status = 301

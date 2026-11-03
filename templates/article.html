@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+{{head}}
+<link rel="stylesheet" href="/style.css">
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-66SC7DBMMG"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-66SC7DBMMG');
+</script>
+</head>
+<body class="article-page">
+
+{{header}}
+
+<main>
+  {{draftBanner}}
+  <article class="article">
+    <header class="wrap article-header">
+      <nav class="breadcrumb article-breadcrumb" aria-label="Breadcrumb">
+        <a href="/articles.html">Articles &amp; Analysis</a>
+        <span aria-hidden="true">/</span>
+        <a href="{{categoryHref}}">{{categoryName}}</a>
+      </nav>
+      <div class="article-header-top">{{category}}</div>
+      <h1 class="article-title">{{title}}</h1>
+      {{subtitle}}
+      <div class="article-byline">
+        <span class="article-byline-author">By <strong>{{author}}</strong></span>
+        <span class="article-byline-dates">{{dates}}</span>
+      </div>
+    </header>
+
+    <div class="wrap">
+      {{heroImage}}
+      <div class="article-body">
+        {{body}}
+      </div>
+      {{sources}}
+
+      <div class="article-share" aria-label="Share this article">
+        <span class="article-share-label">Share</span>
+        <a href="https://twitter.com/intent/tweet?text={{shareText}}&amp;url={{shareUrl}}" rel="noopener" target="_blank">X</a>
+        <a href="https://bsky.app/intent/compose?text={{shareText}}%20{{shareUrl}}" rel="noopener" target="_blank">Bluesky</a>
+        <a href="https://www.facebook.com/sharer/sharer.php?u={{shareUrl}}" rel="noopener" target="_blank">Facebook</a>
+        <a href="mailto:?subject={{shareText}}&amp;body={{shareUrl}}">Email</a>
+        <button type="button" class="article-copy-link" data-url="{{canonical}}">Copy link</button>
+      </div>
+
+      <p class="article-back"><a href="/articles.html">&larr; Back to Articles &amp; Analysis</a></p>
+    </div>
+  </article>
+
+  {{related}}
+</main>
+
+{{footer}}
+
+<script src="/data.js"></script>
+<script src="/script.js"></script>
+<script>
+  document.querySelectorAll(".article-copy-link").forEach(btn => {
+    btn.addEventListener("click", () => {
+      navigator.clipboard && navigator.clipboard.writeText(btn.dataset.url).then(() => {
+        btn.textContent = "Link copied";
+        setTimeout(() => { btn.textContent = "Copy link"; }, 2000);
+      });
+    });
+  });
+</script>
+</body>
+</html>
