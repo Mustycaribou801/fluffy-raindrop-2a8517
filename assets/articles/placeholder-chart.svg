@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" role="img" aria-label="Placeholder graphic">
+  <rect width="1200" height="600" fill="#121923"/>
+  <g stroke="#2d3a49" stroke-width="1">
+    <path d="M0 100H1200M0 200H1200M0 300H1200M0 400H1200M0 500H1200"/>
+  </g>
+  <rect x="40" y="40" width="1120" height="520" fill="none" stroke="#526274" stroke-dasharray="12 10" stroke-width="2"/>
+  <text x="600" y="285" fill="#d0a84d" font-family="monospace" font-size="34" font-weight="700" text-anchor="middle" letter-spacing="4">PLACEHOLDER IMAGE</text>
+  <text x="600" y="335" fill="#9aa8ba" font-family="monospace" font-size="22" text-anchor="middle">Replace with your own chart, map or photo</text>
+</svg>

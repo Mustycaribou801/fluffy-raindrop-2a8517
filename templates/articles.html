@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+{{head}}
+<link rel="stylesheet" href="/style.css">
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-66SC7DBMMG"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-66SC7DBMMG');
+</script>
+</head>
+<body class="articles-index">
+
+{{header}}
+
+<main>
+  <section class="wrap articles-hero">
+    <p class="section-label">Mustycaribou Forecasts &middot; Analysis desk</p>
+    <h1 class="articles-hero-title">Articles &amp; Analysis</h1>
+    <p class="articles-hero-lede">Independent election analysis and political commentary from Mustycaribou Forecasts — the reasoning behind the ratings, what the polls do and don't say, and how races across the United States and Australia are taking shape.</p>
+  </section>
+
+  <div class="articles-content{{emptyClass}}">
+    {{featured}}
+
+    <section class="wrap article-listing" aria-labelledby="recent-heading">
+      <div class="section-heading article-section-heading">
+        <h2 id="recent-heading">Recent articles</h2>
+        <span class="article-listing-count" id="article-count" aria-live="polite"></span>
+      </div>
+
+      <div class="article-filters" role="group" aria-label="Filter articles by category">
+        {{filters}}
+      </div>
+
+      <div class="article-grid" id="article-grid">{{grid}}
+      </div>
+      <p class="article-empty" id="article-empty" hidden>No articles in this category yet.</p>
+    </section>
+  </div>
+
+  <section class="wrap article-none">
+    <p class="article-empty">No articles have been published yet. New analysis will appear here as it is published.</p>
+  </section>
+</main>
+
+{{footer}}
+
+<script src="/data.js"></script>
+<script src="/script.js"></script>
+<script>
+  // Category filters. The selected category is kept in the URL
+  // (?category=polling) so a filtered view can be shared.
+  (function(){
+    const buttons = [...document.querySelectorAll(".article-filter")];
+    const cards = [...document.querySelectorAll("#article-grid .article-card")];
+    const featured = document.getElementById("featured-article");
+    const empty = document.getElementById("article-empty");
+    const count = document.getElementById("article-count");
+    if (!buttons.length) return;
+
+    function apply(filter, push){
+      if (!buttons.some(b => b.dataset.filter === filter)) filter = "all";
+      const all = filter === "all";
+      buttons.forEach(b => b.setAttribute("aria-pressed", String(b.dataset.filter === filter)));
+      let shown = 0;
+      cards.forEach(card => {
+        // With no filter the featured article sits above the grid, so it isn't repeated.
+        const match = all ? !card.classList.contains("is-featured") : card.dataset.category === filter;
+        card.hidden = !match;
+        if (match || (all && card.classList.contains("is-featured"))) shown++;
+      });
+      if (featured) featured.hidden = !all;
+      empty.hidden = shown > 0;
+      count.textContent = `${shown} article${shown === 1 ? "" : "s"}`;
+      if (push){
+        const url = new URL(location.href);
+        all ? url.searchParams.delete("category") : url.searchParams.set("category", filter);
+        history.replaceState(null, "", url);
+      }
+    }
+
+    buttons.forEach(b => b.addEventListener("click", () => apply(b.dataset.filter, true)));
+    apply(new URLSearchParams(location.search).get("category") || "all", false);
+  })();
+</script>
+</body>
+</html>

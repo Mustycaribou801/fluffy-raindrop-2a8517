@@ -1,0 +1,12 @@
+{
+  "name": "mustycaribou-forecasts",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.mjs"
+  },
+  "dependencies": {
+    "gray-matter": "^4.0.3",
+    "marked": "^15.0.12"
+  }
+}
