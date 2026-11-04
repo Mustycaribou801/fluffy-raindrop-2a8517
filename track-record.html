@@ -40,6 +40,22 @@
 </nav>
 
 <main>
+  <section class="wrap featured-review" id="featured-review" aria-label="Featured: 2026 Midterm Election Review">
+    <a class="featured-review-card" href="2026-results.html">
+      <div>
+        <p class="section-label">Featured &middot; New</p>
+        <h2>2026 Midterm Election Review</h2>
+        <p>See how the final 2026 Senate and governor forecasts compare with the results: winner accuracy, margin error, rating calibration and every race, state by state.</p>
+      </div>
+      <span class="featured-review-cta">View the 2026 review &rarr;</span>
+      <dl class="featured-review-stats" id="featured-review-stats">
+        <div><dt>Senate winner accuracy</dt><dd data-score="senate">Pending</dd></div>
+        <div><dt>Governor winner accuracy</dt><dd data-score="governor">Pending</dd></div>
+        <div><dt>Overall winner accuracy</dt><dd data-score="overall">Pending</dd></div>
+      </dl>
+      <p class="featured-review-note" id="featured-review-note">Results pending. Accuracy is shown once verified (called or certified) results are entered.</p>
+    </a>
+  </section>
   <section class="wrap archive-hero">
     <p class="section-label">2024 election archive</p>
     <div class="section-heading archive-heading">
@@ -186,6 +202,26 @@
 
 <script src="data.js"></script>
 <script src="script.js"></script>
+<script src="results-2026.js"></script>
+<script src="results-2026-page.js"></script>
+<script>
+  // 2026 featured card: accuracy calculated from results-2026.js (verified results only).
+  (function(){
+    if (typeof window.scoreResults2026 !== "function") return;
+    const score = window.scoreResults2026();
+    document.querySelectorAll("#featured-review-stats [data-score]").forEach(el => {
+      const s = score[el.dataset.score];
+      el.innerHTML = s && s.counted
+        ? `${(s.correct / s.counted * 100).toFixed(1)}%<small>${s.correct}/${s.counted} called</small>`
+        : `Pending<small>0/${s ? s.total : 0} called</small>`;
+    });
+    const o = score.overall;
+    const note = document.getElementById("featured-review-note");
+    if (note && o.counted) note.textContent = o.counted === o.total
+      ? "All races called. Accuracy counts called and certified results only."
+      : `${o.counted} of ${o.total} races called so far. Accuracy counts called and certified results only; uncalled and pending races aren't scored.`;
+  })();
+</script>
 <script>
   const PRESIDENTIAL_ARCHIVE_2024 = [
     { abbr:"WA", state:"Washington", ev:12, x:1, y:1, predicted:"D", actual:"D", predictedMargin:16.0, actualMargin:18.2, rating:"Safe D" },
