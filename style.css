@@ -2892,3 +2892,12 @@ footer{
 .r26-wrong-list .rating-chip{ margin: 0 2px; }
 .r26-cands{ margin-top: -4px; }
 .r26-cands dt{ font-size: 0.84rem; }
+
+/* ---------- 2026 review: results withheld (resultsPublished: false) ---------- */
+.results-2026 [data-r26-results][hidden]{ display: none !important; }
+.r26-results-off .r26-result-col{ display: none; }
+.r26-audit-notice{
+  margin-top: 24px;
+  border-left: 4px solid var(--gold);
+}
+.r26-audit-notice p{ margin: 0; color: var(--ink); font-size: 1.02rem; }

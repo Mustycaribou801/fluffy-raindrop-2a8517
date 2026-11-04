@@ -16,7 +16,7 @@
   gtag('config', 'G-66SC7DBMMG');
 </script>
 </head>
-<body class="results-2026">
+<body class="results-2026 r26-results-off">
 
 <header class="masthead">
   <div class="masthead-inner">
@@ -49,10 +49,15 @@
         <h2>2026 Midterm Election Review</h2>
         <p class="archive-lede">An audit of the final pre-election Senate and governor forecasts against the results, state by state. The predictions are fixed. Results show as <em>pending</em> until a verified figure is entered.</p>
       </div>
-      <div class="archive-stamp" id="r26-stamp">Results pending</div>
+      <div class="archive-stamp" id="r26-stamp">Audit in progress</div>
     </div>
 
-    <div class="r26-status-strip" id="r26-status-strip" aria-live="polite"></div>
+    <!-- Shown while RESULTS_2026.resultsPublished is false (results-2026.js). -->
+    <div class="race-detail-panel r26-audit-notice" data-r26-audit-notice role="status">
+      <p>Our 2026 election results audit is currently being finalised. Verified results and forecasting accuracy statistics will be published shortly.</p>
+    </div>
+
+    <div class="r26-status-strip" id="r26-status-strip" aria-live="polite" data-r26-results hidden></div>
     <div class="r26-overview-grid">
       <div class="race-detail-panel r26-overview-copy" id="r26-overview-copy"></div>
       <div class="stat-grid archive-kpis" id="r26-overview-kpis"></div>
@@ -64,7 +69,7 @@
   </section>
 
   <!-- (2) KPI cards -->
-  <section class="wrap" id="accuracy">
+  <section class="wrap" id="accuracy" data-r26-results hidden>
     <p class="section-label">Forecast performance</p>
     <h2>Senate accuracy</h2>
     <div class="stat-grid dashboard-grid" id="r26-senate-kpis"></div>
@@ -85,7 +90,7 @@
         <p class="section-label">Interactive audit</p>
         <h2>Senate map</h2>
       </div>
-      <div class="race-tabs r26-mode-tabs" role="group" aria-label="Senate map view" data-map="senate">
+      <div class="race-tabs r26-mode-tabs" data-r26-results hidden role="group" aria-label="Senate map view" data-map="senate">
         <button type="button" class="race-tab active" data-mode="predicted" aria-pressed="true">Predicted</button>
         <button type="button" class="race-tab" data-mode="actual" aria-pressed="false">Actual</button>
         <button type="button" class="race-tab" data-mode="errors" aria-pressed="false">Errors</button>
@@ -103,7 +108,7 @@
       <div>
         <h2>Governor map</h2>
       </div>
-      <div class="race-tabs r26-mode-tabs" role="group" aria-label="Governor map view" data-map="governor">
+      <div class="race-tabs r26-mode-tabs" data-r26-results hidden role="group" aria-label="Governor map view" data-map="governor">
         <button type="button" class="race-tab active" data-mode="predicted" aria-pressed="true">Predicted</button>
         <button type="button" class="race-tab" data-mode="actual" aria-pressed="false">Actual</button>
         <button type="button" class="race-tab" data-mode="errors" aria-pressed="false">Errors</button>
@@ -116,11 +121,11 @@
       </div>
       <aside class="accuracy-panel" id="r26-governor-panel" aria-live="polite"></aside>
     </div>
-    <p class="hero-footnote">Faded tiles had no race in 2026. Striped tiles are uncalled or in a runoff: they're shown in the Actual and Errors views without a winner. Every value on the maps is also listed in the tables below.</p>
+    <p class="hero-footnote">Faded tiles had no race in 2026.<span data-r26-results hidden> Striped tiles are uncalled or in a runoff: they're shown in the Actual and Errors views without a winner.</span> Every value on the maps is also listed in the tables below.</p>
   </section>
 
   <!-- (4) Rating tiers -->
-  <section class="wrap" id="ratings">
+  <section class="wrap" id="ratings" data-r26-results hidden>
     <div class="section-heading">
       <div>
         <p class="section-label">Calibration</p>
@@ -170,7 +175,7 @@
         <span>Find a state</span>
         <input type="search" id="r26-senate-search" placeholder="State, abbreviation or incumbent" autocomplete="off">
       </label>
-      <label class="board-field">
+      <label class="board-field" data-r26-results hidden>
         <span>Show</span>
         <select id="r26-senate-filter">
           <option value="">All races</option>
@@ -184,19 +189,19 @@
     </div>
     <div class="archive-table-wrap">
       <table class="archive-table r26-table r26-state-table">
-        <caption>All 35 Senate races. Margin is first place minus second place, labelled by the leading party; error is the absolute gap between predicted and actual margin. Uncalled races show the current margin and aren't scored.</caption>
+        <caption>All 35 Senate races.<span data-r26-results hidden> Margin is first place minus second place, labelled by the leading party; error is the absolute gap between predicted and actual margin. Uncalled races show the current margin and aren't scored.</span></caption>
         <thead>
           <tr>
             <th scope="col">State</th>
             <th scope="col">Predicted party</th>
             <th scope="col">Predicted margin</th>
-            <th scope="col">Actual party</th>
-            <th scope="col">Dem %</th>
-            <th scope="col">Rep %</th>
-            <th scope="col">Actual margin</th>
-            <th scope="col">Margin error</th>
-            <th scope="col">Winner</th>
-            <th scope="col">Result status</th>
+            <th scope="col" class="r26-result-col">Actual party</th>
+            <th scope="col" class="r26-result-col">Dem %</th>
+            <th scope="col" class="r26-result-col">Rep %</th>
+            <th scope="col" class="r26-result-col">Actual margin</th>
+            <th scope="col" class="r26-result-col">Margin error</th>
+            <th scope="col" class="r26-result-col">Winner</th>
+            <th scope="col" class="r26-result-col">Result status</th>
           </tr>
         </thead>
         <tbody id="r26-senate-table"></tbody>
@@ -209,7 +214,7 @@
         <span>Find a state</span>
         <input type="search" id="r26-governor-search" placeholder="State or abbreviation" autocomplete="off">
       </label>
-      <label class="board-field">
+      <label class="board-field" data-r26-results hidden>
         <span>Show</span>
         <select id="r26-governor-filter">
           <option value="">All races</option>
@@ -223,19 +228,19 @@
     </div>
     <div class="archive-table-wrap">
       <table class="archive-table r26-table r26-state-table">
-        <caption>All 36 governor races. Governor forecasts were published as ratings, so the predicted column shows the rating. Uncalled races show the current margin and aren't scored.</caption>
+        <caption>All 36 governor races. Governor forecasts were published as ratings, so the predicted column shows the rating.<span data-r26-results hidden> Uncalled races show the current margin and aren't scored.</span></caption>
         <thead>
           <tr>
             <th scope="col">State</th>
             <th scope="col">Predicted party</th>
             <th scope="col">Predicted rating</th>
-            <th scope="col">Actual party</th>
-            <th scope="col">Dem %</th>
-            <th scope="col">Rep %</th>
-            <th scope="col">Actual margin</th>
-            <th scope="col">Margin error</th>
-            <th scope="col">Winner</th>
-            <th scope="col">Result status</th>
+            <th scope="col" class="r26-result-col">Actual party</th>
+            <th scope="col" class="r26-result-col">Dem %</th>
+            <th scope="col" class="r26-result-col">Rep %</th>
+            <th scope="col" class="r26-result-col">Actual margin</th>
+            <th scope="col" class="r26-result-col">Margin error</th>
+            <th scope="col" class="r26-result-col">Winner</th>
+            <th scope="col" class="r26-result-col">Result status</th>
           </tr>
         </thead>
         <tbody id="r26-governor-table"></tbody>
@@ -262,6 +267,7 @@
           <li><strong>Predicted party</strong> comes from the rating: Safe, Likely and Lean D are Democratic calls, and the R versions are Republican calls. A Toss-up uses the sign of the projected margin, and a Toss-up with no margin isn't scored.</li>
           <li>Senate forecasts had a rating and a projected margin. Governor forecasts had a rating only.</li>
         </ul>
+        <div data-r26-results hidden>
         <h3>Results</h3>
         <ul>
           <li>Election-night figures come from the NBC News results pages, which publish vote data from The Associated Press. Race calls are the NBC News Decision Desk's projections. Each race links to its source page and records when it was read. They will be replaced with certified figures from state election offices as those are published. Nothing is estimated or filled in.</li>
@@ -269,6 +275,7 @@
           <li>Only called and certified races count towards accuracy. A candidate who is leading is never treated as the winner.</li>
           <li>Election-night shares are unofficial and change as counting continues, especially where a large share of the expected vote is still outstanding.</li>
         </ul>
+        </div>
       </div>
       <div class="race-detail-panel r26-method">
         <h3>Statistics</h3>

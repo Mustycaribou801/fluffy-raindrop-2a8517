@@ -53,6 +53,13 @@ const RESULTS_2026 = {
   forecastSnapshot: "2026-07-06",  // date of the final pre-election forecast in data.js
   resultsLastChecked: "2026-11-04", // date the results below were last read from the source
 
+  // TEMPORARY SWITCH. While false, the review page shows the frozen
+  // pre-election predictions only: every `result` object below is kept
+  // for reference but ignored, so no results, vote shares, winner calls,
+  // accuracy figures or margin errors are displayed (here or on the
+  // Track Record card). Set to true to publish the audit again.
+  resultsPublished: false,
+
   // Your post-election reflection. Add one string per paragraph;
   // the page shows a "coming soon" note while this list is empty.
   reflection: [
