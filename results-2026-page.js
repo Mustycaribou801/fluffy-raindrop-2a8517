@@ -85,8 +85,14 @@
     };
   }
 
-  const SEN = RESULTS_2026.senate.map(r => analyse(r, "Senate"));
-  const GOV = RESULTS_2026.governor.map(r => analyse(r, "Governor"));
+  // While results are withheld (resultsPublished !== true), every race is
+  // analysed as if no result had been entered. The stored result data stays
+  // in results-2026.js but is never read, shown or scored.
+  const PUBLISHED = RESULTS_2026.resultsPublished === true;
+  const withheld = race => PUBLISHED ? race : { ...race, result: { status: "pending" } };
+
+  const SEN = RESULTS_2026.senate.map(r => analyse(withheld(r), "Senate"));
+  const GOV = RESULTS_2026.governor.map(r => analyse(withheld(r), "Governor"));
 
   // A race counts towards accuracy only once a winner has been called or certified.
   const counts = r => r.decided && r.correct !== null;
@@ -135,7 +141,7 @@
     const decided = all.filter(r => r.decided).length;
     const withVotes = all.filter(r => r.status !== "pending").length;
     document.getElementById("r26-stamp").textContent =
-      withVotes === 0 ? "Results pending" : decided === all.length ? "All races called" : `${decided}/${all.length} called`;
+      !PUBLISHED ? "Audit in progress" : withVotes === 0 ? "Results pending" : decided === all.length ? "All races called" : `${decided}/${all.length} called`;
 
     document.getElementById("r26-status-strip").innerHTML = ["certified", "called", "uncalled", "runoff", "pending"].map(k => {
       const n = all.filter(r => r.status === k).length;
@@ -150,9 +156,19 @@
     document.getElementById("r26-overview-copy").innerHTML = `
       <p>The midterms were held on ${ELECTION_DAY}: <strong>${s.total} Senate races</strong>, including special elections, and <strong>${g.total} governor races</strong>. Going into Election Day, the final forecast had Democrats winning <strong>${s.predD}</strong> of the Senate contests and Republicans <strong>${s.predR}</strong>${senPredD !== null ? `. That would make the chamber <strong>${senPredD}–${senPredR}</strong> once the seats not up this cycle are counted` : ""}. It projected <strong>${s.predFlips}</strong> Senate seat${s.predFlips === 1 ? "" : "s"} changing party.</p>
       <p>For governor, the forecast had Democrats winning <strong>${g.predD}</strong> races and Republicans <strong>${g.predR}</strong>, with <strong>${g.predFlips}</strong> projected flip${g.predFlips === 1 ? "" : "s"}.</p>
-      <p>${withVotes === 0
+      ${!PUBLISHED ? "" : `<p>${withVotes === 0
         ? "No results have been entered yet. Every race is marked pending until a verified result is added, so the accuracy figures below are blank on purpose."
-        : `<strong>${decided}</strong> of ${all.length} races have a declared winner and count towards the accuracy figures.${undecidedList.length ? ` Not yet decided: ${undecidedList.join(", ")}. Those races show their current margin and aren't scored.` : ""}`}</p>`;
+        : `<strong>${decided}</strong> of ${all.length} races have a declared winner and count towards the accuracy figures.${undecidedList.length ? ` Not yet decided: ${undecidedList.join(", ")}. Those races show their current margin and aren't scored.` : ""}`}</p>`}`;
+
+    if (!PUBLISHED){
+      document.getElementById("r26-overview-kpis").innerHTML =
+        card(senPredD !== null ? `${senPredD}–${senPredR}` : `${s.predD}–${s.predR}`, senPredD !== null ? "Forecast Senate (D–R), incl. holdovers" : "Forecast Senate races won (D–R)") +
+        card(String(s.predFlips), "Forecast Senate seats changing party") +
+        card(`${g.predD}–${g.predR}`, "Forecast governor races won (D–R)") +
+        card(String(g.predFlips), "Forecast governor seats changing party");
+      document.getElementById("r26-count-note").textContent = "";
+      return;
+    }
 
     const senSoFar = HOLD_D !== null ? `${HOLD_D + s.actualD}–${HOLD_R + s.actualR}${s.actualI ? `–${s.actualI} I` : ""}` : `${s.actualD}–${s.actualR}`;
     document.getElementById("r26-overview-kpis").innerHTML =
@@ -264,18 +280,18 @@
         <dt>Final rating</dt><dd><span class="rating-chip ${r.rating}">${LABELS[r.rating]}</span></dd>
         <dt>Predicted winner</dt><dd>${r.predictedParty ? PARTY[r.predictedParty] : "Not scored"}</dd>
         ${m.margins ? `<dt>Predicted margin</dt><dd>${fmtMargin(r.predictedMargin) || "—"}</dd>` : ""}
-        <dt>Actual winner</dt><dd>${r.decided ? (PARTY[r.actualParty] || esc(r.actualParty)) : notDecidedLabel(r)}</dd>
+        ${!PUBLISHED ? (r.incumbentName ? `<dt>Incumbent</dt><dd>${esc(r.incumbentName)}</dd>` : "") + "</dl>" : `<dt>Actual winner</dt><dd>${r.decided ? (PARTY[r.actualParty] || esc(r.actualParty)) : notDecidedLabel(r)}</dd>
         <dt>${r.decided ? "Actual margin" : "Current margin"}</dt><dd>${marginText(r) || "Pending"}</dd>
         ${m.margins ? `<dt>Margin error</dt><dd>${r.error !== null ? `${r.error.toFixed(1)} pts` : "—"}</dd>` : ""}
         <dt>Winner call</dt><dd>${verdict}</dd>
         <dt>Result status</dt><dd>${statusTag(r.status)}</dd>
         ${r.incumbentName ? `<dt>Incumbent</dt><dd>${esc(r.incumbentName)}</dd>` : ""}
-      </dl>
-      ${candRows ? `<dl class="panel-metrics r26-cands">${candRows}${r.expectedVote !== null ? `<dt>Expected vote counted</dt><dd>${r.expectedVote}%</dd>` : ""}</dl>` : ""}
+      </dl>`}
+      ${!PUBLISHED ? `<p class="hero-footnote">Verified results for this race will be published once the audit is complete.</p>` : `${candRows ? `<dl class="panel-metrics r26-cands">${candRows}${r.expectedVote !== null ? `<dt>Expected vote counted</dt><dd>${r.expectedVote}%</dd>` : ""}</dl>` : ""}
       ${r.note ? `<p class="hero-footnote">${esc(r.note)}</p>` : ""}
       <p class="hero-footnote">${r.status !== "pending"
         ? `${r.decided && r.calledBy ? `Called by ${esc(r.calledBy)}. ` : r.status === "uncalled" ? "<strong>Not yet called.</strong> " : r.status === "runoff" ? "<strong>Goes to a runoff; no winner yet.</strong> " : ""}Source: ${r.sourceUrl ? `<a href="${esc(r.sourceUrl)}" target="_blank" rel="noopener">${esc(r.source || r.sourceUrl)}</a>` : esc(r.source) || "not recorded"}${r.asOf ? ` · as of ${esc(r.asOf)}` : ""}`
-        : "No verified result has been entered for this race yet."}</p>`;
+        : "No verified result has been entered for this race yet."}</p>`}`;
   }
 
   function initMap(key){
@@ -372,26 +388,26 @@
 
     const muted = t => `<span class="r26-muted">${t}</span>`;
     document.getElementById(`r26-${key}-table`).innerHTML = shown.length ? shown.map(r => {
-      const rowCls = r.correct === true ? "correct-row" : r.correct === false ? "incorrect-row" : "pending-row";
+      const rowCls = !PUBLISHED ? "" : r.correct === true ? "correct-row" : r.correct === false ? "incorrect-row" : "pending-row";
       const predicted = key === "senate"
         ? `${fmtMargin(r.predictedMargin) || "—"} <span class="rating-chip ${r.rating}">${LABELS[r.rating]}</span>`
         : `<span class="rating-chip ${r.rating}">${LABELS[r.rating]}</span>`;
       const winner = r.correct === null ? muted(notDecidedLabel(r)) : r.correct ? `<span class="r26-ok">Correct</span>` : `<span class="r26-miss">Incorrect</span>`;
       const share = c => c ? fmtPct(c.pct) : muted("—");
       return `
-        <tr class="${rowCls}${r.decided ? "" : r.hasVotes ? " uncalled-row" : ""}">
+        <tr class="${rowCls}${!PUBLISHED || r.decided ? "" : r.hasVotes ? " uncalled-row" : ""}">
           <th scope="row">${esc(r.state)}</th>
           <td>${partyTag(r.predictedParty)}</td>
           <td>${predicted}</td>
-          <td>${r.decided ? partyTag(r.actualParty) : muted(notDecidedLabel(r))}</td>
+          ${!PUBLISHED ? "" : `<td>${r.decided ? partyTag(r.actualParty) : muted(notDecidedLabel(r))}</td>
           <td>${r.hasVotes ? share(r.dem) : muted("—")}</td>
           <td>${r.hasVotes ? share(r.rep) : muted("—")}</td>
           <td>${r.hasVotes ? (r.decided ? marginText(r) : `${fmtLead(r.lead.party, r.leadPts)} <span class="r26-status ${r.status}">${STATUS[r.status]}</span>`) : muted("Pending")}</td>
           <td>${r.error !== null ? `${r.error.toFixed(1)} pts` : muted(key === "governor" ? "n/a" : "—")}</td>
           <td>${winner}</td>
-          <td>${statusTag(r.status)}${r.sourceUrl ? ` <a class="r26-src" href="${esc(r.sourceUrl)}" target="_blank" rel="noopener" aria-label="Source for ${esc(r.state)}">Source</a>` : ""}</td>
+          <td>${statusTag(r.status)}${r.sourceUrl ? ` <a class="r26-src" href="${esc(r.sourceUrl)}" target="_blank" rel="noopener" aria-label="Source for ${esc(r.state)}">Source</a>` : ""}</td>`}
         </tr>`;
-    }).join("") : `<tr><td colspan="10" class="r26-empty">No races match this search.</td></tr>`;
+    }).join("") : `<tr><td colspan="${PUBLISHED ? 10 : 3}" class="r26-empty">No races match this search.</td></tr>`;
     document.getElementById(`r26-${key}-count`).textContent = `${shown.length} of ${races.length} races`;
   }
 
@@ -408,7 +424,7 @@
       ? paras.map(p => `<p>${esc(p)}</p>`).join("")
       : `<p>My reflection will be posted here once enough results have been verified to judge the forecast fairly.</p>`;
     document.getElementById("r26-snapshot").textContent = `final update ${RESULTS_2026.forecastSnapshot}`;
-    document.getElementById("r26-checked").textContent = RESULTS_2026.resultsLastChecked
+    document.getElementById("r26-checked").textContent = !PUBLISHED ? "" : RESULTS_2026.resultsLastChecked
       ? `Results last checked ${RESULTS_2026.resultsLastChecked}.`
       : "No results have been entered yet.";
   }
@@ -417,7 +433,7 @@
   // Called or certified races only. Uncalled, runoff and pending races are never counted.
   window.scoreResults2026 = function(){
     const score = races => {
-      const counted = races.filter(counts);
+      const counted = PUBLISHED ? races.filter(counts) : [];
       return { total: races.length, counted: counted.length, correct: counted.filter(r => r.correct).length };
     };
     return { senate: score(SEN), governor: score(GOV), overall: score([...SEN, ...GOV]) };
@@ -426,6 +442,21 @@
   // ---------- wire-up ----------
   document.addEventListener("DOMContentLoaded", () => {
     if (!document.getElementById("r26-stamp")) return; // not on 2026-results.html
+    if (!PUBLISHED){
+      // Predictions-only mode: the results sections stay hidden (they are
+      // hidden in the HTML by default) and are never rendered.
+      renderOverview();
+      initMap("senate");
+      initMap("governor");
+      initTable("senate");
+      initTable("governor");
+      renderReflection();
+      return;
+    }
+    // Results published: reveal the results sections and remove the notice.
+    document.body.classList.remove("r26-results-off");
+    document.querySelectorAll("[data-r26-results]").forEach(el => { el.hidden = false; });
+    document.querySelectorAll("[data-r26-audit-notice]").forEach(el => el.remove());
     renderOverview();
     kpis("r26-senate-kpis", SEN, { margins: true });
     kpis("r26-governor-kpis", GOV, { margins: false });
