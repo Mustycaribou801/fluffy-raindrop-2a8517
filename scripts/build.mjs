@@ -53,6 +53,7 @@ const INCLUDE_DRAFTS = process.env.INCLUDE_DRAFTS
 const EXCLUDE = new Set([
   "node_modules", "content", "templates", "scripts",
   "package.json", "package-lock.json", "netlify.toml", "PUBLISHING.md",
+  "db", "netlify", "drizzle.config.ts",
   path.basename(OUT),
 ]);
 
@@ -358,6 +359,7 @@ function buildArticlePage(a, all, tpl){
     shareUrl,
     shareText,
     canonical,
+    slug: a.slug,
     related: related.length ? `
     <section class="wrap article-related" aria-labelledby="related-heading">
       <div class="section-heading article-section-heading">
