@@ -2625,3 +2625,270 @@ footer{
 .comment-body p{ margin: 0 0 0.7em; color: var(--ink); line-height: 1.6; overflow-wrap: anywhere; }
 .comment-body p:last-child{ margin-bottom: 0; }
 .comment-empty{ margin: 20px 0 0; color: var(--ink-soft); font-size: 0.95rem; }
+
+/* ==========================================================
+   2026 MIDTERM REVIEW — 2026-results.html and the featured
+   card on track-record.html. Scoped to new class names so the
+   2024 archive styles above are untouched.
+   ========================================================== */
+
+/* ---------- Featured card (track-record.html) ---------- */
+.featured-review{ padding-top: 40px; padding-bottom: 8px; }
+.featured-review + section{ border-top: 0; }
+.featured-review-card{
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 18px 28px;
+  align-items: center;
+  padding: 26px 28px;
+  background: linear-gradient(135deg, rgba(208,168,77,0.12), rgba(28,38,51,0.96) 55%);
+  border: 1px solid rgba(208,168,77,0.45);
+  border-radius: 8px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+  color: var(--ink);
+  text-decoration: none;
+  transition: border-color 160ms ease, transform 160ms ease;
+}
+.featured-review-card:hover,
+.featured-review-card:focus-visible{ border-color: var(--gold); transform: translateY(-2px); }
+.featured-review-card:focus-visible{ outline: 2px solid var(--gold); outline-offset: 3px; }
+.featured-review-card .section-label{ color: var(--gold); margin-bottom: 8px; }
+.featured-review-card h2{ margin-bottom: 8px; }
+.featured-review-card p{ margin: 0; color: var(--ink-soft); }
+.featured-review-cta{
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 10px 16px;
+  background: var(--gold);
+  color: #111720;
+  border-radius: 2px;
+  white-space: nowrap;
+}
+
+/* ---------- Page scaffolding ---------- */
+.r26-crumb{ color: inherit; }
+.r26-subhead{ margin-top: 36px; }
+.r26-map-gap{ margin-top: 48px; }
+.r26-overview-grid{
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(260px, 0.8fr);
+  gap: 22px;
+  margin-top: 18px;
+}
+.r26-overview-copy p{ font-size: 1.02rem; }
+.r26-status-strip{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 22px;
+  margin-top: 24px;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--ink-soft);
+}
+.r26-strip-item{ display: inline-flex; align-items: center; gap: 8px; }
+.r26-strip-item strong{ color: var(--ink); }
+.r26-count-toggle{ margin-top: 18px; }
+.r26-count-toggle label{ display: inline-flex; align-items: center; gap: 10px; cursor: pointer; }
+.r26-count-toggle input{ width: 18px; height: 18px; accent-color: var(--gold); }
+.r26-count-toggle .hero-footnote{ margin-top: 6px; }
+
+/* ---------- Status + party tags ---------- */
+.r26-status{
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 2px;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border: 1px solid var(--rule-strong);
+  color: var(--ink-soft);
+}
+.r26-status.projected{ border-style: dashed; border-color: var(--gold); color: var(--gold); }
+.r26-status.called{ border-color: #4fa968; color: #7fcf95; }
+.r26-status.certified{ background: #2f7045; border-color: #2f7045; color: #fff; }
+.r26-party{
+  display: inline-block;
+  min-width: 24px;
+  text-align: center;
+  padding: 2px 6px;
+  border-radius: 2px;
+  font-weight: 700;
+}
+.r26-party.D{ background: var(--dem-soft); color: #a9c8e4; }
+.r26-party.R{ background: var(--rep-soft); color: #e1a0a0; }
+.r26-party.I{ background: var(--gold-soft); color: var(--gold); }
+.r26-muted{ color: var(--ink-soft); }
+.r26-ok{ color: #7fcf95; font-weight: 700; }
+.r26-miss{ color: #e58b8b; font-weight: 700; }
+.r26-empty{ text-align: center; color: var(--ink-soft); }
+
+/* ---------- Maps ---------- */
+.r26-legend{ margin: 4px 0 16px; }
+.r26-legend .r26-swatch{ border-radius: 2px; border: 1px solid rgba(255,255,255,0.25); }
+.r26-tile.tone-SD, .r26-swatch.tone-SD{ background: #2d6fa8; }
+.r26-tile.tone-LD, .r26-swatch.tone-LD{ background: #34628c; }
+.r26-tile.tone-TD, .r26-swatch.tone-TD{ background: #24405e; }
+.r26-tile.tone-TU, .r26-swatch.tone-TU{ background: #6b5a2c; }
+.r26-tile.tone-TR, .r26-swatch.tone-TR{ background: #5a2c31; }
+.r26-tile.tone-LR, .r26-swatch.tone-LR{ background: #8a3d40; }
+.r26-tile.tone-SR, .r26-swatch.tone-SR{ background: #b04f4f; }
+.r26-tile.act-D, .r26-swatch.act-D{ background: var(--dem); }
+.r26-tile.act-R, .r26-swatch.act-R{ background: var(--rep); }
+.r26-tile.act-I, .r26-swatch.act-I{ background: #8a7a3d; }
+.r26-tile.is-correct, .r26-swatch.is-correct{ background: #2f7045; }
+.r26-tile.is-incorrect, .r26-swatch.is-incorrect{ background: var(--rep); }
+.r26-tile.is-pending, .r26-swatch.is-pending{
+  background: repeating-linear-gradient(135deg, #2a3442 0 6px, #222b37 6px 12px);
+  color: var(--ink-soft);
+}
+.r26-tile.is-projected{ border: 2px dashed var(--gold); }
+.r26-swatch.is-projected{ background: transparent; border: 2px dashed var(--gold); }
+.r26-tile.no-race{
+  background: rgba(255,255,255,0.03);
+  border-color: rgba(255,255,255,0.06);
+  color: rgba(154,168,186,0.4);
+  box-shadow: none;
+  cursor: default;
+  pointer-events: none;
+}
+.r26-tile:focus-visible{ outline: 2px solid var(--gold); outline-offset: 3px; }
+
+/* ---------- Rating-tier chart ---------- */
+.r26-tier-lede{ margin-bottom: 20px; }
+.r26-tier-card{ margin: 0 0 22px; }
+.r26-key{ display: inline-block; width: 10px; height: 10px; border-radius: 2px; }
+.r26-key.correct, .r26-bar.correct{ background: #2f7045; }
+.r26-key.incorrect, .r26-bar.incorrect{ background: var(--rep); }
+.r26-key.pending, .r26-bar.pending{ background: repeating-linear-gradient(135deg, #3a4656 0 5px, #2a3442 5px 10px); }
+.r26-tier-chart{ display: grid; gap: 14px; padding: 18px 4px 6px; }
+.r26-tier-row{
+  display: grid;
+  grid-template-columns: 110px minmax(0, 1fr) 190px;
+  gap: 14px;
+  align-items: center;
+}
+.r26-tier-name{ font-family: var(--font-display); font-weight: 600; font-size: 1.05rem; }
+.r26-tier-name small{ display: block; font-family: var(--font-mono); font-size: 0.7rem; color: var(--ink-soft); font-weight: 400; }
+.r26-tier-track{
+  display: flex;
+  height: 22px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.r26-bar{ display: block; height: 100%; }
+.r26-bar + .r26-bar{ box-shadow: inset 1px 0 0 rgba(16,21,29,0.8); }
+.r26-tier-value{ font-family: var(--font-mono); font-size: 0.8rem; color: var(--ink); }
+.r26-table th[scope="row"]{
+  font-family: var(--font-body);
+  font-size: 0.94rem;
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--ink);
+  background: none;
+  font-weight: 600;
+}
+.r26-state-table .rating-chip{ margin-left: 6px; }
+.r26-state-table .pending-row th:first-child{ border-left: 4px solid var(--rule-strong); }
+.r26-state-table .correct-row th:first-child{ border-left: 4px solid #4fa968; }
+.r26-state-table .incorrect-row th:first-child{ border-left: 4px solid var(--rep); }
+.r26-state-table .projected-row th:first-child{ border-left-style: dashed; }
+.r26-method ul{ padding-left: 18px; margin: 0 0 18px; }
+.r26-method li{ margin-bottom: 8px; color: var(--ink); }
+.r26-method li:last-child{ margin-bottom: 0; }
+.r26-method h3{ margin-bottom: 10px; }
+
+@media (max-width: 900px){
+  .r26-overview-grid{ grid-template-columns: 1fr; }
+  .featured-review-card{ grid-template-columns: 1fr; }
+  .featured-review-cta{ justify-self: start; }
+}
+@media (max-width: 560px){
+  .r26-tier-row{ grid-template-columns: 1fr; gap: 6px; }
+  .r26-mode-tabs{ flex-wrap: wrap; }
+  .featured-review-card{ padding: 20px; }
+  .r26-count-toggle label{ align-items: flex-start; }
+}
+
+/* ---------- Featured card: 2026 accuracy stats ---------- */
+.featured-review-stats{
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  margin: 4px 0 0;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.08);
+}
+.featured-review-stats div{ background: rgba(16,21,29,0.7); padding: 14px 16px; }
+.featured-review-stats dt{ font-size: 0.82rem; color: var(--ink-soft); }
+.featured-review-stats dd{
+  margin: 6px 0 0;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 1.6rem;
+  line-height: 1.1;
+  color: var(--ink);
+}
+.featured-review-stats dd small{
+  display: block;
+  margin-top: 4px;
+  font-size: 0.7rem;
+  font-weight: 400;
+  color: var(--ink-soft);
+}
+.featured-review-card .featured-review-note{ grid-column: 1 / -1; font-size: 0.82rem; }
+@media (max-width: 560px){
+  .featured-review-stats{ grid-template-columns: 1fr; }
+  .featured-review-stats dd{ font-size: 1.35rem; }
+}
+
+/* ---------- Archived-forecast notice (forecast pages) ---------- */
+.archive-notice{
+  border-bottom: 1px solid rgba(208,168,77,0.35);
+  background: rgba(208,168,77,0.08);
+}
+.archive-notice-inner{
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 16px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  font-size: 0.92rem;
+}
+.archive-notice-inner p{ margin: 0; max-width: none; color: var(--ink); }
+.archive-notice-tag{
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 3px 8px;
+  border: 1px solid var(--gold);
+  border-radius: 2px;
+  color: var(--gold);
+  white-space: nowrap;
+}
+.archive-notice-inner a{ color: var(--gold); font-weight: 600; }
+.featured-review{ scroll-margin-top: 160px; }
+
+/* ---------- 2026 review: results data ---------- */
+.r26-status.uncalled{ border-style: dashed; border-color: var(--gold); color: var(--gold); }
+.r26-status.runoff{ border-color: var(--gold); color: var(--gold); background: rgba(208,168,77,0.12); }
+.r26-tile.is-uncalled, .r26-swatch.is-uncalled{
+  background: repeating-linear-gradient(135deg, #5a4c26 0 6px, #3a3222 6px 12px);
+  color: var(--gold);
+  border: 1px dashed var(--gold);
+}
+.r26-state-table .uncalled-row th:first-child{ border-left: 4px dashed var(--gold); }
+.r26-src{ margin-left: 6px; font-size: 0.72rem; color: var(--ink-soft); }
+.r26-wrong-panel{ margin-top: 22px; }
+.r26-wrong-list li{ display: flex; flex-wrap: wrap; gap: 4px 10px; padding: 10px 0; border-bottom: 1px solid var(--rule); }
+.r26-wrong-list li:last-child{ border-bottom: 0; }
+.r26-wrong-list .rating-chip{ margin: 0 2px; }
+.r26-cands{ margin-top: -4px; }
+.r26-cands dt{ font-size: 0.84rem; }

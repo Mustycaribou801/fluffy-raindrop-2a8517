@@ -867,7 +867,9 @@ function markActiveNav(){
   const path = location.pathname.split("/").pop() || "index.html";
   document.querySelectorAll("nav.primary a").forEach(a => {
     const href = a.getAttribute("href");
-    if (href === path || (path === "senate-race.html" && href === "forecast.html")) a.classList.add("active");
+    if (href === path
+      || (path === "senate-race.html" && href === "forecast.html")
+      || (path === "2026-results.html" && href === "track-record.html")) a.classList.add("active");
   });
 }
 
@@ -875,6 +877,7 @@ function markActiveNav(){
 function renderMeta(){
   const el = document.getElementById("last-updated");
   if (el) el.textContent = SITE_META.lastUpdated;
+  document.querySelectorAll(".forecast-final-date").forEach(d => { d.textContent = SITE_META.forecastFinalUpdate || d.textContent; });
   const nameEls = document.querySelectorAll(".forecaster-name");
   nameEls.forEach(el => el.textContent = SITE_META.forecasterName);
 }
