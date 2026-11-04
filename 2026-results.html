@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026 Midterm Election Review — Mustycaribou Forecasts</title>
+<meta name="description" content="How the Mustycaribou Forecasts 2026 Senate and governor predictions compare with the results: winner accuracy, margin error, rating-tier performance and state-by-state tables.">
+<link rel="stylesheet" href="style.css">
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-66SC7DBMMG"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-66SC7DBMMG');
+</script>
+</head>
+<body class="results-2026">
+
+<header class="masthead">
+  <div class="masthead-inner">
+    <h1 class="masthead-title"><a href="index.html">Mustycaribou Forecasts</a></h1>
+    <span class="masthead-tag">Professional election intelligence</span>
+  </div>
+  <div class="masthead-meta">
+    <span>By <span class="forecaster-name">Preston</span></span>
+    <span>last updated <span id="last-updated"></span></span>
+  </div>
+</header>
+
+<nav class="primary">
+  <ul>
+    <li><a href="index.html">Home</a></li>
+    <li><a href="forecast.html">2026 Forecast</a></li>
+    <li><a href="updates.html">Updates</a></li>
+    <li><a href="track-record.html">Track Record</a></li>
+    <li><a href="methodology.html">Methodology</a></li>
+    <li><a href="articles.html">Articles</a></li>
+  </ul>
+</nav>
+
+<main>
+  <!-- (1) Overview -->
+  <section class="wrap archive-hero" id="overview">
+    <p class="section-label"><a href="track-record.html" class="r26-crumb">Track Record</a> / 2026 midterm review</p>
+    <div class="section-heading archive-heading">
+      <div>
+        <h2>2026 Midterm Election Review</h2>
+        <p class="archive-lede">An audit of the final pre-election Senate and governor forecasts against the results, state by state. The predictions are fixed. Results show as <em>pending</em> until a verified figure is entered.</p>
+      </div>
+      <div class="archive-stamp" id="r26-stamp">Results pending</div>
+    </div>
+
+    <div class="r26-status-strip" id="r26-status-strip" aria-live="polite"></div>
+    <div class="r26-overview-grid">
+      <div class="race-detail-panel r26-overview-copy" id="r26-overview-copy"></div>
+      <div class="stat-grid archive-kpis" id="r26-overview-kpis"></div>
+    </div>
+
+    <div class="r26-count-toggle">
+      <p class="hero-footnote" id="r26-count-note"></p>
+    </div>
+  </section>
+
+  <!-- (2) KPI cards -->
+  <section class="wrap" id="accuracy">
+    <p class="section-label">Forecast performance</p>
+    <h2>Senate accuracy</h2>
+    <div class="stat-grid dashboard-grid" id="r26-senate-kpis"></div>
+    <h2 class="r26-subhead">Governor accuracy</h2>
+    <div class="stat-grid dashboard-grid" id="r26-governor-kpis"></div>
+    <p class="hero-footnote">Governor forecasts were published as ratings only, without projected margins, so margin error applies to Senate races alone.</p>
+
+    <div class="race-detail-panel r26-wrong-panel">
+      <p class="section-label">Incorrect winner predictions</p>
+      <ul class="miss-list r26-wrong-list" id="r26-wrong-calls"></ul>
+    </div>
+  </section>
+
+  <!-- (3) Maps -->
+  <section class="wrap" id="maps">
+    <div class="section-heading">
+      <div>
+        <p class="section-label">Interactive audit</p>
+        <h2>Senate map</h2>
+      </div>
+      <div class="race-tabs r26-mode-tabs" role="group" aria-label="Senate map view" data-map="senate">
+        <button type="button" class="race-tab active" data-mode="predicted" aria-pressed="true">Predicted</button>
+        <button type="button" class="race-tab" data-mode="actual" aria-pressed="false">Actual</button>
+        <button type="button" class="race-tab" data-mode="errors" aria-pressed="false">Errors</button>
+      </div>
+    </div>
+    <div class="accuracy-legend r26-legend" id="r26-senate-legend" aria-label="Senate map legend"></div>
+    <div class="accuracy-workbench">
+      <div class="accuracy-map-shell">
+        <div class="accuracy-map r26-map" id="r26-senate-map" role="group" aria-label="2026 Senate races by state. Select a state for details."></div>
+      </div>
+      <aside class="accuracy-panel" id="r26-senate-panel" aria-live="polite"></aside>
+    </div>
+
+    <div class="section-heading r26-map-gap">
+      <div>
+        <h2>Governor map</h2>
+      </div>
+      <div class="race-tabs r26-mode-tabs" role="group" aria-label="Governor map view" data-map="governor">
+        <button type="button" class="race-tab active" data-mode="predicted" aria-pressed="true">Predicted</button>
+        <button type="button" class="race-tab" data-mode="actual" aria-pressed="false">Actual</button>
+        <button type="button" class="race-tab" data-mode="errors" aria-pressed="false">Errors</button>
+      </div>
+    </div>
+    <div class="accuracy-legend r26-legend" id="r26-governor-legend" aria-label="Governor map legend"></div>
+    <div class="accuracy-workbench">
+      <div class="accuracy-map-shell">
+        <div class="accuracy-map r26-map" id="r26-governor-map" role="group" aria-label="2026 governor races by state. Select a state for details."></div>
+      </div>
+      <aside class="accuracy-panel" id="r26-governor-panel" aria-live="polite"></aside>
+    </div>
+    <p class="hero-footnote">Faded tiles had no race in 2026. Striped tiles are uncalled or in a runoff: they're shown in the Actual and Errors views without a winner. Every value on the maps is also listed in the tables below.</p>
+  </section>
+
+  <!-- (4) Rating tiers -->
+  <section class="wrap" id="ratings">
+    <div class="section-heading">
+      <div>
+        <p class="section-label">Calibration</p>
+        <h2>Accuracy by rating</h2>
+      </div>
+      <div class="race-tabs" role="group" aria-label="Choose races for the rating chart" id="r26-tier-tabs">
+        <button type="button" class="race-tab active" data-set="all" aria-pressed="true">All races</button>
+        <button type="button" class="race-tab" data-set="senate" aria-pressed="false">Senate</button>
+        <button type="button" class="race-tab" data-set="governor" aria-pressed="false">Governor</button>
+      </div>
+    </div>
+    <p class="archive-lede r26-tier-lede">If the ratings are well calibrated, Safe races should almost never miss, Likely races should rarely miss, and Lean races should miss now and then.</p>
+    <figure class="mchart-card r26-tier-card">
+      <figcaption class="mchart-legend">
+        <span><i class="r26-key correct"></i> Winner correct</span>
+        <span><i class="r26-key incorrect"></i> Winner incorrect</span>
+        <span><i class="r26-key pending"></i> Pending</span>
+      </figcaption>
+      <div class="r26-tier-chart" id="r26-tier-chart"></div>
+    </figure>
+    <div class="archive-table-wrap">
+      <table class="archive-table r26-table">
+        <caption id="r26-tier-caption">Winner accuracy by final rating tier</caption>
+        <thead>
+          <tr>
+            <th scope="col">Rating tier</th>
+            <th scope="col">Races</th>
+            <th scope="col">Counted</th>
+            <th scope="col">Correct</th>
+            <th scope="col">Incorrect</th>
+            <th scope="col">Pending</th>
+            <th scope="col">Winner accuracy</th>
+            <th scope="col">Avg margin error</th>
+          </tr>
+        </thead>
+        <tbody id="r26-tier-table"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- (5) State tables -->
+  <section class="wrap" id="tables">
+    <p class="section-label">Every race</p>
+    <h2>Senate, state by state</h2>
+    <div class="board-toolbar">
+      <label class="board-field">
+        <span>Find a state</span>
+        <input type="search" id="r26-senate-search" placeholder="State, abbreviation or incumbent" autocomplete="off">
+      </label>
+      <label class="board-field">
+        <span>Show</span>
+        <select id="r26-senate-filter">
+          <option value="">All races</option>
+          <option value="pending">Pending only</option>
+          <option value="uncalled">Uncalled or runoff</option>
+          <option value="called">Called or certified</option>
+          <option value="incorrect">Wrong winner calls</option>
+        </select>
+      </label>
+      <span class="board-count" id="r26-senate-count" aria-live="polite"></span>
+    </div>
+    <div class="archive-table-wrap">
+      <table class="archive-table r26-table r26-state-table">
+        <caption>All 35 Senate races. Margin is first place minus second place, labelled by the leading party; error is the absolute gap between predicted and actual margin. Uncalled races show the current margin and aren't scored.</caption>
+        <thead>
+          <tr>
+            <th scope="col">State</th>
+            <th scope="col">Predicted party</th>
+            <th scope="col">Predicted margin</th>
+            <th scope="col">Actual party</th>
+            <th scope="col">Dem %</th>
+            <th scope="col">Rep %</th>
+            <th scope="col">Actual margin</th>
+            <th scope="col">Margin error</th>
+            <th scope="col">Winner</th>
+            <th scope="col">Result status</th>
+          </tr>
+        </thead>
+        <tbody id="r26-senate-table"></tbody>
+      </table>
+    </div>
+
+    <h2 class="r26-subhead">Governor, state by state</h2>
+    <div class="board-toolbar">
+      <label class="board-field">
+        <span>Find a state</span>
+        <input type="search" id="r26-governor-search" placeholder="State or abbreviation" autocomplete="off">
+      </label>
+      <label class="board-field">
+        <span>Show</span>
+        <select id="r26-governor-filter">
+          <option value="">All races</option>
+          <option value="pending">Pending only</option>
+          <option value="uncalled">Uncalled or runoff</option>
+          <option value="called">Called or certified</option>
+          <option value="incorrect">Wrong winner calls</option>
+        </select>
+      </label>
+      <span class="board-count" id="r26-governor-count" aria-live="polite"></span>
+    </div>
+    <div class="archive-table-wrap">
+      <table class="archive-table r26-table r26-state-table">
+        <caption>All 36 governor races. Governor forecasts were published as ratings, so the predicted column shows the rating. Uncalled races show the current margin and aren't scored.</caption>
+        <thead>
+          <tr>
+            <th scope="col">State</th>
+            <th scope="col">Predicted party</th>
+            <th scope="col">Predicted rating</th>
+            <th scope="col">Actual party</th>
+            <th scope="col">Dem %</th>
+            <th scope="col">Rep %</th>
+            <th scope="col">Actual margin</th>
+            <th scope="col">Margin error</th>
+            <th scope="col">Winner</th>
+            <th scope="col">Result status</th>
+          </tr>
+        </thead>
+        <tbody id="r26-governor-table"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- (6) Reflection -->
+  <section class="wrap" id="reflection">
+    <p class="section-label">Post-election reflection</p>
+    <h2>What I got right, and what I missed</h2>
+    <div class="race-detail-panel archive-note" id="r26-reflection"></div>
+  </section>
+
+  <!-- (7) Methodology -->
+  <section class="wrap" id="methodology">
+    <p class="section-label">Methodology &amp; data sources</p>
+    <h2>How this review is calculated</h2>
+    <div class="race-detail-grid">
+      <div class="race-detail-panel r26-method">
+        <h3>Predictions</h3>
+        <ul>
+          <li>Each prediction is the final pre-election forecast published on this site (<span id="r26-snapshot"></span>). It has not been changed since.</li>
+          <li><strong>Predicted party</strong> comes from the rating: Safe, Likely and Lean D are Democratic calls, and the R versions are Republican calls. A Toss-up uses the sign of the projected margin, and a Toss-up with no margin isn't scored.</li>
+          <li>Senate forecasts had a rating and a projected margin. Governor forecasts had a rating only.</li>
+        </ul>
+        <h3>Results</h3>
+        <ul>
+          <li>Election-night figures come from the NBC News results pages, which publish vote data from The Associated Press. Race calls are the NBC News Decision Desk's projections. Each race links to its source page and records when it was read. They will be replaced with certified figures from state election offices as those are published. Nothing is estimated or filled in.</li>
+          <li><strong>Called</strong>: a winner declared by a decision desk. <strong>Certified</strong>: official state result. <strong>Uncalled</strong>: votes reported but no winner declared; the current margin is shown. <strong>Runoff</strong>: race goes to a second round; the first-round leader isn't treated as the winner. <strong>Pending</strong>: no result entered.</li>
+          <li>Only called and certified races count towards accuracy. A candidate who is leading is never treated as the winner.</li>
+          <li>Election-night shares are unofficial and change as counting continues, especially where a large share of the expected vote is still outstanding.</li>
+        </ul>
+      </div>
+      <div class="race-detail-panel r26-method">
+        <h3>Statistics</h3>
+        <ul>
+          <li>Margins are the winner's lead over the runner-up in percentage points, signed: D+ is a Democratic lead, R+ a Republican lead.</li>
+          <li><strong>Actual margin</strong> = first-place share &minus; second-place share, from the published shares (rounded to 0.1 pt). Where the main challenger was an independent (for example Nebraska, Idaho and Montana in the Senate), the margin is against that candidate.</li>
+          <li><strong>Margin error</strong> = |predicted signed margin &minus; actual signed margin|, where a Republican lead counts as negative. It's calculated only for called Senate races.</li>
+          <li><strong>Winner accuracy</strong> = correct calls &divide; counted races. Pending races are left out and never treated as hits or misses.</li>
+          <li><strong>Rating tiers</strong>: Safe (SD/SR), Likely (LD/LR), Lean (TD/TR) and Toss-up (TU).</li>
+          <li>Every figure on this page is recalculated in the browser from the race data whenever the page loads.</li>
+        </ul>
+        <p class="hero-footnote" id="r26-checked"></p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap">
+  <p>Figures on this page are self-reported and archived for transparency. The 2024 review is on the <a href="track-record.html">Track Record</a> page.</p>
+</footer>
+
+<script src="data.js"></script>
+<script src="script.js"></script>
+<script src="results-2026.js"></script>
+<script src="results-2026-page.js"></script>
+</body>
+</html>
