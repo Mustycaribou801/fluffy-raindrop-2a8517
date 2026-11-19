@@ -604,7 +604,8 @@ p{ max-width: 68ch; }
 }
 .accuracy-panel p:last-child{ margin-bottom: 0; }
 .dashboard-grid{ grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
-.senate-archive-section .archive-heading{ margin-bottom: 24px; }
+.senate-archive-section .archive-heading,
+.house-archive-section .archive-heading{ margin-bottom: 24px; }
 .senate-dashboard{ margin-bottom: 28px; }
 .archive-table-wrap{
   overflow-x: auto;
@@ -2769,3 +2770,21 @@ a.race-tab.active:hover{ color: #111720; }
 .tr26-table td:last-child{ white-space: nowrap; }
 .tr-year-nav{ padding-bottom: 12px; }
 .tr26-office-switch{ padding-bottom: 16px; }
+
+/* 2024 House archive: predicted vs. actual seat balance */
+.house-balance-compare{
+  margin-top: 18px;
+  padding: 20px;
+  background: var(--paper-raised);
+  border: 1px solid rgba(255,255,255,0.09);
+  border-radius: 3px;
+}
+.house-balance-row + .house-balance-row{ margin-top: 18px; }
+.house-balance-label{
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: #b9c3cf;
+}
