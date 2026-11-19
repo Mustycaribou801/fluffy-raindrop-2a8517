@@ -1,8 +1,7 @@
 /* ============================================================
    MUSTYCARIBOU FORECASTS — 2026 MIDTERM RESULTS DATA
    ------------------------------------------------------------
-   Powers 2026-results.html and the 2026 card on
-   track-record.html. Every statistic on both pages is
+   Powers track-record-2026.html. Every statistic on the page is
    recalculated from this file, so this is the only place you
    need to edit as results come in.
 
@@ -53,11 +52,8 @@ const RESULTS_2026 = {
   forecastSnapshot: "2026-07-06",  // date of the final pre-election forecast in data.js
   resultsLastChecked: "2026-11-19", // date the results below were last read from the source
 
-  // TEMPORARY SWITCH. While false, the review page shows the frozen
-  // pre-election predictions only: every `result` object below is kept
-  // for reference but ignored, so no results, vote shares, winner calls,
-  // accuracy figures or margin errors are displayed (here or on the
-  // Track Record card). Set to true to publish the audit again.
+  // Legacy flag from the retired standalone review page. The 2026 Track
+  // Record reads the result objects directly and does not use it.
   resultsPublished: false,
 
   // Your post-election reflection. Add one string per paragraph;

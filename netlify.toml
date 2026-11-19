@@ -16,3 +16,16 @@
   from = "/articles"
   to = "/articles.html"
   status = 301
+
+# The standalone 2026 Midterm Election Review was merged into the 2026 Track Record.
+[[redirects]]
+  from = "/2026-results.html"
+  to = "/track-record-2026.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/2026-results"
+  to = "/track-record-2026.html"
+  status = 301
+  force = true

@@ -869,7 +869,6 @@ function markActiveNav(){
     const href = a.getAttribute("href");
     if (href === path
       || (path === "senate-race.html" && href === "forecast.html")
-      || (path === "2026-results.html" && href === "track-record.html")
       || (path === "track-record-2026.html" && href === "track-record.html")) a.classList.add("active");
   });
 }
@@ -930,25 +929,8 @@ function renderElectionTicker(){
   track.style.setProperty("--ticker-duration", `${Math.max(20, copyWidth / 45)}s`);
 }
 
-// ---------- Election Night banner (homepage) ----------
-const ELECTION_DAY_2026 = new Date(2026, 10, 3); // Tuesday, November 3, 2026 (local time)
-
-function renderElectionBanner(){
-  const el = document.getElementById("election-banner-status");
-  if (!el) return;
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-  const days = Math.round((ELECTION_DAY_2026 - today) / 86400000);
-  el.textContent =
-    days > 1 ? `${days} days to Election Day` :
-    days === 1 ? "Election Day is tomorrow" :
-    days === 0 ? "Election Day \u00b7 polls open" :
-    "Forecast archived \u00b7 await official results";
-}
-
 document.addEventListener("DOMContentLoaded", () => {
   markActiveNav();
   renderMeta();
   renderElectionTicker();
-  renderElectionBanner();
 });
