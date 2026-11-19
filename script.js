@@ -869,7 +869,8 @@ function markActiveNav(){
     const href = a.getAttribute("href");
     if (href === path
       || (path === "senate-race.html" && href === "forecast.html")
-      || (path === "2026-results.html" && href === "track-record.html")) a.classList.add("active");
+      || (path === "2026-results.html" && href === "track-record.html")
+      || (path === "track-record-2026.html" && href === "track-record.html")) a.classList.add("active");
   });
 }
 
