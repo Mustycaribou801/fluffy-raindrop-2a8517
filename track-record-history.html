@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Track Record: Historical Forecasting Performance — Mustycaribou Forecasts</title>
+<meta name="description" content="Mustycaribou's forecasting track record: 571 of 590 election winners called correctly (96.78%) across the 2024 presidential, Senate and House forecasts and the 2026 Senate and governor forecasts.">
+<link rel="canonical" href="https://mustycaribou.com/track-record-history.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Mustycaribou Forecasts">
+<meta property="og:title" content="Historical Forecasting Performance — Mustycaribou Forecasts">
+<meta property="og:description" content="Every published Mustycaribou forecast scored against the result: winner accuracy by election for 2024 and 2026.">
+<meta property="og:url" content="https://mustycaribou.com/track-record-history.html">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Historical Forecasting Performance — Mustycaribou Forecasts">
+<meta name="twitter:description" content="Every published Mustycaribou forecast scored against the result: winner accuracy by election for 2024 and 2026.">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Historical Forecasting Performance",
+  "description": "Winner accuracy for every published Mustycaribou election forecast, 2024 and 2026.",
+  "url": "https://mustycaribou.com/track-record-history.html",
+  "isPartOf": { "@type": "WebSite", "name": "Mustycaribou Forecasts", "url": "https://mustycaribou.com/" }
+}
+</script>
+<link rel="stylesheet" href="style.css">
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-66SC7DBMMG"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-66SC7DBMMG');
+</script>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="masthead-inner">
+    <h1 class="masthead-title"><a href="index.html">Mustycaribou Forecasts</a></h1>
+    <span class="masthead-tag">Professional election intelligence</span>
+  </div>
+  <div class="masthead-meta">
+    <span>By <span class="forecaster-name">Preston</span></span>
+    <span>last updated <span id="last-updated"></span></span>
+  </div>
+</header>
+
+<nav class="primary">
+  <ul>
+    <li><a href="index.html">Home</a></li>
+    <li><a href="forecast.html">2026 Forecast</a></li>
+    <li><a href="updates.html">Updates</a></li>
+    <li><a href="track-record-history.html">Track Record</a></li>
+    <li><a href="methodology.html">Methodology</a></li>
+    <li><a href="articles.html">Articles</a></li>
+  </ul>
+</nav>
+
+<main class="history">
+  <nav class="wrap tr-year-nav" aria-label="Track Record section">
+    <span class="section-label">Track Record</span>
+    <div class="race-tabs">
+      <a class="race-tab active" href="track-record-history.html" aria-current="page">Overview</a>
+      <a class="race-tab" href="track-record.html">2024 Election Archive</a>
+      <a class="race-tab" href="track-record-2026.html">2026 Election Archive</a>
+    </div>
+  </nav>
+
+  <section class="wrap archive-hero">
+    <p class="section-label">Track Record overview</p>
+    <div class="section-heading archive-heading">
+      <div>
+        <h2>Historical Forecasting Performance</h2>
+        <p class="archive-lede">Every published Mustycaribou forecast, scored against the certified result. This page brings the 2024 and 2026 track records together in one place: how many winners each forecast called correctly, by election and by year.</p>
+      </div>
+      <div class="archive-stamp" id="history-stamp"></div>
+    </div>
+    <p class="hero-footnote">A forecast counts as correct when the predicted winner of a state, seat or race won. Every total and percentage below is calculated from the individual election records. The full state-by-state audits are in the <a href="track-record.html">2024 Election Archive</a> and the <a href="track-record-2026.html">2026 Election Archive</a>.</p>
+  </section>
+
+  <section class="wrap history-dashboard">
+    <p class="section-label">Headline statistics</p>
+    <h2>Overall Forecasting Record</h2>
+    <div class="stat-grid dashboard-grid history-kpis" id="history-kpis"></div>
+
+    <div class="history-cycles" id="history-cycles"></div>
+  </section>
+
+  <section class="wrap" id="by-election">
+    <p class="section-label">Performance record</p>
+    <h2>Forecasting Performance by Election</h2>
+    <div class="archive-table-wrap">
+      <table class="archive-table history-table">
+        <caption>Winner calls for each published forecast, with the combined total</caption>
+        <thead>
+          <tr>
+            <th scope="col">Election</th>
+            <th scope="col">Correct predictions</th>
+            <th scope="col">Incorrect predictions</th>
+            <th scope="col">Winner accuracy</th>
+          </tr>
+        </thead>
+        <tbody id="history-table"></tbody>
+        <tfoot id="history-total"></tfoot>
+      </table>
+    </div>
+
+    <figure class="mchart-card history-chart-card">
+      <figcaption class="mchart-legend">
+        <span><i class="hbar-key"></i> Winner accuracy by election</span>
+        <span><i class="hbar-ref-key"></i> <span id="history-chart-ref"></span></span>
+      </figcaption>
+      <div class="mchart history-chart" id="history-chart" aria-label="Bar chart of winner accuracy by election, on a scale from 0 to 100 percent"></div>
+      <p class="hero-footnote">The scale runs from 0% to 100%, so bar length is proportional to accuracy. Hover over, tap or tab to a bar to see its exact record.</p>
+    </figure>
+  </section>
+
+  <section class="wrap history-senate-section" id="senate-record">
+    <p class="section-label">Chamber record</p>
+    <h2>US Senate Forecasting Record</h2>
+    <p>The Senate is the only office forecast in both cycles. These figures combine the 2024 and 2026 Senate forecasts.</p>
+    <div class="stat-grid dashboard-grid history-senate" id="history-senate"></div>
+  </section>
+</main>
+
+<footer class="wrap">
+  <p>The 2024 records cover the final presidential forecast for all 50 states, the 34 Senate races and all 435 House seats. The 2026 records cover the 35 Senate races and 36 governor's races in the final forecast published on 6 July 2026. A race is scored only once its winner has been called or certified. Accuracy is correct calls divided by total races forecast.</p>
+</footer>
+
+<script src="data.js"></script>
+<script src="script.js"></script>
+<script src="track-record-history.js"></script>
+</body>
+</html>

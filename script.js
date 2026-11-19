@@ -864,12 +864,16 @@ function renderMisses(listId, misses){
 
 // ---------- Nav active state ----------
 function markActiveNav(){
-  const path = location.pathname.split("/").pop() || "index.html";
+  // Pretty URLs can drop the .html extension, so compare without it.
+  const page = p => (p.split("/").pop() || "index").replace(/\.html$/, "") || "index";
+  const path = page(location.pathname);
+  // The Track Record overview is the menu's landing page; both election archives sit under it.
+  const TRACK_RECORD = new Set(["track-record-history", "track-record", "track-record-2026"]);
   document.querySelectorAll("nav.primary a").forEach(a => {
-    const href = a.getAttribute("href");
+    const href = page(a.getAttribute("href") || "");
     if (href === path
-      || (path === "senate-race.html" && href === "forecast.html")
-      || (path === "track-record-2026.html" && href === "track-record.html")) a.classList.add("active");
+      || (path === "senate-race" && href === "forecast")
+      || (TRACK_RECORD.has(path) && href === "track-record-history")) a.classList.add("active");
   });
 }
 
