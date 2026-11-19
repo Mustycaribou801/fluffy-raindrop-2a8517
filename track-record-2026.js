@@ -5,9 +5,7 @@
      prediction = frozen copy of the final forecast in data.js
      result     = latest called / certified result, with source
 
-   This page reads the result objects directly. The temporary
-   `resultsPublished` switch only governs 2026-results.html and
-   the featured card on track-record.html.
+   This page reads the result objects directly.
 
    Layout and components are the 2024 Track Record's
    (track-record.html), and the Senate margin chart, notable
@@ -44,7 +42,7 @@
   const card = (num, label, cls = "") => `<div class="stat-card${cls ? " " + cls : ""}"><span class="stat-number">${num}</span><span class="stat-label">${label}</span></div>`;
 
   // ---------- normalise one race ----------
-  // Same rules as 2026-results.html: the predicted party comes from the rating
+  // The predicted party comes from the rating
   // (Toss-ups use the sign of the margin), and the margin is first place minus
   // second place, signed negative for a Republican lead and positive otherwise.
   function analyse(race, office){

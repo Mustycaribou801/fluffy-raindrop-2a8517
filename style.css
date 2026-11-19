@@ -1855,108 +1855,6 @@ footer{
   color: var(--ink-soft);
 }
 
-/* ---------- Election Night banner (homepage) ---------- */
-.election-banner{
-  position: relative;
-  overflow: hidden;
-  background:
-    radial-gradient(ellipse at 12% 0%, rgba(77,143,200,0.2), transparent 55%),
-    radial-gradient(ellipse at 88% 100%, rgba(200,95,95,0.16), transparent 55%),
-    linear-gradient(120deg, #111a26 0%, #0d141d 50%, #111a26 100%);
-  border-bottom: 1px solid rgba(208,168,77,0.22);
-  box-shadow: 0 18px 50px rgba(0,0,0,0.35), inset 0 -1px 0 rgba(208,168,77,0.08);
-}
-.election-banner::before{
-  content: "";
-  position: absolute;
-  left: 0; right: 0; top: 0;
-  height: 3px;
-  background: var(--tricolor);
-  opacity: 0.85;
-}
-.election-banner::after{
-  content: "";
-  position: absolute;
-  left: 0; right: 0; bottom: -1px;
-  height: 1px;
-  background: var(--hairline);
-}
-.election-banner-inner{
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 16px 32px;
-  padding-top: 26px;
-  padding-bottom: 24px;
-}
-.election-banner-eyebrow{
-  display: block;
-  font-family: var(--font-mono);
-  font-size: 0.68rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--ink-soft);
-  margin-bottom: 6px;
-}
-.election-banner-title{
-  margin: 0;
-  max-width: none;
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: clamp(1.9rem, 4.4vw, 3rem);
-  line-height: 1;
-  letter-spacing: -0.02em;
-  color: var(--ink);
-  text-shadow: 0 2px 24px rgba(77,143,200,0.18);
-}
-.election-banner-title span{
-  background: linear-gradient(180deg, #f0d48c 0%, var(--gold) 60%, #a9843a 100%);
-  -webkit-background-clip: text;
-          background-clip: text;
-  color: transparent;
-  text-shadow: none;
-}
-.election-banner-meta{
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 8px;
-}
-.election-banner-status{
-  display: inline-flex;
-  align-items: center;
-  gap: 9px;
-  padding: 7px 14px;
-  border-radius: 999px;
-  border: 1px solid rgba(208,168,77,0.4);
-  background: rgba(208,168,77,0.08);
-  box-shadow: 0 0 18px var(--glow-gold), inset 0 1px 0 rgba(255,255,255,0.05);
-  font-family: var(--font-mono);
-  font-size: 0.74rem;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--gold);
-}
-.election-banner-status i{
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--gold);
-  animation: statusBreathe 3.2s ease-in-out infinite;
-}
-@keyframes statusBreathe{
-  0%, 100%{ box-shadow: 0 0 0 0 rgba(208,168,77,0.45); }
-  50%     { box-shadow: 0 0 0 5px rgba(208,168,77,0); }
-}
-.election-banner-date{
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--ink-soft);
-}
 
 /* ---------- Illuminated panels ---------- */
 .forecast-map,
@@ -2128,7 +2026,6 @@ footer{
 @media (max-width: 700px){
   .ticker-label{ padding: 0 12px 0 18px; }
   .ticker-label > span{ max-width: 11ch; line-height: 1.25; font-size: 0.58rem; }
-  .election-banner-meta{ align-items: flex-start; }
 }
 @media (max-width: 560px){
   .home .tally-row{ gap: 8px; }
@@ -2140,7 +2037,6 @@ footer{
   .ticker-track{ animation: none; }
   .ticker-viewport{ overflow-x: auto; }
   .ticker-list[aria-hidden="true"]{ display: none; }
-  .election-banner-status i{ animation: none; }
   .senate-state{ animation: none; }
 }
 
@@ -2627,47 +2523,10 @@ footer{
 .comment-empty{ margin: 20px 0 0; color: var(--ink-soft); font-size: 0.95rem; }
 
 /* ==========================================================
-   2026 MIDTERM REVIEW — 2026-results.html and the featured
-   card on track-record.html. Scoped to new class names so the
+   2026 TRACK RECORD — shared r26-* styles. Scoped to new class names so the
    2024 archive styles above are untouched.
    ========================================================== */
 
-/* ---------- Featured card (track-record.html) ---------- */
-.featured-review{ padding-top: 40px; padding-bottom: 8px; }
-.featured-review + section{ border-top: 0; }
-.featured-review-card{
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: 18px 28px;
-  align-items: center;
-  padding: 26px 28px;
-  background: linear-gradient(135deg, rgba(208,168,77,0.12), rgba(28,38,51,0.96) 55%);
-  border: 1px solid rgba(208,168,77,0.45);
-  border-radius: 8px;
-  box-shadow: 0 20px 50px rgba(0,0,0,0.25);
-  color: var(--ink);
-  text-decoration: none;
-  transition: border-color 160ms ease, transform 160ms ease;
-}
-.featured-review-card:hover,
-.featured-review-card:focus-visible{ border-color: var(--gold); transform: translateY(-2px); }
-.featured-review-card:focus-visible{ outline: 2px solid var(--gold); outline-offset: 3px; }
-.featured-review-card .section-label{ color: var(--gold); margin-bottom: 8px; }
-.featured-review-card h2{ margin-bottom: 8px; }
-.featured-review-card p{ margin: 0; color: var(--ink-soft); }
-.featured-review-cta{
-  font-family: var(--font-mono);
-  font-size: 0.8rem;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  padding: 10px 16px;
-  background: var(--gold);
-  color: #111720;
-  border-radius: 2px;
-  white-space: nowrap;
-}
-
-/* ---------- Page scaffolding ---------- */
 .r26-crumb{ color: inherit; }
 .r26-subhead{ margin-top: 36px; }
 .r26-map-gap{ margin-top: 48px; }
@@ -2804,47 +2663,11 @@ footer{
 
 @media (max-width: 900px){
   .r26-overview-grid{ grid-template-columns: 1fr; }
-  .featured-review-card{ grid-template-columns: 1fr; }
-  .featured-review-cta{ justify-self: start; }
 }
 @media (max-width: 560px){
   .r26-tier-row{ grid-template-columns: 1fr; gap: 6px; }
   .r26-mode-tabs{ flex-wrap: wrap; }
-  .featured-review-card{ padding: 20px; }
   .r26-count-toggle label{ align-items: flex-start; }
-}
-
-/* ---------- Featured card: 2026 accuracy stats ---------- */
-.featured-review-stats{
-  grid-column: 1 / -1;
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1px;
-  margin: 4px 0 0;
-  background: rgba(255,255,255,0.08);
-  border: 1px solid rgba(255,255,255,0.08);
-}
-.featured-review-stats div{ background: rgba(16,21,29,0.7); padding: 14px 16px; }
-.featured-review-stats dt{ font-size: 0.82rem; color: var(--ink-soft); }
-.featured-review-stats dd{
-  margin: 6px 0 0;
-  font-family: var(--font-mono);
-  font-weight: 700;
-  font-size: 1.6rem;
-  line-height: 1.1;
-  color: var(--ink);
-}
-.featured-review-stats dd small{
-  display: block;
-  margin-top: 4px;
-  font-size: 0.7rem;
-  font-weight: 400;
-  color: var(--ink-soft);
-}
-.featured-review-card .featured-review-note{ grid-column: 1 / -1; font-size: 0.82rem; }
-@media (max-width: 560px){
-  .featured-review-stats{ grid-template-columns: 1fr; }
-  .featured-review-stats dd{ font-size: 1.35rem; }
 }
 
 /* ---------- Archived-forecast notice (forecast pages) ---------- */
@@ -2874,7 +2697,6 @@ footer{
   white-space: nowrap;
 }
 .archive-notice-inner a{ color: var(--gold); font-weight: 600; }
-.featured-review{ scroll-margin-top: 160px; }
 
 /* ---------- 2026 review: results data ---------- */
 .r26-status.uncalled{ border-style: dashed; border-color: var(--gold); color: var(--gold); }
