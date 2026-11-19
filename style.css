@@ -2901,3 +2901,49 @@ footer{
   border-left: 4px solid var(--gold);
 }
 .r26-audit-notice p{ margin: 0; color: var(--ink); font-size: 1.02rem; }
+
+/* ==========================================================
+   Track Record year selector (track-record.html and
+   track-record-2026.html) and the 2026 Track Record page
+   ========================================================== */
+.tr-year-nav{
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px 16px;
+  padding-top: 28px;
+}
+.tr-year-nav .section-label{ margin: 0; }
+.tr-year-nav .race-tabs{ margin: 0; }
+a.race-tab{ display: inline-block; text-decoration: none; }
+a.race-tab:hover{ border-color: var(--gold); }
+a.race-tab.active:hover{ color: #111720; }
+.tr-year-nav + section{ border-top: 0; }
+
+.tr26-office-switch{ padding-top: 8px; }
+.tr26-office-switch .race-tabs{ margin: 0; flex-wrap: wrap; }
+.tr26-office-switch + .tr26-office > section:first-child{ border-top: 0; }
+.tr26-office > section + section{ border-top: 1px solid rgba(255,255,255,0.08); }
+.tr26 .race-tabs{ flex-wrap: wrap; }
+
+/* Tiles: faded = no race in 2026; grey = no verified result. */
+.accuracy-state.tr26-no-race{
+  background: rgba(255,255,255,0.03);
+  border-color: rgba(255,255,255,0.06);
+  color: rgba(154,168,186,0.45);
+  box-shadow: none;
+}
+.accuracy-state.tr26-unresolved,
+.accuracy-state.tr26-none{ background: #4a5566; color: var(--ink); }
+.accuracy-legend .tr26-grey{ background: #4a5566; }
+.forecast-archive-map.tr26-forecast-map .accuracy-state{ cursor: pointer; }
+.tr26-forecast-pick{
+  margin: 14px 0 0;
+  padding: 12px 0 12px;
+  border-top: 1px solid var(--rule);
+  min-height: 3.2em;
+}
+.tr26-table td small{ color: var(--ink-soft); font-family: var(--font-mono); font-size: 0.7rem; }
+.tr26-table td:last-child{ white-space: nowrap; }
+.tr-year-nav{ padding-bottom: 12px; }
+.tr26-office-switch{ padding-bottom: 16px; }
