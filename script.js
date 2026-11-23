@@ -892,7 +892,8 @@ function renderMeta(){
 // slides by exactly one copy, so the loop has no visible jump.
 function renderElectionTicker(){
   const nav = document.querySelector("nav.primary");
-  if (!nav || typeof SENATE === "undefined") return;
+  // The home page leads with the Victorian forecast, so the US ticker is not shown there.
+  if (!nav || typeof SENATE === "undefined" || document.body.classList.contains("home")) return;
   const races = SENATE.races
     .filter(isBattleground)
     .sort((a,b) => Math.abs(a.margin) - Math.abs(b.margin) || a.state.localeCompare(b.state));
