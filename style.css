@@ -2909,7 +2909,8 @@ a.history-link-card:hover{ box-shadow: inset 0 0 0 1px var(--gold); }
 /* ==========================================================
    2026 VICTORIAN STATE ELECTION — scoped to body.vic
    ========================================================== */
-.vic{
+.vic,
+.vic-feature{
   --vic-lib: #2f6fc4;
   --vic-nat: #8cc6ee;
   --vic-alp: #d4504c;
@@ -3170,4 +3171,94 @@ a.history-link-card:hover{ box-shadow: inset 0 0 0 1px var(--gold); }
 }
 @media (max-width: 380px){
   .vic-seg.nat span{ display: none; }
+}
+
+/* ---------- Homepage: Victorian forecast feature ---------- */
+.home .home-vic{
+  background:
+    radial-gradient(ellipse at 85% 30%, rgba(47,111,196,0.16), transparent 60%),
+    linear-gradient(180deg, rgba(23,31,43,0.7), rgba(16,21,29,0));
+}
+.home-vic-label{ color: var(--gold); }
+.home .home-vic .home-hero-title{ max-width: 16ch; }
+.home-vic-updated{
+  margin: 22px 0 0;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+.home-vic-panel{
+  display: block;
+  color: var(--ink);
+  border-radius: 10px;
+  padding: 22px 24px 20px;
+  transition: border-color 140ms ease, transform 140ms ease;
+}
+.home-vic-panel:hover{
+  text-decoration: none;
+  border-color: rgba(143,180,214,0.45);
+  transform: translateY(-2px);
+}
+.home-vic-figures{
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+  margin: 6px 0 26px;
+}
+.home-vic-figures > div{
+  background: var(--paper-raised);
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.home-vic-figures .vic-headline-number{ font-size: 2rem; }
+.home-vic-panel .vic-seatbar{ margin-bottom: 30px; }
+.home-vic-legend{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #b9c3cf;
+}
+.home-vic-legend li{ display: inline-flex; align-items: center; gap: 7px; }
+.home-vic-legend strong{ color: var(--ink); }
+.home-vic-legend i{ width: 11px; height: 11px; border-radius: 2px; }
+.home-vic-legend .lib i{ background: var(--vic-lib); }
+.home-vic-legend .nat i{ background: var(--vic-nat); }
+.home-vic-legend .alp i{ background: var(--vic-alp); }
+.home-vic-legend .onp i{ background: var(--vic-onp); }
+.home-vic-legend .grn i{ background: var(--vic-grn); }
+.home-vic-cta{
+  display: block;
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--gold);
+}
+@media (max-width: 640px){
+  .home-vic-panel{ padding: 18px 16px; }
+  .home-vic-figures > div{ padding: 12px; }
+  .home-vic-figures .vic-headline-number{ font-size: 1.6rem; }
+  .home-vic-panel .vic-seatbar-track{ height: 38px; }
+  .home-vic-panel .vic-seg span{ font-size: 0.74rem; }
+  .home-vic-panel .vic-seg.grn span,
+  .home-vic-panel .vic-seg.onp span{ display: none; }
+}
+@media (max-width: 380px){
+  .home-vic-panel .vic-seg.nat span{ display: none; }
 }
