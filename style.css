@@ -2905,3 +2905,269 @@ a.history-link-card:hover{ box-shadow: inset 0 0 0 1px var(--gold); }
 }
 .history-chart .mchart-tick:first-child{ transform: none; }
 .history-chart .mchart-tick:last-child{ transform: translateX(-100%); }
+
+/* ==========================================================
+   2026 VICTORIAN STATE ELECTION — scoped to body.vic
+   ========================================================== */
+.vic{
+  --vic-lib: #2f6fc4;
+  --vic-nat: #8cc6ee;
+  --vic-alp: #d4504c;
+  --vic-onp: #ec8a2e;
+  --vic-grn: #3fa65c;
+}
+.vic .vic-title{
+  font-size: clamp(1.9rem, 4.4vw, 2.8rem);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  margin-bottom: 8px;
+}
+.vic .vic-subtitle{
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin: 0;
+}
+.vic .vic-lede{ margin-top: 26px; }
+.vic .vic-note{ color: var(--ink-soft); margin: 14px 0 0; }
+.vic .vic-jump{ padding: 22px 0 0; }
+
+.vic-panel{
+  background: var(--panel);
+  border: 1px solid rgba(255,255,255,0.09);
+  border-radius: 3px;
+  box-shadow: 0 16px 36px rgba(0,0,0,0.24);
+  padding: 22px 26px 24px;
+}
+
+/* Headline numbers */
+.vic-headline{
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+  margin: 6px 0 30px;
+}
+.vic-headline-item{
+  background: var(--paper-raised);
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.vic-headline-label{
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #b9c3cf;
+}
+.vic-headline-label.coalition{ color: #8fb4d6; }
+.vic-headline-number{
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 2.4rem;
+  line-height: 1;
+  color: var(--ink);
+}
+.vic-headline-sub{ font-size: 0.85rem; color: var(--ink-soft); }
+
+/* Horizontal seat bar */
+.vic-seatbar{ margin: 0; }
+.vic-seatbar-bracket{
+  position: relative;
+  height: 14px;
+  margin-top: 14px;
+  border: 1px solid rgba(143,180,214,0.7);
+  border-bottom: 0;
+  border-radius: 3px 3px 0 0;
+}
+.vic-seatbar-bracket span{
+  position: absolute;
+  left: 10px;
+  top: -10px;
+  padding: 0 6px;
+  background: var(--panel);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #8fb4d6;
+  line-height: 1.4;
+}
+.vic-seatbar-chart{ position: relative; }
+.vic-seatbar-track{
+  display: flex;
+  height: 46px;
+  border-radius: 4px;
+  overflow: hidden;
+  background: #111822;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.05);
+}
+.vic-seg{
+  flex-basis: 0;
+  flex-shrink: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: inset -2px 0 0 rgba(16,21,29,0.7);
+}
+.vic-seg:last-child{ box-shadow: none; }
+.vic-seg span{
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: #fff;
+  white-space: nowrap;
+}
+.vic-seg.lib{ background: var(--vic-lib); }
+.vic-seg.nat{ background: var(--vic-nat); }
+.vic-seg.alp{ background: var(--vic-alp); }
+.vic-seg.onp{ background: var(--vic-onp); }
+.vic-seg.grn{ background: var(--vic-grn); }
+.vic-seg.nat span,
+.vic-seg.onp span{ color: #111720; }
+
+.vic-majority{
+  position: absolute;
+  top: -8px;
+  bottom: -8px;
+  width: 2px;
+  margin-left: -1px;
+  background: var(--ink);
+  border-radius: 1px;
+  box-shadow: 0 0 0 1px rgba(13,18,25,0.85), 0 0 10px rgba(232,237,244,0.35);
+  pointer-events: none;
+}
+.vic-majority span{
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 6px;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--ink);
+  white-space: nowrap;
+}
+.vic-seatbar-scale{
+  display: flex;
+  justify-content: space-between;
+  margin-top: 8px;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--ink-soft);
+}
+.vic-seatbar figcaption{ margin-top: 18px; }
+
+/* Party breakdown */
+.vic-parties{
+  list-style: none;
+  margin: 26px 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+}
+.vic-party{
+  background: var(--paper-raised);
+  padding: 16px 18px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-areas:
+    "swatch name"
+    "seats seats"
+    "share share";
+  align-items: center;
+  column-gap: 8px;
+  row-gap: 6px;
+  border-top: 3px solid transparent;
+}
+.vic-party i{ grid-area: swatch; width: 12px; height: 12px; border-radius: 2px; }
+.vic-party-name{
+  grid-area: name;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #b9c3cf;
+}
+.vic-party-seats{
+  grid-area: seats;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 1.9rem;
+  line-height: 1;
+}
+.vic-party-share{ grid-area: share; font-size: 0.82rem; color: var(--ink-soft); }
+.vic-party.lib{ border-top-color: var(--vic-lib); }
+.vic-party.nat{ border-top-color: var(--vic-nat); }
+.vic-party.alp{ border-top-color: var(--vic-alp); }
+.vic-party.onp{ border-top-color: var(--vic-onp); }
+.vic-party.grn{ border-top-color: var(--vic-grn); }
+.vic-party.lib i{ background: var(--vic-lib); }
+.vic-party.nat i{ background: var(--vic-nat); }
+.vic-party.alp i{ background: var(--vic-alp); }
+.vic-party.onp i{ background: var(--vic-onp); }
+.vic-party.grn i{ background: var(--vic-grn); }
+.vic-parties-note{
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--ink-soft);
+  margin: 12px 0 0;
+  max-width: none;
+}
+
+/* Electorate table placeholder */
+.vic-electorate-table{
+  margin-top: 22px;
+  border: 1px dashed var(--rule-strong);
+  border-radius: 3px;
+  background: rgba(23,31,43,0.6);
+  padding: 40px 24px;
+  text-align: center;
+}
+.vic-placeholder{
+  margin: 0 auto;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+@media (max-width: 900px){
+  .vic-parties{ grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (max-width: 640px){
+  .vic-panel{ padding: 18px 16px 20px; }
+  .vic-headline{ grid-template-columns: 1fr; }
+  .vic-headline-item{
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: baseline;
+    column-gap: 12px;
+    padding: 14px 16px;
+  }
+  .vic-headline-label{ flex: 1 0 100%; }
+  .vic-headline-number{ font-size: 2rem; }
+  .vic-seatbar-track{ height: 38px; }
+  .vic-seg span{ font-size: 0.74rem; }
+  /* Greens and One Nation segments are too narrow for labels on phones;
+     their figures are shown in the party breakdown below. */
+  .vic-seg.grn span,
+  .vic-seg.onp span{ display: none; }
+  .vic-parties{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .vic-party{ padding: 14px; }
+  .vic-party-seats{ font-size: 1.6rem; }
+}
+@media (max-width: 380px){
+  .vic-seg.nat span{ display: none; }
+}
