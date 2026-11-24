@@ -3031,6 +3031,7 @@ a.history-link-card:hover{ box-shadow: inset 0 0 0 1px var(--gold); }
 .vic-seg.alp{ background: var(--vic-alp); }
 .vic-seg.onp{ background: var(--vic-onp); }
 .vic-seg.grn{ background: var(--vic-grn); }
+.vic-seg.ind{ background: #8f9aa8; }
 .vic-seg.nat span,
 .vic-seg.onp span{ color: #111720; }
 
@@ -3113,11 +3114,13 @@ a.history-link-card:hover{ box-shadow: inset 0 0 0 1px var(--gold); }
 .vic-party.alp{ border-top-color: var(--vic-alp); }
 .vic-party.onp{ border-top-color: var(--vic-onp); }
 .vic-party.grn{ border-top-color: var(--vic-grn); }
+.vic-party.ind{ border-top-color: #8f9aa8; }
 .vic-party.lib i{ background: var(--vic-lib); }
 .vic-party.nat i{ background: var(--vic-nat); }
 .vic-party.alp i{ background: var(--vic-alp); }
 .vic-party.onp i{ background: var(--vic-onp); }
 .vic-party.grn i{ background: var(--vic-grn); }
+.vic-party.ind i{ background: #8f9aa8; }
 .vic-parties-note{
   font-family: var(--font-mono);
   font-size: 0.72rem;
@@ -3439,6 +3442,7 @@ a.history-link-card:hover{ box-shadow: inset 0 0 0 1px var(--gold); }
 .home-vic-legend .alp i{ background: var(--vic-alp); }
 .home-vic-legend .onp i{ background: var(--vic-onp); }
 .home-vic-legend .grn i{ background: var(--vic-grn); }
+.home-vic-legend .ind i{ background: #8f9aa8; }
 .home-vic-cta{
   display: block;
   margin-top: 18px;

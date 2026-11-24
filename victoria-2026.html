@@ -79,6 +79,7 @@
         <span>88 seats</span>
       </div>
 
+      <!-- VIC:HEADLINE -->
       <div class="vic-headline">
         <div class="vic-headline-item">
           <span class="vic-headline-label coalition">Coalition total</span>
@@ -96,7 +97,9 @@
           <span class="vic-headline-sub">seats above majority</span>
         </div>
       </div>
+      <!-- /VIC:HEADLINE -->
 
+      <!-- VIC:SEATBAR -->
       <figure class="vic-seatbar" aria-labelledby="vic-seatbar-caption">
         <div class="vic-seatbar-bracket" style="width: calc(60 / 88 * 100%);">
           <span>Coalition 60</span>
@@ -119,7 +122,9 @@
         </div>
         <figcaption id="vic-seatbar-caption" class="hero-footnote">Each segment is sized to its share of the 88 Assembly seats. The white line marks the 45 seats needed to govern in its own right.</figcaption>
       </figure>
+      <!-- /VIC:SEATBAR -->
 
+      <!-- VIC:PARTIES -->
       <ul class="vic-parties">
         <li class="vic-party lib">
           <i aria-hidden="true"></i>
@@ -152,6 +157,7 @@
           <span class="vic-party-share">4.5%</span>
         </li>
       </ul>
+      <!-- /VIC:PARTIES -->
       <p class="vic-parties-note">Seat share is each party's projected seats as a percentage of the 88-seat Assembly, not a vote share or a probability.</p>
     </div>
   </section>
@@ -170,12 +176,14 @@
         <label class="vic-select">
           <span class="vic-control-label">Predicted winner</span>
           <select id="vic-winner">
+            <!-- VIC:WINNER_OPTIONS -->
             <option value="">All parties</option>
             <option value="LIB">Liberal</option>
             <option value="NAT">National</option>
             <option value="ALP">Labor</option>
             <option value="ONP">One Nation</option>
             <option value="GRN">Greens</option>
+            <!-- /VIC:WINNER_OPTIONS -->
           </select>
         </label>
         <div class="vic-chips" role="group" aria-label="Show">
@@ -187,7 +195,9 @@
       </div>
 
       <div class="vic-table-meta">
+        <!-- VIC:COUNT -->
         <p id="vic-count" aria-live="polite">Showing 88 of 88 electorates</p>
+        <!-- /VIC:COUNT -->
         <label class="vic-sort-mobile">
           <span>Sort</span>
           <select id="vic-sort">
@@ -214,7 +224,7 @@
             </tr>
           </thead>
           <tbody>
-          <!-- VIC-TABLE:START -->
+          <!-- VIC:TABLE -->
           <tr data-name="Albert Park" data-prev="ALP" data-winner="LIB" data-runner="GRN" data-margin="0.03" data-status="gain" data-close="1">
             <th scope="row" data-label="Electorate">Albert Park</th>
             <td data-label="2022 winner"><span class="vic-tag alp">Labor</span></td>
@@ -919,7 +929,7 @@
             <td data-label="Margin" class="vic-num">6.52<span class="vic-unit"> pts</span></td>
             <td data-label="Result"><span class="vic-status gain">LIB gain</span></td>
           </tr>
-          <!-- VIC-TABLE:END -->
+          <!-- /VIC:TABLE -->
           </tbody>
         </table>
         <p class="vic-empty" id="vic-empty" hidden>No electorates match these filters.</p>
