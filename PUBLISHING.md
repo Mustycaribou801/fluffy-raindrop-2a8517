@@ -125,3 +125,36 @@ copies the existing site unchanged into `_site/`, then generates the article
 pages from `content/articles/*.md` using the layouts in `templates/`. Files whose
 names start with `_` in `content/articles/` are ignored. Article styling lives
 in the "ARTICLES & ANALYSIS" section at the bottom of `style.css`.
+
+---
+
+# Updating the 2026 Victorian forecast
+
+Every Victorian forecast figure on the site comes from one file:
+**`data/victoria-2026.csv`**. It has one row per electorate:
+
+| Column             | Meaning                                                   |
+|--------------------|-----------------------------------------------------------|
+| `Electorate`       | Electorate name                                           |
+| `Previous winner`  | Party that won the seat in 2022                           |
+| `Projected winner` | Party projected to win in 2026                            |
+| `Runner-up`        | Other party projected to make the final two               |
+| `Margin`           | Winner's projected two-candidate share above 50%, in points (`2.02` = 52.02%) |
+
+Party codes: `LIB` Liberal, `NAT` National, `ALP` Labor, `ONP` One Nation,
+`GRN` Greens, `IND` Independent.
+
+To change a call, edit that electorate's row (on GitHub: open the file, click
+the pencil icon) and commit. On the next deploy, the following all update
+automatically from the CSV: the seat totals, Coalition total and margin, the
+seat bar, the party seat/share list, the electorate table, its party filter, hold/gain
+labels and close contests (under 2 points), the page's search/social descriptions,
+and the homepage summary panel and headline. Don't edit those numbers in the HTML —
+they sit between `<!-- VIC:… -->` markers and are overwritten on every build.
+
+If the file has a mistake (an unknown party code, a missing or duplicate
+electorate, anything other than 88 rows, or an invalid margin), the deploy stops with a
+message naming the line, and the live site keeps the previous version.
+
+To refresh the repository copies of `victoria-2026.html` and `index.html`
+locally (optional), run `node scripts/victoria-forecast.mjs`.

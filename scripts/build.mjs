@@ -11,6 +11,10 @@
      index.html                 "Latest Analysis" (3 newest)
      sitemap.xml                existing URLs + every article
 
+   It also regenerates every Victorian 2026 forecast figure
+   (victoria-2026.html and the homepage summary) from
+   data/victoria-2026.csv — see scripts/victoria-forecast.mjs.
+
    You should not need to edit this file to publish an article.
    See PUBLISHING.md.
    ========================================================== */
@@ -20,6 +24,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import matter from "gray-matter";
 import { marked } from "marked";
+import { applyForecast, describe as describeForecast } from "./victoria-forecast.mjs";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const OUT = path.resolve(ROOT, process.env.OUT_DIR || "_site");
@@ -53,7 +58,7 @@ const INCLUDE_DRAFTS = process.env.INCLUDE_DRAFTS
 const EXCLUDE = new Set([
   "node_modules", "content", "templates", "scripts",
   "package.json", "package-lock.json", "netlify.toml", "PUBLISHING.md",
-  "db", "netlify", "drizzle.config.ts",
+  "db", "netlify", "drizzle.config.ts", "data",
   path.basename(OUT),
 ]);
 
@@ -489,6 +494,15 @@ function copySite(){
 
 const articles = loadArticles();
 copySite();
+
+// Victorian forecast: every total, chart and table comes from data/victoria-2026.csv.
+let forecast;
+try {
+  forecast = applyForecast(OUT);
+} catch (err){
+  console.error(`\n✖ Victorian forecast: ${err.message}\n`);
+  process.exit(1);
+}
 fs.mkdirSync(path.join(OUT, "articles"), { recursive: true });
 
 const articleTpl = readTemplate("article.html");
@@ -507,6 +521,7 @@ fs.writeFileSync(indexFile, indexHtml.replace("<!-- LATEST_ANALYSIS -->", latest
 buildSitemap(articles);
 buildFeed(articles);
 
+console.log(describeForecast(forecast));
 const drafts = articles.filter(a => a.draft).length;
 console.log(`Built ${articles.length - drafts} published article(s)${drafts ? ` and ${drafts} draft preview(s)` : ""} [context: ${CONTEXT}] -> ${path.relative(ROOT, OUT) || OUT}`);
 for (const a of articles) console.log(`  ${a.draft ? "draft    " : "published"}  ${a.url}`);

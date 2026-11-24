@@ -1,5 +1,6 @@
 /* 2026 Victorian electorate table: search, sort and filter.
-   The rows are static HTML generated from the CSV; this only reorders and hides them. */
+   The rows are static HTML generated from data/victoria-2026.csv by
+   scripts/victoria-forecast.mjs; this only reorders and hides them. */
 (function () {
   var table = document.getElementById("vic-table");
   if (!table) return;
