@@ -864,10 +864,16 @@ function renderMisses(listId, misses){
 
 // ---------- Nav active state ----------
 function markActiveNav(){
-  const path = location.pathname.split("/").pop() || "index.html";
+  // Pretty URLs can drop the .html extension, so compare without it.
+  const page = p => (p.split("/").pop() || "index").replace(/\.html$/, "") || "index";
+  const path = page(location.pathname);
+  // The Track Record overview is the menu's landing page; both election archives sit under it.
+  const TRACK_RECORD = new Set(["track-record-history", "track-record", "track-record-2026"]);
   document.querySelectorAll("nav.primary a").forEach(a => {
-    const href = a.getAttribute("href");
-    if (href === path || (path === "senate-race.html" && href === "forecast.html")) a.classList.add("active");
+    const href = page(a.getAttribute("href") || "");
+    if (href === path
+      || (path === "senate-race" && href === "forecast")
+      || (TRACK_RECORD.has(path) && href === "track-record-history")) a.classList.add("active");
   });
 }
 
@@ -875,6 +881,7 @@ function markActiveNav(){
 function renderMeta(){
   const el = document.getElementById("last-updated");
   if (el) el.textContent = SITE_META.lastUpdated;
+  document.querySelectorAll(".forecast-final-date").forEach(d => { d.textContent = SITE_META.forecastFinalUpdate || d.textContent; });
   const nameEls = document.querySelectorAll(".forecaster-name");
   nameEls.forEach(el => el.textContent = SITE_META.forecasterName);
 }
@@ -885,7 +892,8 @@ function renderMeta(){
 // slides by exactly one copy, so the loop has no visible jump.
 function renderElectionTicker(){
   const nav = document.querySelector("nav.primary");
-  if (!nav || typeof SENATE === "undefined") return;
+  // The home page leads with the Victorian forecast, so the US ticker is not shown there.
+  if (!nav || typeof SENATE === "undefined" || document.body.classList.contains("home")) return;
   const races = SENATE.races
     .filter(isBattleground)
     .sort((a,b) => Math.abs(a.margin) - Math.abs(b.margin) || a.state.localeCompare(b.state));
@@ -926,25 +934,8 @@ function renderElectionTicker(){
   track.style.setProperty("--ticker-duration", `${Math.max(20, copyWidth / 45)}s`);
 }
 
-// ---------- Election Night banner (homepage) ----------
-const ELECTION_DAY_2026 = new Date(2026, 10, 3); // Tuesday, November 3, 2026 (local time)
-
-function renderElectionBanner(){
-  const el = document.getElementById("election-banner-status");
-  if (!el) return;
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-  const days = Math.round((ELECTION_DAY_2026 - today) / 86400000);
-  el.textContent =
-    days > 1 ? `${days} days to Election Day` :
-    days === 1 ? "Election Day is tomorrow" :
-    days === 0 ? "Election Day \u00b7 polls open" :
-    "Forecast archived \u00b7 await official results";
-}
-
 document.addEventListener("DOMContentLoaded", () => {
   markActiveNav();
   renderMeta();
   renderElectionTicker();
-  renderElectionBanner();
 });

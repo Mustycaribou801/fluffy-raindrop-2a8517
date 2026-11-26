@@ -604,7 +604,8 @@ p{ max-width: 68ch; }
 }
 .accuracy-panel p:last-child{ margin-bottom: 0; }
 .dashboard-grid{ grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
-.senate-archive-section .archive-heading{ margin-bottom: 24px; }
+.senate-archive-section .archive-heading,
+.house-archive-section .archive-heading{ margin-bottom: 24px; }
 .senate-dashboard{ margin-bottom: 28px; }
 .archive-table-wrap{
   overflow-x: auto;
@@ -1855,108 +1856,6 @@ footer{
   color: var(--ink-soft);
 }
 
-/* ---------- Election Night banner (homepage) ---------- */
-.election-banner{
-  position: relative;
-  overflow: hidden;
-  background:
-    radial-gradient(ellipse at 12% 0%, rgba(77,143,200,0.2), transparent 55%),
-    radial-gradient(ellipse at 88% 100%, rgba(200,95,95,0.16), transparent 55%),
-    linear-gradient(120deg, #111a26 0%, #0d141d 50%, #111a26 100%);
-  border-bottom: 1px solid rgba(208,168,77,0.22);
-  box-shadow: 0 18px 50px rgba(0,0,0,0.35), inset 0 -1px 0 rgba(208,168,77,0.08);
-}
-.election-banner::before{
-  content: "";
-  position: absolute;
-  left: 0; right: 0; top: 0;
-  height: 3px;
-  background: var(--tricolor);
-  opacity: 0.85;
-}
-.election-banner::after{
-  content: "";
-  position: absolute;
-  left: 0; right: 0; bottom: -1px;
-  height: 1px;
-  background: var(--hairline);
-}
-.election-banner-inner{
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 16px 32px;
-  padding-top: 26px;
-  padding-bottom: 24px;
-}
-.election-banner-eyebrow{
-  display: block;
-  font-family: var(--font-mono);
-  font-size: 0.68rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--ink-soft);
-  margin-bottom: 6px;
-}
-.election-banner-title{
-  margin: 0;
-  max-width: none;
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: clamp(1.9rem, 4.4vw, 3rem);
-  line-height: 1;
-  letter-spacing: -0.02em;
-  color: var(--ink);
-  text-shadow: 0 2px 24px rgba(77,143,200,0.18);
-}
-.election-banner-title span{
-  background: linear-gradient(180deg, #f0d48c 0%, var(--gold) 60%, #a9843a 100%);
-  -webkit-background-clip: text;
-          background-clip: text;
-  color: transparent;
-  text-shadow: none;
-}
-.election-banner-meta{
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 8px;
-}
-.election-banner-status{
-  display: inline-flex;
-  align-items: center;
-  gap: 9px;
-  padding: 7px 14px;
-  border-radius: 999px;
-  border: 1px solid rgba(208,168,77,0.4);
-  background: rgba(208,168,77,0.08);
-  box-shadow: 0 0 18px var(--glow-gold), inset 0 1px 0 rgba(255,255,255,0.05);
-  font-family: var(--font-mono);
-  font-size: 0.74rem;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--gold);
-}
-.election-banner-status i{
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--gold);
-  animation: statusBreathe 3.2s ease-in-out infinite;
-}
-@keyframes statusBreathe{
-  0%, 100%{ box-shadow: 0 0 0 0 rgba(208,168,77,0.45); }
-  50%     { box-shadow: 0 0 0 5px rgba(208,168,77,0); }
-}
-.election-banner-date{
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--ink-soft);
-}
 
 /* ---------- Illuminated panels ---------- */
 .forecast-map,
@@ -2128,7 +2027,6 @@ footer{
 @media (max-width: 700px){
   .ticker-label{ padding: 0 12px 0 18px; }
   .ticker-label > span{ max-width: 11ch; line-height: 1.25; font-size: 0.58rem; }
-  .election-banner-meta{ align-items: flex-start; }
 }
 @media (max-width: 560px){
   .home .tally-row{ gap: 8px; }
@@ -2140,7 +2038,6 @@ footer{
   .ticker-track{ animation: none; }
   .ticker-viewport{ overflow-x: auto; }
   .ticker-list[aria-hidden="true"]{ display: none; }
-  .election-banner-status i{ animation: none; }
   .senate-state{ animation: none; }
 }
 
@@ -2625,3 +2522,947 @@ footer{
 .comment-body p{ margin: 0 0 0.7em; color: var(--ink); line-height: 1.6; overflow-wrap: anywhere; }
 .comment-body p:last-child{ margin-bottom: 0; }
 .comment-empty{ margin: 20px 0 0; color: var(--ink-soft); font-size: 0.95rem; }
+
+/* ==========================================================
+   2026 TRACK RECORD — shared r26-* styles. Scoped to new class names so the
+   2024 archive styles above are untouched.
+   ========================================================== */
+
+.r26-crumb{ color: inherit; }
+.r26-subhead{ margin-top: 36px; }
+.r26-map-gap{ margin-top: 48px; }
+.r26-overview-grid{
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(260px, 0.8fr);
+  gap: 22px;
+  margin-top: 18px;
+}
+.r26-overview-copy p{ font-size: 1.02rem; }
+.r26-status-strip{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 22px;
+  margin-top: 24px;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--ink-soft);
+}
+.r26-strip-item{ display: inline-flex; align-items: center; gap: 8px; }
+.r26-strip-item strong{ color: var(--ink); }
+.r26-count-toggle{ margin-top: 18px; }
+.r26-count-toggle label{ display: inline-flex; align-items: center; gap: 10px; cursor: pointer; }
+.r26-count-toggle input{ width: 18px; height: 18px; accent-color: var(--gold); }
+.r26-count-toggle .hero-footnote{ margin-top: 6px; }
+
+/* ---------- Status + party tags ---------- */
+.r26-status{
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 2px;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border: 1px solid var(--rule-strong);
+  color: var(--ink-soft);
+}
+.r26-status.projected{ border-style: dashed; border-color: var(--gold); color: var(--gold); }
+.r26-status.called{ border-color: #4fa968; color: #7fcf95; }
+.r26-status.certified{ background: #2f7045; border-color: #2f7045; color: #fff; }
+.r26-party{
+  display: inline-block;
+  min-width: 24px;
+  text-align: center;
+  padding: 2px 6px;
+  border-radius: 2px;
+  font-weight: 700;
+}
+.r26-party.D{ background: var(--dem-soft); color: #a9c8e4; }
+.r26-party.R{ background: var(--rep-soft); color: #e1a0a0; }
+.r26-party.I{ background: var(--gold-soft); color: var(--gold); }
+.r26-muted{ color: var(--ink-soft); }
+.r26-ok{ color: #7fcf95; font-weight: 700; }
+.r26-miss{ color: #e58b8b; font-weight: 700; }
+.r26-empty{ text-align: center; color: var(--ink-soft); }
+
+/* ---------- Maps ---------- */
+.r26-legend{ margin: 4px 0 16px; }
+.r26-legend .r26-swatch{ border-radius: 2px; border: 1px solid rgba(255,255,255,0.25); }
+.r26-tile.tone-SD, .r26-swatch.tone-SD{ background: #2d6fa8; }
+.r26-tile.tone-LD, .r26-swatch.tone-LD{ background: #34628c; }
+.r26-tile.tone-TD, .r26-swatch.tone-TD{ background: #24405e; }
+.r26-tile.tone-TU, .r26-swatch.tone-TU{ background: #6b5a2c; }
+.r26-tile.tone-TR, .r26-swatch.tone-TR{ background: #5a2c31; }
+.r26-tile.tone-LR, .r26-swatch.tone-LR{ background: #8a3d40; }
+.r26-tile.tone-SR, .r26-swatch.tone-SR{ background: #b04f4f; }
+.r26-tile.act-D, .r26-swatch.act-D{ background: var(--dem); }
+.r26-tile.act-R, .r26-swatch.act-R{ background: var(--rep); }
+.r26-tile.act-I, .r26-swatch.act-I{ background: #8a7a3d; }
+.r26-tile.is-correct, .r26-swatch.is-correct{ background: #2f7045; }
+.r26-tile.is-incorrect, .r26-swatch.is-incorrect{ background: var(--rep); }
+.r26-tile.is-pending, .r26-swatch.is-pending{
+  background: repeating-linear-gradient(135deg, #2a3442 0 6px, #222b37 6px 12px);
+  color: var(--ink-soft);
+}
+.r26-tile.is-projected{ border: 2px dashed var(--gold); }
+.r26-swatch.is-projected{ background: transparent; border: 2px dashed var(--gold); }
+.r26-tile.no-race{
+  background: rgba(255,255,255,0.03);
+  border-color: rgba(255,255,255,0.06);
+  color: rgba(154,168,186,0.4);
+  box-shadow: none;
+  cursor: default;
+  pointer-events: none;
+}
+.r26-tile:focus-visible{ outline: 2px solid var(--gold); outline-offset: 3px; }
+
+/* ---------- Rating-tier chart ---------- */
+.r26-tier-lede{ margin-bottom: 20px; }
+.r26-tier-card{ margin: 0 0 22px; }
+.r26-key{ display: inline-block; width: 10px; height: 10px; border-radius: 2px; }
+.r26-key.correct, .r26-bar.correct{ background: #2f7045; }
+.r26-key.incorrect, .r26-bar.incorrect{ background: var(--rep); }
+.r26-key.pending, .r26-bar.pending{ background: repeating-linear-gradient(135deg, #3a4656 0 5px, #2a3442 5px 10px); }
+.r26-tier-chart{ display: grid; gap: 14px; padding: 18px 4px 6px; }
+.r26-tier-row{
+  display: grid;
+  grid-template-columns: 110px minmax(0, 1fr) 190px;
+  gap: 14px;
+  align-items: center;
+}
+.r26-tier-name{ font-family: var(--font-display); font-weight: 600; font-size: 1.05rem; }
+.r26-tier-name small{ display: block; font-family: var(--font-mono); font-size: 0.7rem; color: var(--ink-soft); font-weight: 400; }
+.r26-tier-track{
+  display: flex;
+  height: 22px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.r26-bar{ display: block; height: 100%; }
+.r26-bar + .r26-bar{ box-shadow: inset 1px 0 0 rgba(16,21,29,0.8); }
+.r26-tier-value{ font-family: var(--font-mono); font-size: 0.8rem; color: var(--ink); }
+.r26-table th[scope="row"]{
+  font-family: var(--font-body);
+  font-size: 0.94rem;
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--ink);
+  background: none;
+  font-weight: 600;
+}
+.r26-state-table .rating-chip{ margin-left: 6px; }
+.r26-state-table .pending-row th:first-child{ border-left: 4px solid var(--rule-strong); }
+.r26-state-table .correct-row th:first-child{ border-left: 4px solid #4fa968; }
+.r26-state-table .incorrect-row th:first-child{ border-left: 4px solid var(--rep); }
+.r26-state-table .projected-row th:first-child{ border-left-style: dashed; }
+.r26-method ul{ padding-left: 18px; margin: 0 0 18px; }
+.r26-method li{ margin-bottom: 8px; color: var(--ink); }
+.r26-method li:last-child{ margin-bottom: 0; }
+.r26-method h3{ margin-bottom: 10px; }
+
+@media (max-width: 900px){
+  .r26-overview-grid{ grid-template-columns: 1fr; }
+}
+@media (max-width: 560px){
+  .r26-tier-row{ grid-template-columns: 1fr; gap: 6px; }
+  .r26-mode-tabs{ flex-wrap: wrap; }
+  .r26-count-toggle label{ align-items: flex-start; }
+}
+
+/* ---------- Archived-forecast notice (forecast pages) ---------- */
+.archive-notice{
+  border-bottom: 1px solid rgba(208,168,77,0.35);
+  background: rgba(208,168,77,0.08);
+}
+.archive-notice-inner{
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 16px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  font-size: 0.92rem;
+}
+.archive-notice-inner p{ margin: 0; max-width: none; color: var(--ink); }
+.archive-notice-tag{
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 3px 8px;
+  border: 1px solid var(--gold);
+  border-radius: 2px;
+  color: var(--gold);
+  white-space: nowrap;
+}
+.archive-notice-inner a{ color: var(--gold); font-weight: 600; }
+
+/* ---------- 2026 review: results data ---------- */
+.r26-status.uncalled{ border-style: dashed; border-color: var(--gold); color: var(--gold); }
+.r26-status.runoff{ border-color: var(--gold); color: var(--gold); background: rgba(208,168,77,0.12); }
+.r26-tile.is-uncalled, .r26-swatch.is-uncalled{
+  background: repeating-linear-gradient(135deg, #5a4c26 0 6px, #3a3222 6px 12px);
+  color: var(--gold);
+  border: 1px dashed var(--gold);
+}
+.r26-state-table .uncalled-row th:first-child{ border-left: 4px dashed var(--gold); }
+.r26-src{ margin-left: 6px; font-size: 0.72rem; color: var(--ink-soft); }
+.r26-wrong-panel{ margin-top: 22px; }
+.r26-wrong-list li{ display: flex; flex-wrap: wrap; gap: 4px 10px; padding: 10px 0; border-bottom: 1px solid var(--rule); }
+.r26-wrong-list li:last-child{ border-bottom: 0; }
+.r26-wrong-list .rating-chip{ margin: 0 2px; }
+.r26-cands{ margin-top: -4px; }
+.r26-cands dt{ font-size: 0.84rem; }
+
+/* ---------- 2026 review: results withheld (resultsPublished: false) ---------- */
+.results-2026 [data-r26-results][hidden]{ display: none !important; }
+.r26-results-off .r26-result-col{ display: none; }
+.r26-audit-notice{
+  margin-top: 24px;
+  border-left: 4px solid var(--gold);
+}
+.r26-audit-notice p{ margin: 0; color: var(--ink); font-size: 1.02rem; }
+
+/* ==========================================================
+   Track Record year selector (track-record.html and
+   track-record-2026.html) and the 2026 Track Record page
+   ========================================================== */
+.tr-year-nav{
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px 16px;
+  padding-top: 28px;
+}
+.tr-year-nav .section-label{ margin: 0; }
+.tr-year-nav .race-tabs{ margin: 0; }
+a.race-tab{ display: inline-block; text-decoration: none; }
+a.race-tab:hover{ border-color: var(--gold); }
+a.race-tab.active:hover{ color: #111720; }
+.tr-year-nav + section{ border-top: 0; }
+
+.tr26-office-switch{ padding-top: 8px; }
+.tr26-office-switch .race-tabs{ margin: 0; flex-wrap: wrap; }
+.tr26-office-switch + .tr26-office > section:first-child{ border-top: 0; }
+.tr26-office > section + section{ border-top: 1px solid rgba(255,255,255,0.08); }
+.tr26 .race-tabs{ flex-wrap: wrap; }
+
+/* Tiles: faded = no race in 2026; grey = no verified result. */
+.accuracy-state.tr26-no-race{
+  background: rgba(255,255,255,0.03);
+  border-color: rgba(255,255,255,0.06);
+  color: rgba(154,168,186,0.45);
+  box-shadow: none;
+}
+.accuracy-state.tr26-unresolved,
+.accuracy-state.tr26-none{ background: #4a5566; color: var(--ink); }
+.accuracy-legend .tr26-grey{ background: #4a5566; }
+.forecast-archive-map.tr26-forecast-map .accuracy-state{ cursor: pointer; }
+.tr26-forecast-pick{
+  margin: 14px 0 0;
+  padding: 12px 0 12px;
+  border-top: 1px solid var(--rule);
+  min-height: 3.2em;
+}
+.tr26-table td small{ color: var(--ink-soft); font-family: var(--font-mono); font-size: 0.7rem; }
+.tr26-table td:last-child{ white-space: nowrap; }
+.tr-year-nav{ padding-bottom: 12px; }
+.tr26-office-switch{ padding-bottom: 16px; }
+
+/* 2024 House archive: predicted vs. actual seat balance */
+.house-balance-compare{
+  margin-top: 18px;
+  padding: 20px;
+  background: var(--paper-raised);
+  border: 1px solid rgba(255,255,255,0.09);
+  border-radius: 3px;
+}
+.house-balance-row + .house-balance-row{ margin-top: 18px; }
+.house-balance-label{
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: #b9c3cf;
+}
+
+/* ---------- Historical Forecasting Performance (track-record-history.html) ---------- */
+.history-table{ min-width: 560px; }
+.history-table tbody th,
+.history-table tfoot th{ font-weight: 600; }
+.history-table td{ text-align: right; }
+.history-table thead th:not(:first-child){ text-align: right; }
+.history-table .history-subtotal th,
+.history-table .history-subtotal td{
+  background: rgba(255,255,255,0.03);
+  border-bottom: 1px solid var(--rule);
+  color: var(--ink);
+}
+.history-table .history-subtotal th{
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.history-table tfoot th,
+.history-table tfoot td{
+  border-top: 1px solid var(--gold);
+  border-bottom: 0;
+  background: rgba(208,168,77,0.08);
+  color: var(--gold);
+  font-weight: 700;
+}
+.history-table tfoot th{
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.history-kpis .stat-number{ font-size: clamp(2.1rem, 4vw, 2.8rem); }
+.history-kpis .stat-card:nth-child(2) .stat-number{ color: var(--gold); }
+.history-cycles{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 22px;
+  margin-top: 28px;
+}
+.history-cycle-body{ padding: 22px 20px; }
+.history-cycle-body h3{ font-size: 1.4rem; margin-bottom: 18px; }
+.history-cycle-totals{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+  margin-bottom: 18px;
+}
+.history-cycle-totals > div{ background: var(--paper-raised); padding: 16px; }
+.history-accent{ color: var(--gold); }
+.history-cycle-list{ margin-bottom: 14px; }
+.history-cycle-list dt{ font-family: var(--font-display); font-size: 1rem; color: var(--ink); }
+.history-cycle-list dd{ font-size: 1rem; text-align: right; }
+.history-cycle-link{ font-family: var(--font-mono); font-size: 0.78rem; letter-spacing: 0.04em; }
+.history-table th a{ color: var(--ink); border-bottom: 1px solid var(--rule-strong); }
+.history-table th a:hover{ color: var(--gold); border-bottom-color: var(--gold); text-decoration: none; }
+.history-cycle-list dt a{ color: var(--ink); }
+.history-cycle-list dt a:hover{ color: var(--gold); text-decoration: none; }
+
+/* Winner-accuracy bar chart: reuses the .mchart rows, axis and tooltip */
+.history-chart-card{ margin-top: 8px; }
+.history-chart .mchart-axis,
+.history-chart .mchart-row{ grid-template-columns: 150px minmax(0, 1fr); }
+.history-chart .hbar-row{ height: 40px; cursor: default; }
+.history-chart .hbar-row.is-active{ background: rgba(255,255,255,0.04); }
+.history-chart .mchart-label{ font-size: 0.78rem; color: var(--ink); }
+.hbar{
+  position: absolute;
+  left: 0; top: 8px; bottom: 8px;
+  background: linear-gradient(90deg, rgba(208,168,77,0.55), var(--gold));
+  border-radius: 0 2px 2px 0;
+  display: flex; align-items: center; justify-content: flex-end;
+}
+.hbar-row.is-active .hbar,
+.hbar-row:hover .hbar{ background: var(--gold); }
+.hbar-value{
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: #111720;
+  padding-right: 8px;
+  white-space: nowrap;
+}
+.hbar.is-short .hbar-value{ position: absolute; left: 100%; padding: 0 0 0 6px; color: var(--ink); }
+.hbar-ref{
+  position: absolute;
+  top: 0; bottom: 0;
+  border-left: 1px dashed var(--ink);
+  opacity: 0.75;
+  pointer-events: none;
+}
+.hbar-key{ display: inline-block; width: 14px; height: 10px; background: var(--gold); }
+.hbar-ref-key{ display: inline-block; width: 0; height: 14px; border-left: 1px dashed var(--ink); }
+
+/* US Senate record */
+a.history-link-card{ color: var(--ink); text-decoration: none; box-shadow: inset 0 0 0 1px transparent; transition: box-shadow .15s; }
+a.history-link-card:hover{ box-shadow: inset 0 0 0 1px var(--gold); }
+.history-accent-card .stat-number{ color: var(--gold); }
+.history-senate-section h2 + p{ color: var(--ink-soft); margin-top: -6px; }
+
+@media (max-width: 640px){
+  .history-table{ min-width: 0; font-size: 0.86rem; }
+  .history-table th,
+  .history-table td{ padding: 11px 10px; }
+  .history-table thead th{ font-size: 0.64rem; }
+  .history-chart .mchart-axis,
+  .history-chart .mchart-row{ grid-template-columns: 104px minmax(0, 1fr); gap: 6px; }
+  .history-chart .mchart-label{ font-size: 0.68rem; padding-left: 2px; }
+  .history-chart .mchart-tick{ font-size: 0.6rem; }
+  .history-cycles{ grid-template-columns: 1fr; }
+  .history-kpis .stat-number{ font-size: 2rem; }
+}
+.history-chart .mchart-tick:first-child{ transform: none; }
+.history-chart .mchart-tick:last-child{ transform: translateX(-100%); }
+
+/* ==========================================================
+   2026 VICTORIAN STATE ELECTION — scoped to body.vic
+   ========================================================== */
+.vic,
+.vic-feature{
+  --vic-lib: #2f6fc4;
+  --vic-nat: #8cc6ee;
+  --vic-alp: #d4504c;
+  --vic-onp: #ec8a2e;
+  --vic-grn: #3fa65c;
+}
+.vic .vic-title{
+  font-size: clamp(1.9rem, 4.4vw, 2.8rem);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  margin-bottom: 8px;
+}
+.vic .vic-subtitle{
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin: 0;
+}
+.vic .vic-lede{ margin-top: 26px; }
+.vic .vic-note{ color: var(--ink-soft); margin: 14px 0 0; }
+.vic .vic-jump{ padding: 22px 0 0; }
+
+.vic-panel{
+  background: var(--panel);
+  border: 1px solid rgba(255,255,255,0.09);
+  border-radius: 3px;
+  box-shadow: 0 16px 36px rgba(0,0,0,0.24);
+  padding: 22px 26px 24px;
+}
+
+/* Headline numbers */
+.vic-headline{
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+  margin: 6px 0 30px;
+}
+.vic-headline-item{
+  background: var(--paper-raised);
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.vic-headline-label{
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #b9c3cf;
+}
+.vic-headline-label.coalition{ color: #8fb4d6; }
+.vic-headline-number{
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 2.4rem;
+  line-height: 1;
+  color: var(--ink);
+}
+.vic-headline-sub{ font-size: 0.85rem; color: var(--ink-soft); }
+
+/* Horizontal seat bar */
+.vic-seatbar{ margin: 0; }
+.vic-seatbar-bracket{
+  position: relative;
+  height: 14px;
+  margin-top: 14px;
+  border: 1px solid rgba(143,180,214,0.7);
+  border-bottom: 0;
+  border-radius: 3px 3px 0 0;
+}
+.vic-seatbar-bracket span{
+  position: absolute;
+  left: 10px;
+  top: -10px;
+  padding: 0 6px;
+  background: var(--panel);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #8fb4d6;
+  line-height: 1.4;
+}
+.vic-seatbar-chart{ position: relative; }
+.vic-seatbar-track{
+  display: flex;
+  height: 46px;
+  border-radius: 4px;
+  overflow: hidden;
+  background: #111822;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.05);
+}
+.vic-seg{
+  flex-basis: 0;
+  flex-shrink: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: inset -2px 0 0 rgba(16,21,29,0.7);
+}
+.vic-seg:last-child{ box-shadow: none; }
+.vic-seg span{
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: #fff;
+  white-space: nowrap;
+}
+.vic-seg.lib{ background: var(--vic-lib); }
+.vic-seg.nat{ background: var(--vic-nat); }
+.vic-seg.alp{ background: var(--vic-alp); }
+.vic-seg.onp{ background: var(--vic-onp); }
+.vic-seg.grn{ background: var(--vic-grn); }
+.vic-seg.ind{ background: #8f9aa8; }
+.vic-seg.nat span,
+.vic-seg.onp span{ color: #111720; }
+
+.vic-majority{
+  position: absolute;
+  top: -8px;
+  bottom: -8px;
+  width: 2px;
+  margin-left: -1px;
+  background: var(--ink);
+  border-radius: 1px;
+  box-shadow: 0 0 0 1px rgba(13,18,25,0.85), 0 0 10px rgba(232,237,244,0.35);
+  pointer-events: none;
+}
+.vic-majority span{
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 6px;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--ink);
+  white-space: nowrap;
+}
+.vic-seatbar-scale{
+  display: flex;
+  justify-content: space-between;
+  margin-top: 8px;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--ink-soft);
+}
+.vic-seatbar figcaption{ margin-top: 18px; }
+
+/* Party breakdown */
+.vic-parties{
+  list-style: none;
+  margin: 26px 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+}
+.vic-party{
+  background: var(--paper-raised);
+  padding: 16px 18px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-areas:
+    "swatch name"
+    "seats seats"
+    "share share";
+  align-items: center;
+  column-gap: 8px;
+  row-gap: 6px;
+  border-top: 3px solid transparent;
+}
+.vic-party i{ grid-area: swatch; width: 12px; height: 12px; border-radius: 2px; }
+.vic-party-name{
+  grid-area: name;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #b9c3cf;
+}
+.vic-party-seats{
+  grid-area: seats;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 1.9rem;
+  line-height: 1;
+}
+.vic-party-share{ grid-area: share; font-size: 0.82rem; color: var(--ink-soft); }
+.vic-party.lib{ border-top-color: var(--vic-lib); }
+.vic-party.nat{ border-top-color: var(--vic-nat); }
+.vic-party.alp{ border-top-color: var(--vic-alp); }
+.vic-party.onp{ border-top-color: var(--vic-onp); }
+.vic-party.grn{ border-top-color: var(--vic-grn); }
+.vic-party.ind{ border-top-color: #8f9aa8; }
+.vic-party.lib i{ background: var(--vic-lib); }
+.vic-party.nat i{ background: var(--vic-nat); }
+.vic-party.alp i{ background: var(--vic-alp); }
+.vic-party.onp i{ background: var(--vic-onp); }
+.vic-party.grn i{ background: var(--vic-grn); }
+.vic-party.ind i{ background: #8f9aa8; }
+.vic-parties-note{
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--ink-soft);
+  margin: 12px 0 0;
+  max-width: none;
+}
+
+/* ---------- Electorate table ---------- */
+.vic .visually-hidden{
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+.vic .vic-table-intro{ color: var(--ink-soft); max-width: 760px; }
+.vic-table-panel{
+  margin-top: 22px;
+  background: var(--panel);
+  border: 1px solid rgba(255,255,255,0.09);
+  border-radius: 3px;
+  box-shadow: 0 16px 36px rgba(0,0,0,0.24);
+  padding: 22px 26px 24px;
+}
+.vic-controls{
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+  gap: 14px 18px;
+  align-items: end;
+}
+.vic-chips{ grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 8px; }
+.vic-control-label,
+.vic-sort-mobile span{
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-bottom: 6px;
+}
+.vic-search input,
+.vic-select select,
+.vic-sort-mobile select{
+  width: 100%;
+  min-height: 44px;
+  padding: 10px 12px;
+  background: var(--paper-raised);
+  color: var(--ink);
+  border: 1px solid var(--rule-strong);
+  border-radius: 3px;
+  font: inherit;
+  font-size: 16px;
+}
+.vic-search input:focus,
+.vic-select select:focus,
+.vic-sort-mobile select:focus,
+.vic-chip:focus-visible,
+.vic-table thead button:focus-visible{
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+.vic-chip{
+  min-height: 40px;
+  padding: 8px 16px;
+  background: transparent;
+  color: var(--ink-soft);
+  border: 1px solid var(--rule-strong);
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.vic-chip:hover{ color: var(--ink); border-color: var(--ink-soft); }
+.vic-chip.is-active{ background: var(--gold); border-color: var(--gold); color: #111720; }
+
+.vic-table-meta{
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 12px;
+  margin: 20px 0 10px;
+}
+#vic-count{
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+.vic-sort-mobile{ display: none; }
+
+.vic-table-scroll{ overflow-x: auto; border-top: 1px solid var(--rule); }
+.vic-table{ width: 100%; border-collapse: collapse; font-size: 0.95rem; }
+.vic-table th,
+.vic-table td{
+  padding: 11px 12px;
+  text-align: left;
+  border-bottom: 1px solid var(--rule);
+  white-space: nowrap;
+}
+.vic-table tbody th{ font-weight: 600; color: var(--ink); }
+.vic-table tbody tr:hover{ background: rgba(255,255,255,0.03); }
+.vic-table thead th{
+  position: sticky;
+  top: 0;
+  background: var(--panel);
+  padding: 0;
+  border-bottom: 1px solid var(--rule-strong);
+}
+.vic-table thead button{
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  padding: 12px;
+  background: none;
+  border: 0;
+  color: var(--ink-soft);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-align: left;
+  cursor: pointer;
+}
+.vic-table thead th.vic-num button{ justify-content: flex-end; }
+.vic-table thead button:hover{ color: var(--ink); }
+.vic-table.is-enhanced thead button::after{ content: "\2195"; opacity: 0.35; }
+.vic-table thead th[aria-sort] button{ color: var(--ink); }
+.vic-table thead th[aria-sort="ascending"] button::after{ content: "\2191"; opacity: 1; color: var(--gold); }
+.vic-table thead th[aria-sort="descending"] button::after{ content: "\2193"; opacity: 1; color: var(--gold); }
+.vic-table .vic-num{ text-align: right; font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+.vic-unit{ color: var(--ink-soft); font-size: 0.8em; }
+
+.vic-tag{
+  display: inline-block;
+  padding: 3px 9px 3px 8px;
+  border-left: 4px solid var(--tag, var(--rule-strong));
+  background: color-mix(in srgb, var(--tag, #6b7a8c) 22%, transparent);
+  border-radius: 2px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  line-height: 1.3;
+}
+.vic-tag.lib{ --tag: var(--vic-lib); }
+.vic-tag.nat{ --tag: var(--vic-nat); }
+.vic-tag.alp{ --tag: var(--vic-alp); }
+.vic-tag.onp{ --tag: var(--vic-onp); }
+.vic-tag.grn{ --tag: var(--vic-grn); }
+.vic-tag.ind{ --tag: #8f9aa8; }
+
+.vic-status{
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.vic-status.hold{ color: var(--ink-soft); }
+.vic-status.gain{ color: var(--gold); font-weight: 600; }
+.vic-close{
+  display: inline-block;
+  margin-left: 6px;
+  padding: 1px 6px;
+  border: 1px solid var(--toss);
+  border-radius: 2px;
+  color: var(--toss);
+  font-size: 0.62rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  vertical-align: 1px;
+}
+.vic-empty{
+  margin: 0;
+  padding: 32px 12px;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+.vic-table-note{ margin: 16px 0 0; font-size: 0.85rem; color: var(--ink-soft); max-width: none; }
+
+/* Phones: each electorate becomes a compact card */
+@media (max-width: 720px){
+  .vic-table-panel{ padding: 18px 14px 20px; }
+  .vic-controls{ grid-template-columns: 1fr; }
+  .vic-chips{ flex-wrap: nowrap; overflow-x: auto; padding-bottom: 2px; }
+  .vic-chip{ flex: 0 0 auto; }
+  .vic-table-meta{ flex-direction: column; align-items: stretch; }
+  .vic-sort-mobile{ display: block; }
+  .vic-table-scroll{ overflow: visible; border-top: 0; }
+  .vic-table thead{ display: none; }
+  .vic-table, .vic-table tbody{ display: block; }
+  .vic-table tbody tr{
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px 10px;
+    padding: 14px;
+    margin-bottom: 10px;
+    background: var(--paper-raised);
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+  }
+  .vic-table tbody tr[hidden]{ display: none; }
+  .vic-table tbody th,
+  .vic-table tbody td{ display: block; padding: 0; border: 0; white-space: normal; text-align: left; }
+  .vic-table tbody th{ grid-column: 1 / span 2; font-size: 1.05rem; align-self: center; }
+  .vic-table tbody td:last-child{ grid-column: 3; grid-row: 1; text-align: right; align-self: center; }
+  .vic-table tbody td::before{
+    content: attr(data-label);
+    display: block;
+    margin-bottom: 4px;
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  .vic-table tbody td:last-child::before{ display: none; }
+  .vic-table tbody td[data-label="Margin"]{ grid-column: 1 / -1; }
+  .vic-tag{ font-size: 0.8rem; padding: 2px 7px 2px 6px; }
+}
+
+@media (max-width: 900px){
+  .vic-parties{ grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (max-width: 640px){
+  .vic-panel{ padding: 18px 16px 20px; }
+  .vic-headline{ grid-template-columns: 1fr; }
+  .vic-headline-item{
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: baseline;
+    column-gap: 12px;
+    padding: 14px 16px;
+  }
+  .vic-headline-label{ flex: 1 0 100%; }
+  .vic-headline-number{ font-size: 2rem; }
+  .vic-seatbar-track{ height: 38px; }
+  .vic-seg span{ font-size: 0.74rem; }
+  /* Greens and One Nation segments are too narrow for labels on phones;
+     their figures are shown in the party breakdown below. */
+  .vic-seg.grn span,
+  .vic-seg.onp span{ display: none; }
+  .vic-parties{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .vic-party{ padding: 14px; }
+  .vic-party-seats{ font-size: 1.6rem; }
+}
+@media (max-width: 380px){
+  .vic-seg.nat span{ display: none; }
+}
+
+/* ---------- Homepage: Victorian forecast feature ---------- */
+.home .home-vic{
+  background:
+    radial-gradient(ellipse at 85% 30%, rgba(47,111,196,0.16), transparent 60%),
+    linear-gradient(180deg, rgba(23,31,43,0.7), rgba(16,21,29,0));
+}
+.home-vic-label{ color: var(--gold); }
+.home .home-vic .home-hero-title{ max-width: 16ch; }
+.home-vic-updated{
+  margin: 22px 0 0;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+.home-vic-panel{
+  display: block;
+  color: var(--ink);
+  border-radius: 10px;
+  padding: 22px 24px 20px;
+  transition: border-color 140ms ease, transform 140ms ease;
+}
+.home-vic-panel:hover{
+  text-decoration: none;
+  border-color: rgba(143,180,214,0.45);
+  transform: translateY(-2px);
+}
+.home-vic-figures{
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+  margin: 6px 0 26px;
+}
+.home-vic-figures > div{
+  background: var(--paper-raised);
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.home-vic-figures .vic-headline-number{ font-size: 2rem; }
+.home-vic-panel .vic-seatbar{ margin-bottom: 30px; }
+.home-vic-legend{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #b9c3cf;
+}
+.home-vic-legend li{ display: inline-flex; align-items: center; gap: 7px; }
+.home-vic-legend strong{ color: var(--ink); }
+.home-vic-legend i{ width: 11px; height: 11px; border-radius: 2px; }
+.home-vic-legend .lib i{ background: var(--vic-lib); }
+.home-vic-legend .nat i{ background: var(--vic-nat); }
+.home-vic-legend .alp i{ background: var(--vic-alp); }
+.home-vic-legend .onp i{ background: var(--vic-onp); }
+.home-vic-legend .grn i{ background: var(--vic-grn); }
+.home-vic-legend .ind i{ background: #8f9aa8; }
+.home-vic-cta{
+  display: block;
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--gold);
+}
+@media (max-width: 640px){
+  .home-vic-panel{ padding: 18px 16px; }
+  .home-vic-figures > div{ padding: 12px; }
+  .home-vic-figures .vic-headline-number{ font-size: 1.6rem; }
+  .home-vic-panel .vic-seatbar-track{ height: 38px; }
+  .home-vic-panel .vic-seg span{ font-size: 0.74rem; }
+  .home-vic-panel .vic-seg.grn span,
+  .home-vic-panel .vic-seg.onp span{ display: none; }
+}
+@media (max-width: 380px){
+  .home-vic-panel .vic-seg.nat span{ display: none; }
+}

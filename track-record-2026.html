@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026 Midterm Track Record — Mustycaribou Forecasts</title>
+<meta name="description" content="How Mustycaribou's final 2026 Senate and governor forecasts compared with the November 2026 results: winner accuracy, margin error, partisan bias and every race, state by state.">
+<link rel="canonical" href="https://mustycaribou.com/track-record-2026.html">
+<link rel="stylesheet" href="style.css">
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-66SC7DBMMG"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-66SC7DBMMG');
+</script>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="masthead-inner">
+    <h1 class="masthead-title"><a href="index.html">Mustycaribou Forecasts</a></h1>
+    <span class="masthead-tag">Professional election intelligence</span>
+  </div>
+  <div class="masthead-meta">
+    <span>By <span class="forecaster-name">Preston</span></span>
+    <span>last updated <span id="last-updated"></span></span>
+  </div>
+</header>
+
+<nav class="primary">
+  <ul>
+    <li><a href="index.html">Home</a></li>
+    <li><a href="victoria-2026.html">Victoria 2026</a></li>
+    <li><a href="forecast.html">2026 Forecast</a></li>
+    <li><a href="updates.html">Updates</a></li>
+    <li><a href="track-record-history.html">Track Record</a></li>
+    <li><a href="methodology.html">Methodology</a></li>
+    <li><a href="articles.html">Articles</a></li>
+  </ul>
+</nav>
+
+<main class="tr26">
+  <nav class="wrap tr-year-nav" aria-label="Track Record section">
+    <span class="section-label">Track Record</span>
+    <div class="race-tabs">
+      <a class="race-tab" href="track-record-history.html">Overview</a>
+      <a class="race-tab" href="track-record.html">2024 Election Archive</a>
+      <a class="race-tab active" href="track-record-2026.html" aria-current="page">2026 Election Archive</a>
+    </div>
+  </nav>
+
+  <section class="wrap archive-hero tr26-summary">
+    <p class="section-label">2026 election archive</p>
+    <div class="section-heading archive-heading">
+      <div>
+        <h2>2026 Midterm Elections</h2>
+        <p class="archive-lede">The final pre-election Senate and governor forecasts, checked against the November 2026 results. The forecasts are reproduced exactly as published. Each result is linked to its source.</p>
+      </div>
+      <div class="archive-stamp" id="tr26-stamp"></div>
+    </div>
+    <div class="stat-grid dashboard-grid tr26-overall" id="tr26-overall"></div>
+    <p class="hero-footnote" id="tr26-overall-note"></p>
+  </section>
+
+  <div class="wrap tr26-office-switch">
+    <div class="race-tabs" role="group" aria-label="Choose office">
+      <button type="button" class="race-tab active" data-office="senate" aria-pressed="true">U.S. Senate</button>
+      <button type="button" class="race-tab" data-office="governors" aria-pressed="false">Governors</button>
+    </div>
+  </div>
+
+  <div class="tr26-office" id="senate" data-office-panel="senate">
+  <section class="wrap archive-hero tr26-office-hero">
+    <p class="section-label">2026 Senate archive</p>
+    <div class="section-heading archive-heading">
+      <div>
+        <h2>2026 US Senate</h2>
+        <p class="archive-lede">The 35 Senate seats contested in 2026. Each forecast carried a rating and a projected margin, so the Senate audit includes margin error and bias as well as winner calls.</p>
+      </div>
+      <div class="archive-stamp" id="senate-stamp"></div>
+    </div>
+
+    <div class="archive-split">
+      <article class="forecast-map archive-image-card">
+        <div class="map-header">
+          <span>Final senate forecast</span>
+          <span>Published 6 July 2026</span>
+        </div>
+        <div class="accuracy-map-shell">
+          <div class="accuracy-map forecast-archive-map tr26-forecast-map" id="senate-forecast-map" aria-label="Final 2026 Senate forecast map"></div>
+        </div>
+        <dl class="panel-metrics tr26-forecast-pick" id="senate-forecast-pick" aria-live="polite"></dl>
+        <p class="hero-footnote">Final forecast map. Blue states were predicted Democratic and red states Republican. Faded tiles had no Senate election in 2026; their seats are counted only as holdovers in the chamber balance. Select a state to see its original forecast.</p>
+      </article>
+
+      <div class="stat-grid archive-kpis" id="senate-kpis"></div>
+    </div>
+  </section>
+
+  <section class="wrap">
+    <div class="section-heading">
+      <div>
+        <p class="section-label">Interactive audit</p>
+        <h2>Prediction Accuracy Map</h2>
+      </div>
+      <div class="accuracy-legend" aria-label="Map legend">
+        <span><i class="correct"></i> Winner predicted correctly</span>
+        <span><i class="incorrect"></i> Winner predicted incorrectly</span>
+        <span><i class="tr26-grey"></i> No race, or no verified result</span>
+      </div>
+    </div>
+
+    <div class="accuracy-workbench">
+      <div class="accuracy-map-shell">
+        <div class="accuracy-map" id="senate-accuracy-map" aria-label="2026 Senate prediction accuracy by state"></div>
+      </div>
+      <aside class="accuracy-panel" aria-live="polite">
+        <p class="section-label">Selected Senate race</p>
+        <h3 id="senate-panel-state"></h3>
+        <dl class="panel-metrics" id="senate-panel-metrics"></dl>
+        <p id="senate-panel-explanation"></p>
+      </aside>
+    </div>
+  </section>
+
+  <section class="wrap">
+    <p class="section-label">Forecast performance</p>
+    <h2>Dashboard</h2>
+    <div class="stat-grid dashboard-grid" id="senate-dashboard"></div>
+    <p class="hero-footnote" id="senate-dashboard-note"></p>
+  </section>
+
+  <section class="wrap" id="senate-predicted-vs-actual">
+    <div class="section-heading">
+      <div>
+        <p class="section-label">Predicted vs. actual</p>
+        <h2>Margin audit</h2>
+      </div>
+      <div class="race-tabs" role="group" aria-label="Choose race set">
+        <button type="button" class="race-tab" data-set="competitive" aria-pressed="false">Senate: competitive</button>
+        <button type="button" class="race-tab active" data-set="all" aria-pressed="true">Senate: all races</button>
+      </div>
+    </div>
+    <p class="archive-lede" id="senate-audit-note"></p>
+    <div class="stat-grid dashboard-grid" id="senate-audit-summary"></div>
+
+    <div class="audit-layout">
+      <figure class="mchart-card">
+        <figcaption class="mchart-legend">
+          <span><i class="mchart-key predicted"></i> Final forecast margin</span>
+          <span><i class="mchart-key actual"></i> Actual result</span>
+          <span><i class="mchart-key miss"></i> Wrong winner call</span>
+        </figcaption>
+        <div class="mchart" id="senate-margin-chart"></div>
+        <p class="hero-footnote">Signed margins: Democratic leads to the right of even, Republican leads to the left. Where an independent was the main challenger, the margin is the leader's lead over them. Sorted from most Democratic to most Republican actual result. Hover or focus a row for exact figures.</p>
+      </figure>
+      <aside class="race-detail-panel audit-misses">
+        <p class="section-label">Notable misses</p>
+        <ul class="miss-list" id="senate-misses"></ul>
+      </aside>
+    </div>
+  </section>
+
+  <section class="wrap senate-archive-section">
+    <p class="section-label">Every race</p>
+    <h2>Senate race record</h2>
+    <div class="archive-table-wrap">
+      <table class="archive-table tr26-table">
+        <caption>All 35 Senate races contested in 2026. Margin is first place minus second place; error is the absolute gap between predicted and actual signed margin.</caption>
+        <thead>
+          <tr>
+            <th scope="col">State</th>
+            <th scope="col">Rating</th>
+            <th scope="col">Predicted winner</th>
+            <th scope="col">Predicted margin</th>
+            <th scope="col">Actual winner</th>
+            <th scope="col">Actual margin</th>
+            <th scope="col">Margin error</th>
+            <th scope="col">Winner correct</th>
+            <th scope="col">Result</th>
+          </tr>
+        </thead>
+        <tbody id="senate-table"></tbody>
+      </table>
+    </div>
+  </section>
+  </div>
+
+  <div class="tr26-office" id="governors" data-office-panel="governors" hidden>
+  <section class="wrap archive-hero tr26-office-hero">
+    <p class="section-label">2026 Governor archive</p>
+    <div class="section-heading archive-heading">
+      <div>
+        <h2>2026 Gubernatorial Elections</h2>
+        <p class="archive-lede">The 36 governor's races in 2026. Governor forecasts were published as ratings only, with no projected margins, so this audit scores winner calls. Margin error and bias are shown as not available.</p>
+      </div>
+      <div class="archive-stamp" id="governors-stamp"></div>
+    </div>
+
+    <div class="archive-split">
+      <article class="forecast-map archive-image-card">
+        <div class="map-header">
+          <span>Final governor forecast</span>
+          <span>Published 6 July 2026</span>
+        </div>
+        <div class="accuracy-map-shell">
+          <div class="accuracy-map forecast-archive-map tr26-forecast-map" id="governors-forecast-map" aria-label="Final 2026 Governor forecast map"></div>
+        </div>
+        <dl class="panel-metrics tr26-forecast-pick" id="governors-forecast-pick" aria-live="polite"></dl>
+        <p class="hero-footnote">Final forecast map. Blue states were predicted Democratic and red states Republican. Faded tiles had no governor's race in 2026. Select a state to see its original rating.</p>
+      </article>
+
+      <div class="stat-grid archive-kpis" id="governors-kpis"></div>
+    </div>
+  </section>
+
+  <section class="wrap">
+    <div class="section-heading">
+      <div>
+        <p class="section-label">Interactive audit</p>
+        <h2>Prediction Accuracy Map</h2>
+      </div>
+      <div class="accuracy-legend" aria-label="Map legend">
+        <span><i class="correct"></i> Winner predicted correctly</span>
+        <span><i class="incorrect"></i> Winner predicted incorrectly</span>
+        <span><i class="tr26-grey"></i> No race, or no verified result</span>
+      </div>
+    </div>
+
+    <div class="accuracy-workbench">
+      <div class="accuracy-map-shell">
+        <div class="accuracy-map" id="governors-accuracy-map" aria-label="2026 Governor prediction accuracy by state"></div>
+      </div>
+      <aside class="accuracy-panel" aria-live="polite">
+        <p class="section-label">Selected governor's race</p>
+        <h3 id="governors-panel-state"></h3>
+        <dl class="panel-metrics" id="governors-panel-metrics"></dl>
+        <p id="governors-panel-explanation"></p>
+      </aside>
+    </div>
+  </section>
+
+  <section class="wrap">
+    <p class="section-label">Forecast performance</p>
+    <h2>Dashboard</h2>
+    <div class="stat-grid dashboard-grid" id="governors-dashboard"></div>
+    <p class="hero-footnote" id="governors-dashboard-note"></p>
+  </section>
+
+  <section class="wrap" id="governors-predicted-vs-actual">
+    <div class="section-heading">
+      <div>
+        <p class="section-label">Predicted vs. actual</p>
+        <h2>Margin audit</h2>
+      </div>
+      <div class="race-tabs" role="group" aria-label="Choose race set">
+        <button type="button" class="race-tab" data-set="competitive" aria-pressed="false">Governor: competitive</button>
+        <button type="button" class="race-tab active" data-set="all" aria-pressed="true">Governor: all races</button>
+      </div>
+    </div>
+    <p class="archive-lede" id="governors-audit-note"></p>
+    <div class="stat-grid dashboard-grid" id="governors-audit-summary"></div>
+
+    <div class="audit-layout">
+      <figure class="mchart-card">
+        <figcaption class="mchart-legend">
+          
+          <span><i class="mchart-key actual"></i> Actual result</span>
+          <span><i class="mchart-key miss"></i> Wrong winner call</span>
+        </figcaption>
+        <div class="mchart" id="governors-margin-chart"></div>
+        <p class="hero-footnote">Governor forecasts had no numerical margin, so only the actual result is plotted. No forecast point is estimated from the rating. Each row lists the original rating. Sorted from most Democratic to most Republican actual result. Hover or focus a row for exact figures.</p>
+      </figure>
+      <aside class="race-detail-panel audit-misses">
+        <p class="section-label">Notable misses</p>
+        <ul class="miss-list" id="governors-misses"></ul>
+      </aside>
+    </div>
+  </section>
+
+  <section class="wrap senate-archive-section">
+    <p class="section-label">Every race</p>
+    <h2>Governor race record</h2>
+    <div class="archive-table-wrap">
+      <table class="archive-table tr26-table">
+        <caption>All 36 governor's races in 2026. Forecasts were ratings without projected margins, so there is no margin error.</caption>
+        <thead>
+          <tr>
+            <th scope="col">State</th>
+            <th scope="col">Rating</th>
+            <th scope="col">Predicted winner</th>
+            <th scope="col">Predicted margin</th>
+            <th scope="col">Actual winner</th>
+            <th scope="col">Actual margin</th>
+            <th scope="col">Margin error</th>
+            <th scope="col">Winner correct</th>
+            <th scope="col">Result</th>
+          </tr>
+        </thead>
+        <tbody id="governors-table"></tbody>
+      </table>
+    </div>
+  </section>
+  </div>
+</main>
+
+<footer class="wrap">
+  <p>Forecasts are the final pre-election ratings and margins published on 6 July 2026, reproduced unchanged. A race is scored only once a winner has been called by a decision desk or certified. A candidate who is only leading is never treated as the winner. <strong>Competitive races</strong> are defined, as on the 2024 Track Record, as races with an actual margin under 6 points. Margin error and bias are calculated only for races with a published numerical margin forecast. Bias is the average of predicted minus actual Democratic margin: positive means the forecasts were too Democratic, negative too Republican. No 2026 House forecasts were published, so none are scored here.</p>
+</footer>
+
+<script src="data.js"></script>
+<script src="script.js"></script>
+<script src="results-2026.js"></script>
+<script src="track-record-2026.js"></script>
+</body>
+</html>

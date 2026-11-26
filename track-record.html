@@ -31,15 +31,24 @@
 <nav class="primary">
   <ul>
     <li><a href="index.html">Home</a></li>
+    <li><a href="victoria-2026.html">Victoria 2026</a></li>
     <li><a href="forecast.html">2026 Forecast</a></li>
     <li><a href="updates.html">Updates</a></li>
-    <li><a href="track-record.html">Track Record</a></li>
+    <li><a href="track-record-history.html">Track Record</a></li>
     <li><a href="methodology.html">Methodology</a></li>
     <li><a href="articles.html">Articles</a></li>
   </ul>
 </nav>
 
 <main>
+  <nav class="wrap tr-year-nav" aria-label="Track Record section">
+    <span class="section-label">Track Record</span>
+    <div class="race-tabs">
+      <a class="race-tab" href="track-record-history.html">Overview</a>
+      <a class="race-tab active" href="track-record.html" aria-current="page">2024 Election Archive</a>
+      <a class="race-tab" href="track-record-2026.html">2026 Election Archive</a>
+    </div>
+  </nav>
   <section class="wrap archive-hero">
     <p class="section-label">2024 election archive</p>
     <div class="section-heading archive-heading">
@@ -176,6 +185,75 @@
 
     <div class="race-detail-panel archive-note">
       <p>Pennsylvania was the only wrong Senate winner call. The polling miss was substantial, but the Trump effect in Pennsylvania was something I should have weighted more heavily, especially because a similar underestimation appeared in 2016.</p>
+    </div>
+  </section>
+  <section class="wrap house-archive-section" id="house-2024">
+    <div class="section-heading archive-heading">
+      <div>
+        <p class="section-label">2024 House archive</p>
+        <h2>2024 US House Election</h2>
+        <p class="archive-lede">A district-by-district audit of the original 2024 House forecast. These were winner predictions for all 435 districts, so this section records winner accuracy only. It does not include margin errors.</p>
+      </div>
+      <div class="archive-stamp">428/435 correct</div>
+    </div>
+
+    <div class="stat-grid dashboard-grid house-dashboard">
+      <div class="stat-card"><span class="stat-number">218-217</span><span class="stat-label">Predicted House balance (D-R)</span></div>
+      <div class="stat-card"><span class="stat-number">215-220</span><span class="stat-label">Actual House balance (D-R)</span></div>
+      <div class="stat-card"><span class="stat-number">428/435</span><span class="stat-label">Correct district predictions</span></div>
+      <div class="stat-card"><span class="stat-number">7</span><span class="stat-label">Incorrect district predictions</span></div>
+      <div class="stat-card"><span class="stat-number">98.39%</span><span class="stat-label">Winner accuracy</span></div>
+    </div>
+
+    <div class="house-balance-compare" aria-label="Predicted and actual 2024 House balance">
+      <div class="house-balance-row">
+        <div class="house-balance-label"><span>Original forecast</span><span>D 218 &middot; R 217</span></div>
+        <div class="tally-bar">
+          <div class="tally-bar-track">
+            <div class="seg-dem" style="width:50.11%"></div>
+            <div class="seg-rep" style="width:49.89%"></div>
+          </div>
+          <span class="tally-majority-mark" style="left:50.11%" title="218 seats needed for control"></span>
+        </div>
+      </div>
+      <div class="house-balance-row">
+        <div class="house-balance-label"><span>Actual result</span><span>D 215 &middot; R 220</span></div>
+        <div class="tally-bar">
+          <div class="tally-bar-track">
+            <div class="seg-dem" style="width:49.43%"></div>
+            <div class="seg-rep" style="width:50.57%"></div>
+          </div>
+          <span class="tally-majority-mark" style="left:50.11%" title="218 seats needed for control"></span>
+        </div>
+      </div>
+      <p class="hero-footnote">The marker shows the 218 seats needed for a majority. The forecast had Democrats winning control by exactly that number. Republicans won it with 220.</p>
+    </div>
+
+    <div class="archive-table-wrap">
+      <table class="archive-table">
+        <caption>The seven districts predicted incorrectly. All other 428 districts were called correctly.</caption>
+        <thead>
+          <tr>
+            <th>District</th>
+            <th>Predicted Winner</th>
+            <th>Actual Winner</th>
+            <th>Winner Correct</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="incorrect-row"><td>Alaska At-Large</td><td>Democrat</td><td>Republican</td><td>No</td></tr>
+          <tr class="incorrect-row"><td>Maine 2nd</td><td>Republican</td><td>Democrat</td><td>No</td></tr>
+          <tr class="incorrect-row"><td>Washington 3rd</td><td>Republican</td><td>Democrat</td><td>No</td></tr>
+          <tr class="incorrect-row"><td>Nebraska 2nd</td><td>Democrat</td><td>Republican</td><td>No</td></tr>
+          <tr class="incorrect-row"><td>Pennsylvania 7th</td><td>Democrat</td><td>Republican</td><td>No</td></tr>
+          <tr class="incorrect-row"><td>Pennsylvania 8th</td><td>Democrat</td><td>Republican</td><td>No</td></tr>
+          <tr class="incorrect-row"><td>Pennsylvania 10th</td><td>Democrat</td><td>Republican</td><td>No</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="race-detail-panel archive-note">
+      <p>The House forecast called the winner correctly in 428 of 435 districts (98.39%). Five of the seven misses were seats predicted Democratic that Republicans won: Alaska At-Large, Nebraska 2nd and Pennsylvania's 7th, 8th and 10th. The other two went the opposite way, with Maine 2nd and Washington 3rd predicted Republican and won by Democrats. The net three-seat Republican miss turned a forecast 218-217 Democratic majority into the actual 220-215 Republican majority. Three of the seven misses were in Pennsylvania, the same state where the presidential and Senate forecasts also missed.</p>
     </div>
   </section>
 </main>

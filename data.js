@@ -15,7 +15,8 @@
 
 const SITE_META = {
   forecasterName: "Preston", // SAMPLE — put your name/byline here
-  lastUpdated: "2026-07-06",  // update this every time you refresh data
+  lastUpdated: "2026-11-04",  // date of the most recent website update (shown in the header) — change whenever you publish anything
+  forecastFinalUpdate: "2026-07-06", // date of the final pre-election forecast; frozen now the forecast is archived
   cycle: "2026 Midterms",
 };
 
