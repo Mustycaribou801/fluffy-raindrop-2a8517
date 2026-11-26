@@ -28,7 +28,7 @@ Eureka,ALP,ONP,ALP,6.24
 Euroa,NAT,NAT,ONP,7.66
 Evelyn,LIB,LIB,ALP,16.34
 Footscray,ALP,GRN,ALP,2.20
-Frankston,ALP,LIB,ALP,3.12
+Frankston,ALP,ALP,LIB,1.12
 Geelong,ALP,LIB,ALP,0.14
 Gippsland East,NAT,NAT,ONP,12.63
 Gippsland South,NAT,NAT,ONP,14.51
@@ -57,7 +57,7 @@ Mulgrave,ALP,LIB,ALP,4.40
 Murray Plains,NAT,NAT,ONP,14.47
 Narracan,LIB,LIB,ONP,3.04
 Narre Warren North,ALP,ONP,ALP,1.46
-Narre Warren South,ALP,LIB,ALP,1.93
+Narre Warren South,ALP,ALP,LIB,1.93
 Nepean,LIB,LIB,ALP,16.92
 Niddrie,ALP,LIB,ALP,6.60
 Northcote,ALP,GRN,ALP,3.32
