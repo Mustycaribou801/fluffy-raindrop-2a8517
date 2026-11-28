@@ -62,7 +62,10 @@ sources:                                  # optional — "Sources & citations" l
 ```
 
 **Categories** (must match one of these): `Election Analysis`, `Polling`,
-`Forecasting`, `Australian Politics`, `US Politics`.
+`Forecasting`, `Australian Politics`, `US Politics`, `Opinion`.
+Articles in the `Opinion` category automatically show the editorial disclaimer
+(set in `OPINION_DISCLAIMER` in `scripts/build.mjs`) beneath the byline, and a
+prominent OPINION label above the headline.
 To add a category, add it to the `CATEGORIES` list near the top of
 `scripts/build.mjs`.
 

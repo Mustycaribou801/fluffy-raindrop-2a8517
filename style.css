@@ -3466,3 +3466,41 @@ a.history-link-card:hover{ box-shadow: inset 0 0 0 1px var(--gold); }
 @media (max-width: 380px){
   .home-vic-panel .vic-seg.nat span{ display: none; }
 }
+
+/* ---------- Opinion articles ---------- */
+/* Prominent "OPINION" label above the headline and on cards */
+.article-category--opinion{
+  padding: 3px 9px;
+  border: 1px solid var(--gold);
+  border-radius: 3px;
+  background: var(--gold-soft);
+  color: var(--gold);
+  letter-spacing: 0.14em;
+}
+.article-header-top .article-category--opinion{ font-size: 0.78rem; padding: 4px 11px; }
+
+/* Editorial disclaimer added automatically to every Opinion article */
+.article-opinion-disclaimer{
+  margin: 16px 0 0;
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  font-style: italic;
+  line-height: 1.55;
+  color: var(--ink-soft);
+}
+
+/* "Read Article" link on article cards */
+.article-card-read{
+  align-self: flex-start;
+  margin-top: 4px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+.article-card-read:hover{ text-decoration: underline; }
+@media (max-width: 640px){
+  .article-opinion-disclaimer{ font-size: 0.84rem; }
+}
