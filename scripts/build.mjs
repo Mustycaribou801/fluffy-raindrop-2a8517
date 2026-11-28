@@ -44,7 +44,13 @@ const CATEGORIES = [
   "Forecasting",
   "Australian Politics",
   "US Politics",
+  "Opinion",
 ];
+
+// Shown automatically beneath the byline of every article in the Opinion
+// category, before the article text begins.
+const OPINION_DISCLAIMER = "The views expressed in this article are those of the contributing author and do not necessarily reflect the views of Mustycaribou Forecasts or its owner. Opinion articles are independent of the website\u2019s electoral forecasts and statistical analysis.";
+const isOpinion = a => a.category === "Opinion";
 
 // Drafts (`draft: true`) are never built for the live site. On Deploy
 // Previews, branch deploys and local builds they are built with a DRAFT
@@ -212,7 +218,7 @@ function metaLine(a, { withAuthor = true } = {}){
 }
 
 function categoryTag(a){
-  return `<span class="article-category">${escapeHtml(a.category)}</span>${a.draft ? '<span class="article-draft-tag">Draft</span>' : ""}`;
+  return `<span class="article-category${isOpinion(a) ? " article-category--opinion" : ""}">${escapeHtml(a.category)}</span>${a.draft ? '<span class="article-draft-tag">Draft</span>' : ""}`;
 }
 
 function articleCard(a, { variant = "", extraClass = "", headingLevel = 3 } = {}){
@@ -228,6 +234,7 @@ function articleCard(a, { variant = "", extraClass = "", headingLevel = 3 } = {}
           <${h} class="article-card-title"><a href="${a.url}">${escapeHtml(a.title)}</a></${h}>
           <p class="article-card-summary">${escapeHtml(a.description)}</p>
           <p class="article-meta">${metaLine(a)}</p>
+          <a class="article-card-read" href="${a.url}" aria-label="Read article: ${escapeHtml(a.title)}">Read Article &rarr;</a>
         </div>
       </article>`;
 }
@@ -358,6 +365,9 @@ function buildArticlePage(a, all, tpl){
     subtitle: a.subtitle ? `<p class="article-subtitle">${escapeHtml(a.subtitle)}</p>` : "",
     author: escapeHtml(a.author),
     dates,
+    disclaimer: isOpinion(a)
+      ? `<p class="article-opinion-disclaimer">${escapeHtml(OPINION_DISCLAIMER)}</p>`
+      : "",
     heroImage,
     body: a.html,
     sources: sourcesMarkup(a.sources),
